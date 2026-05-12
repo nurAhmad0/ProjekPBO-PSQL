@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ProjekPBO_PSQL
 {
-    class Farmer : Orang
+    class Owner : Orang
     {
-        public Farmer(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
+        public Owner(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
         {
         }
         public override void MelihatJadwalOP()
