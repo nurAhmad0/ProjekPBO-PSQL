@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjekPBO_PSQL
+namespace ProjekPBO_PSQL.Controllers
 {
-    class Farmer : Orang
+    class Pengantar : Orang
     {
-        public Farmer(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
+        public Pengantar(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
         {
         }
         public override void MelihatJadwalOP()
