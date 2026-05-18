@@ -10,7 +10,6 @@ namespace ProjekPBO_PSQL.Controllers
         {
             if (string.IsNullOrEmpty(input))
             {
-                MessageBox.Show("Input tidak boleh kosong!","Validasi Gagal",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return true;
             }
             else
@@ -23,7 +22,6 @@ namespace ProjekPBO_PSQL.Controllers
         {
             if (!int.TryParse(input, out _))
             {
-                MessageBox.Show("Input harus berupa angka!","Validasi Gagal",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return false;
             }
             else
@@ -39,9 +37,7 @@ namespace ProjekPBO_PSQL.Controllers
                 int panjangInput = input.Length;
                 if (panjangInput < min)
                 {
-                    MessageBox.Show($"Input harus memiliki panjang minimal {min} karakter!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
-
                 }
                 else
                 {
@@ -53,7 +49,6 @@ namespace ProjekPBO_PSQL.Controllers
                 int panjangInput = input.Length;
                 if (panjangInput < min || panjangInput > max)
                 {
-                    MessageBox.Show($"Input harus memiliki panjang antara {min} dan {max} karakter!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 else
@@ -71,7 +66,6 @@ namespace ProjekPBO_PSQL.Controllers
             }
             else
             {
-                MessageBox.Show("Input harus terdiri dari huruf dan angka saja!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -110,7 +104,6 @@ namespace ProjekPBO_PSQL.Controllers
             }
             catch
             {
-                MessageBox.Show("Format email salah!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
