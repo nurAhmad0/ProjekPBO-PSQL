@@ -47,9 +47,35 @@ namespace ProjekPBO_PSQL.Models
             conn.Open();
             using var query1 = new NpgsqlCommand(
                 "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
-            query1.Parameters.AddWithValue("ID_pelanggan");
+            query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
+            query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
+            query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
+            query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
+            query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+            query1.ExecuteNonQuery();
+        }
 
+        public void UpdatePelanggan(Pelanggan pelanggan)
+        {
+            using var conn = DataBaseHelper.GetConnection();
+            conn.Open();
+            using var query1 = new NpgsqlCommand(
+                "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
+            query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
+            query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
+            query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
+            query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
+            query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+            query1.ExecuteNonQuery();
+        }
 
-    }
+        public void DeletePelanggan(int id)
+        {
+            using var conn = DataBaseHelper.GetConnection();
+            conn.Open();
+            using var cmd = new NpgsqlCommand("DELETE FROM users WHERE id=@id", conn);
+            cmd.Parameters.AddWithValue("id", id);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

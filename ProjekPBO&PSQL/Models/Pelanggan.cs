@@ -14,11 +14,11 @@ namespace ProjekPBO_PSQL.Models
         private string Email;
         private string DetailAlamat;
 
-        public Pelanggan(int idPelanggan, string namePelanggan, string nO_Telp, string email, string detailAlamat)
+        public Pelanggan(int idPelanggan, string namePelanggan, string no_Telp, string email, string detailAlamat)
         {
             this.IdPelanggan = idPelanggan;
             this.NamePelanggan = namePelanggan;
-            this.NO_Telp = nO_Telp;
+            this.NO_Telp = no_Telp;
             this.Email = email;
             this.DetailAlamat = detailAlamat;
         }
@@ -33,7 +33,7 @@ namespace ProjekPBO_PSQL.Models
             return this.NamePelanggan;
         }
 
-        public string NO_TELP()
+        public string getNO_TELP()
         {
             if (ProjekPBO_PSQL.Controllers.Validator.ApakahPanjang(10, this.NO_Telp, 13))
             {
@@ -41,7 +41,31 @@ namespace ProjekPBO_PSQL.Models
             }
             else
             {
-                return "Nomer Telepon Salah";
+                return "-";
+            }
+        }
+
+        public string getEmail()
+        {
+            if (ProjekPBO_PSQL.Controllers.Validator.ApakahEmailValid(Email))
+            {
+                return this.Email;
+            }
+            else
+            {
+                return "Tidak Ada Email";
+            }
+        }
+
+        public string getDetailAlamat()
+        {
+            if (DetailAlamat != null)
+            {
+                return DetailAlamat;
+            }
+            else
+            {
+                return "Alamat Tidak Ada";
             }
         }
     }
