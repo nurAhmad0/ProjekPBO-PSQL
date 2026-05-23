@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjekPBO_PSQL
+namespace ProjekPBO_PSQL.Models
 {
-    class Owner : Orang
+    class Farmer : Orang
     {
-        public Owner(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
+        public Farmer(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
         {
         }
         public override void MelihatJadwalOP()

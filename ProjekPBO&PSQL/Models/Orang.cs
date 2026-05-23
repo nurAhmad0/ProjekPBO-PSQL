@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjekPBO_PSQL
+namespace ProjekPBO_PSQL.Models
 {
     abstract class Orang
     {
