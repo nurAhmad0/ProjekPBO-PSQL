@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 
 namespace ProjekPBO_PSQL.Models
 {
     class JadwalPengantaran : Jadwal
     {
+        private int IDPelanggan;
         private string NamaPelanggan;
         private string NO_TELP;
         private string DetailAlamat;
-        private int OderID;
+        private int OrderID;
         private DateTime TanggalOrder;
-        private decimal JumlahPoduk;
+        private decimal JumlahProduk;
         private decimal Harga;
+        private string namaTanaman;
 
-        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, List<int> iDAnggota, List<string> namaAnggota, string status, string NamaPelanggan, string NO_TELP, string DetailAlamat, int OrderID, DateTime TanggalOrder, decimal JumlahProduk, decimal Harga) : base (idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, iDAnggota, namaAnggota, status)
+        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, List<int> iDAnggota, List<string> namaAnggota, string status, List<string> StatusAnggota, List<DateTime> WaktuJoin, string NamaPelanggan, string NO_TELP, string DetailAlamat, int OrderID, DateTime TanggalOrder, decimal JumlahProduk, decimal Harga, string namaTanaman, int idPelanggan) : base (idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, iDAnggota, namaAnggota, status, StatusAnggota, WaktuJoin)
         {
             this.NamaPelanggan = NamaPelanggan;
             this.NO_TELP = NO_TELP;
             this.DetailAlamat = DetailAlamat;
-            this.OderID = OrderID;
+            this.OrderID = OrderID;
             this.TanggalOrder = TanggalOrder;
-            this.JumlahPoduk = JumlahProduk;
+            this.JumlahProduk = JumlahProduk;
             this.Harga = Harga;
+            this.namaTanaman = namaTanaman;
+            this.IDPelanggan = idPelanggan;
         }
 
         public string getNamaPelanggan()
@@ -42,7 +47,7 @@ namespace ProjekPBO_PSQL.Models
 
         public int getOderID()
         {
-            return this.OderID;
+            return this.OrderID;
         }
 
         public DateTime getTanggalOrder()
@@ -52,12 +57,22 @@ namespace ProjekPBO_PSQL.Models
 
         public decimal getJumlahProduk()
         {
-            return JumlahPoduk;
+            return this.JumlahProduk;
         }
 
         public decimal getHarga()
         {
-            return Harga;
+            return this.Harga;
+        }
+
+        public string getNamaTanaman()
+        {
+            return this.namaTanaman;
+        }
+
+        public int getIDPelanggan()
+        {
+            return this.IDPelanggan;
         }
     }
 }

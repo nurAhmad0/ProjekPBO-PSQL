@@ -41,41 +41,98 @@ namespace ProjekPBO_PSQL.Models
             return DataPelanggan;
         }
 
-        public void ADDPelanggan(Pelanggan pelanggan)
+        public bool ADDPelanggan(Pelanggan pelanggan)
         {
-            using var conn = DataBaseHelper.GetConnection();
-            conn.Open();
-            using var query1 = new NpgsqlCommand(
-                "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
-            query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-            query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-            query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-            query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-            query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
-            query1.ExecuteNonQuery();
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand(
+                    "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
+                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
+                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
+                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
+                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
+                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                int DampakBaris = query1.ExecuteNonQuery();
+                if (DampakBaris > 0)
+                {
+                    isSucces = true;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Simpan", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            return isSucces;
         }
 
-        public void UpdatePelanggan(Pelanggan pelanggan)
+        public bool UpdatePelanggan(Pelanggan pelanggan)
         {
-            using var conn = DataBaseHelper.GetConnection();
-            conn.Open();
-            using var query1 = new NpgsqlCommand(
-                "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
-            query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-            query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-            query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-            query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-            query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
-            query1.ExecuteNonQuery();
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand(
+                    "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
+                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
+                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
+                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
+                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
+                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                int DampakBaris = query1.ExecuteNonQuery();
+                if (DampakBaris > 0)
+                {
+                    isSucces = true;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Simpan", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            return isSucces;
         }
 
-        public void DeletePelanggan(int id)
+        public bool DelatePelanggan(int id)
         {
-            using var conn = DataBaseHelper.GetConnection();
-            conn.Open();
-            using var cmd = new NpgsqlCommand("DELETE FROM users WHERE id=@id", conn);
-            cmd.Parameters.AddWithValue("id", id);
-            cmd.ExecuteNonQuery();
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("DELETE FROM Pelanggan WHERE id=@id", conn);
+                query1.Parameters.AddWithValue("id", id);
+                int DampakBaris = query1.ExecuteNonQuery();
+                if (DampakBaris > 0)
+                {
+                    isSucces = true;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Hapus", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            return isSucces;
         }
     }
 }

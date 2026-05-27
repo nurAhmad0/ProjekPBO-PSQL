@@ -15,8 +15,10 @@ namespace ProjekPBO_PSQL.Models
         private List<int> IDAnggota;
         private List<string> NamaAnggota;
         private string Status;
+        private List<string> StatusAnggota;
+        private List<DateTime> WaktuJoin;
 
-        public Jadwal(int idJadwal, DateTime tanggal, string keteranganKegiatan, string tipeJadwal, int banyakAnggota, List<int> iDAnggota, List<string> namaAnggota, string status)
+        public Jadwal(int idJadwal, DateTime tanggal, string keteranganKegiatan, string tipeJadwal, int banyakAnggota, List<int> iDAnggota, List<string> namaAnggota, string status, List<string> StatusAnggota, List<DateTime> WaktuJoin)
         {
             this.IdJadwal = idJadwal;
             this.tanggal = tanggal;
@@ -26,6 +28,8 @@ namespace ProjekPBO_PSQL.Models
             this.IDAnggota = iDAnggota;
             this.NamaAnggota = namaAnggota;
             this.Status = status;
+            this.StatusAnggota = StatusAnggota;
+            this.WaktuJoin = WaktuJoin;
         }
 
         public int getIdJadwal()
@@ -67,12 +71,20 @@ namespace ProjekPBO_PSQL.Models
         {
             return Status;
         }
+        public List<String> getStatusAnggota()
+        {
+            return this.StatusAnggota;
+        }
 
+        public List<DateTime> getWaktuJoin()
+        {
+            return this.WaktuJoin;
+        }
         public void setTanggal(DateTime tanggal)
         {
             this.tanggal = tanggal;
         }
-
+        
         public void setKeteranganKegiatan(string keteranganKegiatan)
         {
             this.KeteranganKegiatan = keteranganKegiatan;
