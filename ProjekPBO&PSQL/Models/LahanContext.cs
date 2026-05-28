@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Npgsql;
+﻿using Npgsql;
 using ProjekPBO_PSQL.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.Text;
 
 namespace ProjekPBO_PSQL.Models
 {
-    class CRUDPelanggan
+    class LahanContext
     {
-        public List<Pelanggan> getAllPelanggan()
+        public List<Lahan> GETALLLahan()
         {
-            List<Pelanggan> DataPelanggan = new List<Pelanggan>();
+            List<Lahan> DataLahan = new List<Lahan>();
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("Select ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat from Pelanggan", conn);
+                using var query1 = new NpgsqlCommand("Select id_lahan, Nama_lahan, Luas_lahan, status_lahan from Lahan", conn);
                 using var reader = query1.ExecuteReader();
                 while (reader.Read())
                 {
-                    DataPelanggan.Add(new Pelanggan(
+                    DataLahan.Add(new Lahan(
                         reader.GetInt32(0),
-                        reader.IsDBNull(1) ? "Tanpa Nama" : reader.GetString(1),
-                        reader.IsDBNull(2) ? "-" : reader.GetString(2),
-                        reader.IsDBNull(3) ? "Tidak Ada Email" : reader.GetString(3),
-                        reader.IsDBNull(4) ? "Alamat Tidak Ada" : reader.GetString(4)
+                        reader.IsDBNull(1) ? "-" : reader.GetString(1),
+                        reader.IsDBNull(2) ? 0 : reader.GetDecimal(2),
+                        reader.IsDBNull(3) ? "-" : reader.GetString(3)
                         ));
                 }
             }
@@ -34,86 +34,80 @@ namespace ProjekPBO_PSQL.Models
             }
             catch (Exception ex)
             {
+
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return DataPelanggan;
+            return DataLahan;
         }
 
-        public bool ADDPelanggan(Pelanggan pelanggan)
+        public bool UPDATELahan(Lahan lahan)
         {
-            bool isSucces = false;
+            bool IsSucces = false;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand(
-                    "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                var query1 = new NpgsqlCommand(
+                    "update Lahan set nama_lahan=@NamaLahan, luas_lahan=@LuasLahan, status_lahan=@statusLahan where id_lahan = @idLahan", conn);
+                query1.Parameters.AddWithValue("NamaLahan", lahan.getNamaLahan());
+                query1.Parameters.AddWithValue("LuasLahan", lahan.getLuasLahan());
+                query1.Parameters.AddWithValue("statusLahan", lahan.getStatusLahan());
+                query1.Parameters.AddWithValue("idLahan", lahan.getIdLahan());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
-                    isSucces = true;
+                    IsSucces = true;
                 }
             }
             catch (NpgsqlException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Simpan", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
             }
-            return isSucces;
+            return IsSucces;
         }
 
-        public bool UpdatePelanggan(Pelanggan pelanggan)
+        public bool AddLahan(Lahan lahan)
         {
-            bool isSucces = false;
+            bool IsSucces = false;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand(
-                    "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                var query1 = new NpgsqlCommand(
+                    "INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES (@NamaLahan, @LuasLahan, @Status", conn);
+                query1.Parameters.AddWithValue("LuasLahan", lahan.getLuasLahan());
+                query1.Parameters.AddWithValue("NamaLahan", lahan.getNamaLahan());
+                query1.Parameters.AddWithValue("Status", lahan.getStatusLahan());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
-                    isSucces = true;
+                    IsSucces = true;
                 }
             }
             catch (NpgsqlException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Simpan", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
             }
-            return isSucces;
+            return IsSucces;
         }
 
-        public bool DelatePelanggan(int id)
+        public bool DELETELahan(int id)
         {
             bool isSucces = false;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("DELETE FROM Pelanggan WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("DELETE FROM LAHAN WHERE id=@id", conn);
                 query1.Parameters.AddWithValue("id", id);
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)

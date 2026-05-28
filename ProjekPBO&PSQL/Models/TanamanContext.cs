@@ -1,30 +1,29 @@
-﻿using System;
+﻿using Npgsql;
+using ProjekPBO_PSQL.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Npgsql;
-using ProjekPBO_PSQL.Helpers;
 
 namespace ProjekPBO_PSQL.Models
 {
-    class CRUDPelanggan
+    internal class TanamanContext
     {
-        public List<Pelanggan> getAllPelanggan()
+        public List<Tanaman> GETALLTanaman()
         {
-            List<Pelanggan> DataPelanggan = new List<Pelanggan>();
+            List<Tanaman> DataTanaman = new List<Tanaman>();
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("Select ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat from Pelanggan", conn);
+                using var query1 = new NpgsqlCommand("Select ID_Tanaman, nama_tanaman, harga, estimasi_kadaluarsa from Tanaman", conn);
                 using var reader = query1.ExecuteReader();
                 while (reader.Read())
                 {
-                    DataPelanggan.Add(new Pelanggan(
+                    DataTanaman.Add(new Tanaman(
                         reader.GetInt32(0),
                         reader.IsDBNull(1) ? "Tanpa Nama" : reader.GetString(1),
-                        reader.IsDBNull(2) ? "-" : reader.GetString(2),
-                        reader.IsDBNull(3) ? "Tidak Ada Email" : reader.GetString(3),
-                        reader.IsDBNull(4) ? "Alamat Tidak Ada" : reader.GetString(4)
+                        reader.IsDBNull(2) ? 0 : reader.GetInt32(2),
+                        reader.IsDBNull(3) ? 0 : reader.GetInt32(3)
                         ));
                 }
             }
@@ -37,10 +36,10 @@ namespace ProjekPBO_PSQL.Models
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return DataPelanggan;
+            return DataTanaman;
         }
 
-        public bool ADDPelanggan(Pelanggan pelanggan)
+        public bool ADDTanaman(Tanaman Tanaman)
         {
             bool isSucces = false;
             try
@@ -48,12 +47,11 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                    "INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES (@ID_Tanaman, @Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa)", conn);
+                query1.Parameters.AddWithValue("ID_Tanaman", Tanaman.getIdTanaman());
+                query1.Parameters.AddWithValue("Nama_Tanaman", Tanaman.getNamaTanaman());
+                query1.Parameters.AddWithValue("Harga", Tanaman.getHargaTanaman());
+                query1.Parameters.AddWithValue("Estimasi_Kadaluarsa", Tanaman.getEstimasiKadaluarsa());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
@@ -73,7 +71,7 @@ namespace ProjekPBO_PSQL.Models
             return isSucces;
         }
 
-        public bool UpdatePelanggan(Pelanggan pelanggan)
+        public bool UpdateTanaman(Tanaman Tanaman)
         {
             bool isSucces = false;
             try
@@ -81,12 +79,11 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                    "update Tanaman set Nama_Tanaman=@Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa where ID_Tanaman=@ID_Tanaman", conn);
+                query1.Parameters.AddWithValue("ID_Tanaman", Tanaman.getIdTanaman());
+                query1.Parameters.AddWithValue("Nama_Tanaman", Tanaman.getNamaTanaman());
+                query1.Parameters.AddWithValue("Harga", Tanaman.getHargaTanaman());
+                query1.Parameters.AddWithValue("Estimasi_Kadaluarsa", Tanaman.getEstimasiKadaluarsa());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
@@ -106,14 +103,14 @@ namespace ProjekPBO_PSQL.Models
             return isSucces;
         }
 
-        public bool DelatePelanggan(int id)
+        public bool DelateTanaman(int id)
         {
             bool isSucces = false;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("DELETE FROM Pelanggan WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("DELETE FROM Tanaman WHERE id=@id", conn);
                 query1.Parameters.AddWithValue("id", id);
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)

@@ -193,8 +193,9 @@ namespace ProjekPBO_PSQL.Models
                 if (!string.IsNullOrEmpty(Status) && idAnggota > 0)
                 {
                     using var query1 = new NpgsqlCommand(
-                        "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
+                        "update Detail_Jadwal set status = @status, waktu_join=@waktujoin where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
                     query1.Parameters.AddWithValue("status", jadwal.getStatus());
+                    query1.Parameters.AddWithValue("waktujoin", jadwal.getWaktuJoin());
                     query1.Parameters.AddWithValue("id_anggota", jadwal.getIDAnggota());
                     query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
                     int DampakBaris = query1.ExecuteNonQuery();
@@ -206,7 +207,8 @@ namespace ProjekPBO_PSQL.Models
                 else
                 {
                     using var query1 = new NpgsqlCommand(
-                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal, banyaknya_anggota=@banyakAnggota, status_global=@status, id_lahan=@idLahan, id_pelanggan=@idPelanggan", conn);
+                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal, banyaknya_anggota=@banyakAnggota, status_global=@status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
+                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
                     query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
                     query1.Parameters.AddWithValue("keteranganKegiatan", jadwal.getKeteranganKegiatan());
                     query1.Parameters.AddWithValue("tipeJadwal", jadwal.getTipeJadwal());
@@ -311,6 +313,34 @@ namespace ProjekPBO_PSQL.Models
             catch (Exception ex)
             {
                 MessageBox.Show("Ada kueri yang gagal, database gagal dihapus! Eror: " + ex.Message);
+            }
+            return isSucces;
+        }
+
+        public bool ADDDetailJadwal(int idAnggota, int idJadwal)
+        {
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand(
+                    "INSERT INTO detail_jadwal (id_jadwal, id_anggota) VALUES (@id_anggota, @id_jadwal", conn);
+                query1.Parameters.AddWithValue("id_anggota", idAnggota);
+                query1.Parameters.AddWithValue("id_jadwal", idJadwal);
+                int DampakBaris = query1.ExecuteNonQuery();
+                if (DampakBaris > 0)
+                {
+                    isSucces = true;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal menambahkan data ke database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return isSucces;
         }
