@@ -1,0 +1,366 @@
+-- ========================================================
+-- TAHAP 1: PEMBUATAN TIPE ENUM KUSTOM
+-- ========================================================
+CREATE TYPE Metode_Penarikan AS ENUM ('Transfer', 'Cash');
+CREATE TYPE tipe_jadwal AS ENUM ('Farmer', 'Pengantar');
+CREATE TYPE status AS ENUM ('Belum Dikerjakan', 'Dalam Pengerjaan', 'Sudah Dikerjakan', 'Gagal / Kendala', 'Tertunda');
+CREATE TYPE status_kerja AS ENUM ('Aktif', 'Tidak Aktif');
+CREATE TYPE status_penanaman AS ENUM ('Masih Ditanam', 'Sudah Dipanen', 'Gagal Dipanen');
+CREATE TYPE status_lahan AS ENUM ('Aktif', 'Tidak Aktif'); 
+
+-- ========================================================
+-- TAHAP 2: PEMBUATAN TABEL UTAMA (MASTER TABLES)
+-- ========================================================
+CREATE TABLE Role (
+    id_role SERIAL PRIMARY KEY,
+    nama_role VARCHAR(64) NOT NULL
+);
+
+CREATE TABLE Tanaman (
+    id_tanaman SERIAL PRIMARY KEY,
+    nama_tanaman VARCHAR(100) NOT NULL,
+    harga NUMERIC(10, 2) NOT NULL,
+    estimasi_kadaluarsa INTEGER NOT NULL 
+);
+
+CREATE TABLE Lahan (
+    id_lahan SERIAL PRIMARY KEY,
+    nama_lahan VARCHAR(100) NOT NULL UNIQUE, 
+    luas_lahan DOUBLE PRECISION NOT NULL,
+    status_lahan status_lahan NOT NULL  
+);
+
+CREATE TABLE Pelanggan (
+    id_pelanggan SERIAL PRIMARY KEY,
+    nama_pelanggan VARCHAR(100) NOT NULL,
+    no_telp VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    detail_alamat TEXT NOT NULL
+);
+
+-- ========================================================
+-- TAHAP 3: PEMBUATAN TABEL DENGAN RELASI (FOREIGN KEY)
+-- ========================================================
+CREATE TABLE anggota_perusahaan (
+    id_anggota SERIAL PRIMARY KEY,
+    nama_anggota VARCHAR(64) NOT NULL,
+    no_telp VARCHAR(64) NOT NULL UNIQUE,
+    tanggal_lahir DATE NOT NULL,
+    email VARCHAR(64) NOT NULL UNIQUE,
+    status_kerja status_kerja NOT NULL,
+    saldo NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    username VARCHAR(64) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,
+    id_role INTEGER NOT NULL,
+    CONSTRAINT fk_role_anggota FOREIGN KEY (id_role) REFERENCES Role(id_role)
+);
+
+CREATE TABLE riwayat_penarikan (
+    id_riwayat_penarikan SERIAL PRIMARY KEY,
+    tanggal_penarikan DATE NOT NULL,
+    metode_penarikan Metode_Penarikan NOT NULL,
+    id_anggota INTEGER NOT NULL,
+    CONSTRAINT fk_anggota_penarikan FOREIGN KEY (id_anggota) REFERENCES anggota_perusahaan(id_anggota)
+);
+
+CREATE TABLE jadwal (   
+    id_jadwal SERIAL PRIMARY KEY,
+    tanggal DATE NOT NULL,
+    keterangan_kegiatan VARCHAR(255) NOT NULL,
+    text_tipe_jadwal tipe_jadwal NOT NULL, 
+    banyaknya_anggota INTEGER NOT NULL DEFAULT 0, 
+    total_upah NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    status_global status NOT NULL DEFAULT 'Belum Dikerjakan',
+    id_lahan INTEGER,
+    id_pelanggan INTEGER,
+    CONSTRAINT fk_lahan_jadwal FOREIGN KEY (id_lahan) REFERENCES Lahan(id_lahan),
+    CONSTRAINT fk_pelanggan_jadwal FOREIGN KEY (id_pelanggan) REFERENCES Pelanggan(id_pelanggan)
+);
+
+CREATE TABLE detail_jadwal (
+    id_detail_jadwal SERIAL PRIMARY KEY,
+    status status NOT NULL DEFAULT 'Belum Dikerjakan', 
+    waktu_join TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    upah_diterima NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    id_jadwal INTEGER NOT NULL,
+    id_anggota INTEGER NOT NULL,
+    CONSTRAINT fk_jadwal_detail FOREIGN KEY (id_jadwal) REFERENCES jadwal(id_jadwal) ON DELETE CASCADE,
+    CONSTRAINT fk_anggota_detail_jadwal FOREIGN KEY (id_anggota) REFERENCES anggota_perusahaan(id_anggota) ON DELETE CASCADE
+);
+
+CREATE TABLE laporan_jadwal (
+    id_laporan SERIAL PRIMARY KEY,
+    isi_laporan TEXT NOT NULL,
+    waktu_lapor TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    id_jadwal INTEGER NOT NULL,
+    id_anggota INTEGER NOT NULL, 
+    CONSTRAINT fk_jadwal_laporan FOREIGN KEY (id_jadwal) REFERENCES jadwal(id_jadwal) ON DELETE CASCADE,
+    CONSTRAINT fk_anggota_laporan FOREIGN KEY (id_anggota) REFERENCES anggota_perusahaan(id_anggota) ON DELETE CASCADE
+);
+
+CREATE TABLE Penanaman_Lahan (
+    id_penanaman SERIAL PRIMARY KEY,
+    tanggal_ditanam DATE NOT NULL,
+    jumlah_tanaman INTEGER NOT NULL,
+    status_penanaman status_penanaman NOT NULL DEFAULT 'Masih Ditanam',
+    id_lahan INTEGER NOT NULL,
+    id_tanaman INTEGER NOT NULL,
+    CONSTRAINT fk_lahan_penanaman FOREIGN KEY (id_lahan) REFERENCES Lahan(id_lahan),
+    CONSTRAINT fk_tanaman_penanaman FOREIGN KEY (id_tanaman) REFERENCES Tanaman(id_tanaman)
+);
+
+CREATE TABLE gudang (
+    id_gudang SERIAL PRIMARY KEY,
+    nama_gudang VARCHAR(100) NOT NULL UNIQUE, 
+    stock NUMERIC(10, 2) NOT NULL,
+    tanggal_masuk DATE NOT NULL,
+    id_tanaman INTEGER NOT NULL,
+    CONSTRAINT fk_tanaman_gudang FOREIGN KEY (id_tanaman) REFERENCES Tanaman(id_tanaman)
+);
+
+CREATE TABLE "order" (
+    id_order SERIAL PRIMARY KEY,
+    tanggal_order DATE NOT NULL,
+    id_anggota INTEGER NOT NULL, 
+    id_pelanggan INTEGER NOT NULL,
+    CONSTRAINT fk_anggota_order FOREIGN KEY (id_anggota) REFERENCES anggota_perusahaan(id_anggota),
+    CONSTRAINT fk_pelanggan_order FOREIGN KEY (id_pelanggan) REFERENCES Pelanggan(id_pelanggan)
+);
+
+CREATE TABLE order_details (
+    id_order_details SERIAL PRIMARY KEY,
+    harga NUMERIC(10, 2) NOT NULL,
+    jumlah_produk NUMERIC(10, 2) NOT NULL,
+    id_order INTEGER NOT NULL,
+    id_tanaman INTEGER NOT NULL,
+    CONSTRAINT fk_order_header FOREIGN KEY (id_order) REFERENCES "order"(id_order),
+    CONSTRAINT fk_tanaman_order_detail FOREIGN KEY (id_tanaman) REFERENCES Tanaman(id_tanaman)
+);
+
+-- 🌟 TABEL BARU: HISTORI HARGA TANAMAN (Dimasukkan ke Tahap 3)
+CREATE TABLE histori_harga_tanaman (
+    id_histori SERIAL PRIMARY KEY,
+    id_tanaman INTEGER NOT NULL,
+    harga_lama NUMERIC(10, 2) NOT NULL,
+    harga_baru NUMERIC(10, 2) NOT NULL,
+    tanggal_perubahan TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_tanaman_histori_harga FOREIGN KEY (id_tanaman) REFERENCES Tanaman(id_tanaman) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_lahan_luas ON Lahan(luas_lahan);
+CREATE INDEX idx_histori_tanaman ON histori_harga_tanaman(id_tanaman); -- Indeks pelengkap histori
+
+-- ========================================================
+-- TAHAP 4: PENGISIAN DATA DUMMY (DATA SEEDING)
+-- ========================================================
+INSERT INTO Role (id_role, nama_role) VALUES (1, 'Owner'), (2, 'Farmer'), (3, 'Pengantar');
+
+INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES 
+('Padi Logawa', 12000.00, 180), ('Jagung Manis', 8000.00, 90), ('Kedelai Hitam', 15000.00, 120), ('Cabai Rawit', 25000.00, 45), ('Tomat Rampai', 10000.00, 30);
+
+INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES 
+('Lahan Utama A', 5000.0, 'Aktif'), 
+('Lahan Sayur B', 3200.0, 'Aktif'), 
+('Lahan Cadangan C', 7200.0, 'Aktif'), 
+('Lahan Kosong D', 1500.0, 'Tidak Aktif'), 
+('Lahan Sektor E', 20000.0, 'Aktif');       
+
+INSERT INTO Pelanggan (nama_pelanggan, no_telp, email, detail_alamat) VALUES 
+('Budi Santoso', '081234567890', 'budi@gmail.com', 'Jl. Jawa No. 12, Sumbersari, Jember'),
+('Siti Aminah', '082345678901', 'siti@gmail.com', 'Jl. Kalimantan No. 45, Kampus, Jember'),
+('Eko Prasetyo', '083456789012', 'eko@gmail.com', 'Jl. Mastrip Blok G-5, Jember'),
+('Dewi Lestari', '084567890123', 'dewi@gmail.com', 'Jl. Gajah Mada No. 88, Kaliwates, Jember'),
+('Ahmad Fauzi', '085678901234', 'fauzi@gmail.com', 'Jl. Karimata No. 10, Jember');
+
+INSERT INTO anggota_perusahaan (id_anggota, nama_anggota, no_telp, tanggal_lahir, email, status_kerja, saldo, username, password, id_role) VALUES 
+(1, 'Hendra Owner', '089111222333', '1985-05-12', 'hendra@gmail.com', 'Aktif', 50000000.00, 'owner', 'owner123', 1),
+(2, 'Andi Farmer', '089222333444', '1990-08-20', 'andi@gmail.com', 'Aktif', 500000.00, 'farmer1', 'farmer123', 2),
+(3, 'Bambang Farmer', '089333444555', '1993-02-15', 'bambang@gmail.com', 'Aktif', 750000.00, 'farmer2', 'farmer123', 2),
+(4, 'Chandra Pengantar', '089444555666', '1995-11-30', 'chandra@gmail.com', 'Aktif', 300000.00, 'driver1', 'driver123', 3),
+(5, 'Dodi Pengantar', '089555666777', '1997-04-25', 'dodi@gmail.com', 'Aktif', 450000.00, 'driver2', 'driver123', 3);
+
+SELECT setval('role_id_role_seq', (SELECT MAX(id_role) FROM Role));
+SELECT setval('anggota_perusahaan_id_anggota_seq', (SELECT MAX(id_anggota) FROM anggota_perusahaan));
+SELECT setval('lahan_id_lahan_seq', (SELECT MAX(id_lahan) FROM Lahan));
+SELECT setval('gudang_id_gudang_seq', (SELECT MAX(id_gudang) FROM gudang));
+
+INSERT INTO riwayat_penarikan (tanggal_penarikan, metode_penarikan, id_anggota) VALUES 
+('2026-05-01', 'Transfer', 2), ('2026-05-02', 'Cash', 3), ('2026-05-03', 'Transfer', 4), ('2026-05-04', 'Cash', 5), ('2026-05-05', 'Transfer', 2);
+
+INSERT INTO jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global, id_lahan, id_pelanggan) VALUES 
+('2026-05-10', 'Penyemprotan pupuk organik di lahan utama', 'Farmer', 2, 200000.00, 'Sudah Dikerjakan', 1, NULL),
+('2026-05-11', 'Pemanenan Jagung Manis siap jual', 'Farmer', 1, 150000.00, 'Sudah Dikerjakan', 2, NULL),
+('2026-05-12', 'Pengantaran paket beras ke Budi Santoso', 'Pengantar', 1, 50000.00, 'Sudah Dikerjakan', NULL, 1),
+('2026-05-13', 'Pengiriman stok pesanan Siti Aminah', 'Pengantar', 1, 60000.00, 'Belum Dikerjakan', NULL, 2),
+('2026-05-14', 'Membajak tanah persiapan musim tanam baru', 'Farmer', 2, 300000.00, 'Sudah Dikerjakan', 4, NULL);
+
+INSERT INTO detail_jadwal (status, upah_diterima, id_jadwal, id_anggota) VALUES 
+('Sudah Dikerjakan', 100000.00, 1, 2), 
+('Sudah Dikerjakan', 100000.00, 1, 3), 
+('Sudah Dikerjakan', 150000.00, 2, 2), 
+('Sudah Dikerjakan', 50000.00, 3, 4),  
+('Sudah Dikerjakan', 150000.00, 5, 2), 
+('Sudah Dikerjakan', 150000.00, 5, 3); 
+
+INSERT INTO Penanaman_Lahan (tanggal_ditanam, jumlah_tanaman, status_penanaman, id_lahan, id_tanaman) VALUES 
+('2026-02-10', 500, 'Masih Ditanam', 1, 1), 
+('2026-03-01', 400, 'Masih Ditanam', 2, 2), 
+('2026-01-01', 350, 'Sudah Dipanen', 3, 4), 
+('2026-02-15', 600, 'Masih Ditanam', 3, 3); 
+
+INSERT INTO gudang (nama_gudang, stock, tanggal_masuk, id_tanaman) VALUES 
+('Gudang Sektor Utara', 1500.50, '2026-05-01', 1), 
+('Gudang Distribusi Pusat', 2000.75, '2026-05-02', 2), 
+('Gudang Bahan Pokok B', 800.00, '2026-05-03', 3), 
+('Gudang Komoditas Cabai', 350.25, '2026-05-04', 4), 
+('Gudang Transit Barat', 150.00, '2026-05-05', 5);
+
+INSERT INTO "order" (tanggal_order, id_anggota, id_pelanggan) VALUES 
+('2026-05-11', 1, 1), 
+('2026-05-12', 1, 2), 
+('2026-05-13', 1, 3), 
+('2026-05-14', 1, 4), 
+('2026-05-15', 1, 5);
+
+INSERT INTO order_details (harga, jumlah_produk, id_order, id_tanaman) VALUES 
+(12000.00, 10.50, 1, 1), 
+(8000.00, 5.00, 1, 2), 
+(15000.00, 2.25, 2, 3),
+(25000.00, 3.50, 3, 4),
+(10000.00, 10.00, 4, 5),
+(12000.00, 20.75, 5, 1);
+
+INSERT INTO laporan_jadwal (isi_laporan, id_jadwal, id_anggota) VALUES
+('Ditemukan serangan ulat daun tipis di area pojok barat lahan', 1, 2);
+
+INSERT INTO histori_harga_tanaman (id_tanaman, harga_lama, harga_baru, tanggal_perubahan) VALUES 
+(1, 10000.00, 12000.00, '2026-05-10 08:00:00'), -- Padi Logawa naik dari 10k ke 12k
+(1, 11000.00, 10000.00, '2026-05-01 09:30:00'), -- Padi Logawa pernah turun dulu sebelum naik
+(2, 7500.00, 8000.00, '2026-05-12 14:15:00'),   -- Jagung Manis naik dari 7.5k ke 8k
+(3, 14000.00, 15000.00, '2026-05-15 10:00:00'), -- Kedelai Hitam naik
+(4, 30000.00, 25000.00, '2026-05-20 16:45:00'); -- Cabai Rawit turun dari 30k ke 25k (panen raya)
+
+-- Sinkronisasi urutan (sequence) id otomatis setelah insert manual
+SELECT setval('histori_harga_tanaman_id_histori_seq', (SELECT MAX(id_histori) FROM histori_harga_tanaman));
+
+-- ========================================================
+-- TAHAP 5: PEMBUATAN VIEW AND STORED PROCEDURE
+-- ========================================================
+
+-- 1. View Khusus Farmer
+CREATE OR REPLACE VIEW view_jadwal_farmer AS
+SELECT 
+    j.id_jadwal,
+    j.tanggal,
+    j.keterangan_kegiatan,
+    j.text_tipe_jadwal,
+    j.banyaknya_anggota,
+    j.total_upah,                      
+    dj.upah_diterima,                  
+    j.status_global,                  
+    dj.id_anggota AS id_farmer,         
+    ap.nama_anggota AS nama_farmer,
+    dj.status AS status_pekerjaan,     
+    dj.waktu_join,                                                                                                                                                 
+    l.nama_lahan,
+    t.nama_tanaman,
+    pl.tanggal_ditanam,
+    pl.jumlah_tanaman,
+    j.id_lahan
+FROM jadwal j
+LEFT JOIN detail_jadwal dj ON j.id_jadwal = dj.id_jadwal
+LEFT JOIN anggota_perusahaan ap ON dj.id_anggota = ap.id_anggota
+LEFT JOIN Lahan l ON j.id_lahan = l.id_lahan
+LEFT JOIN Penanaman_Lahan pl ON l.id_lahan = pl.id_lahan AND pl.status_penanaman = 'Masih Ditanam'
+LEFT JOIN Tanaman t ON pl.id_tanaman = t.id_tanaman
+WHERE j.text_tipe_jadwal = 'Farmer';
+
+-- 2. View Khusus Pengantar 
+CREATE OR REPLACE VIEW view_jadwal_pengantar AS
+SELECT 
+    j.id_jadwal,
+    j.tanggal,
+    j.keterangan_kegiatan,
+    j.text_tipe_jadwal,
+    j.banyaknya_anggota,
+    j.total_upah,                      
+    dj.upah_diterima,                  
+    j.status_global,                  
+    dj.id_anggota AS id_pengantar,       
+    ap.nama_anggota AS nama_pengantar,
+    dj.status AS status_pekerjaan,     
+    dj.waktu_join,                    
+    p.nama_pelanggan,
+    p.no_telp AS no_telp_pelanggan,
+    p.detail_alamat AS alamat_tujuan,
+    o.id_order AS nomor_nota,
+    o.tanggal_order,
+    od.jumlah_produk, 
+    od.harga AS harga_produk,
+    t.nama_tanaman,
+    j.id_pelanggan
+FROM jadwal j
+LEFT JOIN detail_jadwal dj ON j.id_jadwal = dj.id_jadwal
+LEFT JOIN anggota_perusahaan ap ON dj.id_anggota = ap.id_anggota
+LEFT JOIN Pelanggan p ON j.id_pelanggan = p.id_pelanggan
+LEFT JOIN "order" o ON p.id_pelanggan = o.id_pelanggan   
+LEFT JOIN order_details od ON o.id_order = od.id_order
+LEFT JOIN Tanaman t ON od.id_tanaman = t.id_tanaman
+WHERE j.text_tipe_jadwal = 'Pengantar';
+
+-- 3. View Laporan Kendala
+CREATE OR REPLACE VIEW view_laporan_kendala AS
+SELECT 
+    l.id_laporan,
+    l.waktu_lapor,
+    l.isi_laporan,
+    j.id_jadwal,
+    j.tanggal AS tanggal_jadwal,
+    j.keterangan_kegiatan,
+    j.text_tipe_jadwal AS divisi_kerja,
+    ap.id_anggota,
+    ap.nama_anggota AS nama_pelapor,
+    ap.no_telp AS no_telp_pelapor
+FROM laporan_jadwal l
+INNER JOIN jadwal j ON l.id_jadwal = j.id_jadwal
+INNER JOIN anggota_perusahaan ap ON l.id_anggota = ap.id_anggota;
+
+-- 4. Stored Procedure Hapus Jadwal
+CREATE OR REPLACE PROCEDURE hapus_jadwal(p_id_jadwal int)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    DELETE FROM detail_jadwal WHERE id_jadwal = p_id_jadwal;
+    DELETE FROM laporan_jadwal WHERE id_jadwal = p_id_jadwal;
+    DELETE FROM jadwal WHERE id_jadwal = p_id_jadwal;
+END;
+$$;
+
+-- 🌟 5. LOGIKA BARU: TRIGGER LOG PERUBAHAN HARGA TANAMAN (Dimasukkan ke Tahap 5)
+CREATE OR REPLACE FUNCTION log_perubahan_harga_tanaman()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Hanya mencatat ke histori jika harganya benar-benar diedit dengan nilai baru
+    IF OLD.harga IS DISTINCT FROM NEW.harga THEN
+        INSERT INTO histori_harga_tanaman (id_tanaman, harga_lama, harga_baru, tanggal_perubahan)
+        VALUES (OLD.id_tanaman, OLD.harga, NEW.harga, CURRENT_TIMESTAMP);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_setelah_update_harga
+AFTER UPDATE OF HARGA ON Tanaman
+FOR EACH ROW
+EXECUTE FUNCTION log_perubahan_harga_tanaman();
+
+
+
+
+
+
+SELECT pl.id_penanaman,pl.tanggal_ditanam,pl.jumlah_tanaman,pl.status_penanaman,l.id_lahan,l.nama_lahan,l.luas_lahan,t.id_tanaman,t.nama_tanaman,t.harga
+FROM Penanaman_Lahan pl
+INNER JOIN Lahan l ON pl.id_lahan = l.id_lahan
+INNER JOIN Tanaman t ON pl.id_tanaman = t.id_tanaman
+ORDER BY pl.tanggal_ditanam DESC;
