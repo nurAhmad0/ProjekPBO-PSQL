@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using ProjekPBO_PSQL.Controllers;
 using ProjekPBO_PSQL.Helpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ProjekPBO_PSQL.Models
 {
-    class CRUDJadwal
+    class JadwalContext
     {
         public List<JadwalPengantaran> GetALLJadwalPengataran()
         {
@@ -56,11 +57,7 @@ namespace ProjekPBO_PSQL.Models
                             tanggal,            
                             keterangan,          
                             banyakAnggota,       
-                            new List<int>(),     
-                            new List<string>(),  
                             status,        
-                            new List<string>(),  
-                            new List<DateTime>(),
                             namaPelanggan,       
                             noTelpPelanggan,     
                             alamatTujuan,        
@@ -80,10 +77,11 @@ namespace ProjekPBO_PSQL.Models
                         string namaPengantar = reader.GetString(6);
                         string statusIndividu = reader.IsDBNull(7) ? "Belum Dikerjakan" : reader.GetString(7);
                         DateTime waktuMulaiJoin = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8);
-                        jadwalEksis.getIDAnggota().Add(idPengantar);
-                        jadwalEksis.getNamaAnggota().Add(namaPengantar);
-                        jadwalEksis.getStatusAnggota().Add(statusIndividu);
-                        jadwalEksis.getWaktuJoin().Add(waktuMulaiJoin);
+                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPengantar, namaPengantar, statusIndividu, waktuMulaiJoin);
+                        if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPengantar))
+                        {
+                            jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
+                        }
                     }
                 }
             }
@@ -141,12 +139,8 @@ namespace ProjekPBO_PSQL.Models
                             idJadwalCur,
                             tanggal,
                             keterangan,
-                            banyakAnggota,
-                            new List<int>(),       
-                            new List<string>(),   
+                            banyakAnggota,  
                             status,          
-                            new List<string>(),    
-                            new List<DateTime>(),  
                             namaLahan,
                             namaTanaman,
                             tglDitanam,
@@ -164,10 +158,12 @@ namespace ProjekPBO_PSQL.Models
                         string namaPetani = reader.GetString(6);
                         string statusIndividu = reader.IsDBNull(7) ? "Belum Dikerjakan" : reader.GetString(7);
                         DateTime waktuMulaiJoin = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8);
-                        jadwalEksis.getIDAnggota().Add(idPetani);
-                        jadwalEksis.getNamaAnggota().Add(namaPetani);
-                        jadwalEksis.getStatusAnggota().Add(statusIndividu);
-                        jadwalEksis.getWaktuJoin().Add(waktuMulaiJoin);
+                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPetani, namaPetani, statusIndividu, waktuMulaiJoin);
+                        if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPetani))
+                        {
+                            jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
+                        }
+
                     }
                 }
             }
@@ -193,15 +189,37 @@ namespace ProjekPBO_PSQL.Models
                 if (!string.IsNullOrEmpty(Status) && idAnggota > 0)
                 {
                     using var query1 = new NpgsqlCommand(
-                        "update Detail_Jadwal set status = @status, waktu_join=@waktujoin where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
-                    query1.Parameters.AddWithValue("status", jadwal.getStatus());
-                    query1.Parameters.AddWithValue("waktujoin", jadwal.getWaktuJoin());
-                    query1.Parameters.AddWithValue("id_anggota", jadwal.getIDAnggota());
+                        "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
+                    query1.Parameters.AddWithValue("status", Status);
+                    query1.Parameters.AddWithValue("id_anggota", idAnggota);
                     query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
                     int DampakBaris = query1.ExecuteNonQuery();
                     if (DampakBaris > 0)
                     {
                         isSucces = true;
+                    }
+                }
+                else if (!string.IsNullOrEmpty(Status) && idAnggota == 0)
+                {
+                    var daftar = jadwal.getDaftarAnggota();
+
+                    if (daftar != null && daftar.Count > 0)
+                    {
+                        
+                        foreach (DetailAnggotaJadwal anggota in daftar)
+                        {
+                            using var query1 = new NpgsqlCommand(
+                                "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal", conn);
+
+                            query1.Parameters.AddWithValue("status", Status); 
+                            query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+
+                            int DampakBaris = query1.ExecuteNonQuery();
+                            if (DampakBaris > 0)
+                            {
+                                isSucces = true;
+                            }
+                        }
                     }
                 }
                 else
@@ -325,7 +343,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "INSERT INTO detail_jadwal (id_jadwal, id_anggota) VALUES (@id_anggota, @id_jadwal", conn);
+                    "INSERT INTO detail_jadwal (id_jadwal, id_anggota) VALUES (@id_jadwal, @id_anggota)", conn);
                 query1.Parameters.AddWithValue("id_anggota", idAnggota);
                 query1.Parameters.AddWithValue("id_jadwal", idJadwal);
                 int DampakBaris = query1.ExecuteNonQuery();

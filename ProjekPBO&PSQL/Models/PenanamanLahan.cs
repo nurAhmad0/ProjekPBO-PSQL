@@ -10,17 +10,29 @@ namespace ProjekPBO_PSQL.Models
         private DateTime TanggalDItanam;
         private int jumlahTanaman;
         private string statusPenanaman;
-        private int IDLahan;
-        private int IDTanaman;
+        private Lahan LahanTempatMenanam;
+        private Tanaman JenisTanaman;
 
-        public PenanamanLahan(int iDPenanaman, DateTime tanggalDItanam, int jumlahTanaman, string statusPenanaman, int iDLahan, int iDTanaman)
+        public PenanamanLahan(int iDPenanaman, DateTime tanggalDItanam, int jumlahTanaman, string statusPenanaman, int idLahan, string namaLahan, decimal luasLahan, string statusLahan, int idTanaman, string namaTanaman, int hargaTanaman, int estimasiKadaluarsa)
         {
             IDPenanaman = iDPenanaman;
             TanggalDItanam = tanggalDItanam;
             this.jumlahTanaman = jumlahTanaman;
             this.statusPenanaman = statusPenanaman;
-            IDLahan = iDLahan;
-            IDTanaman = iDTanaman;
+            this.LahanTempatMenanam = new Lahan(idLahan, namaLahan, luasLahan, statusLahan);
+            this.JenisTanaman = new Tanaman(idTanaman, namaTanaman, hargaTanaman, estimasiKadaluarsa);
+        }
+
+        
+        public Tanaman getJenisTanaman()
+        {
+            return this.JenisTanaman;
+        }
+
+
+        public Lahan getLahanTempatMenanam()
+        {
+            return this.LahanTempatMenanam;
         }
 
         public int getIDPenanaman()
@@ -36,16 +48,6 @@ namespace ProjekPBO_PSQL.Models
         public int getJumlahTanaman()
         {
             return this.jumlahTanaman;
-        }
-
-        public int getIDLahan()
-        {
-            return this.IDLahan;
-        }
-
-        public int getIDTanaman() 
-        {
-            return this.IDTanaman;
         }
 
         public DateTime getTanggalDitanam()
