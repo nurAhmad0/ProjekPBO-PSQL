@@ -16,8 +16,10 @@ namespace ProjekPBO_PSQL.Models
         protected string StatusKerja;
         protected string NamaRole;
         protected int ID_Role;
+        protected string username;
+        protected string password;
 
-        public Orang(int idOrang, string name, string NO_Telp, decimal saldo, DateTime TanggalLahir, string Email, string StatusKerja, string namaRole, int ID_Role)
+        public Orang(int idOrang, string name, string NO_Telp, decimal saldo, DateTime TanggalLahir, string Email, string StatusKerja, string namaRole, int ID_Role, string username, string password)
         {
             this.Name = name;
             this.IDOrang = idOrang;
@@ -28,9 +30,11 @@ namespace ProjekPBO_PSQL.Models
             this.StatusKerja = StatusKerja;
             this.NamaRole = namaRole;
             this.ID_Role = ID_Role;
+            this.username = username;
+            this.password = password;
         }
 
-        public decimal TarikSaldo(decimal TarikUang)
+        public virtual decimal TarikSaldo(decimal TarikUang)
         {
             if (TarikUang > 10000 && TarikUang < 5000000)
             {
@@ -86,6 +90,16 @@ namespace ProjekPBO_PSQL.Models
         public int getId_Role()
         {
             return this.ID_Role;
+        }
+
+        public string getUsername()
+        {
+            return this.username;
+        }
+
+        public string getPassword()
+        {
+            return this.password;
         }
     }
 }

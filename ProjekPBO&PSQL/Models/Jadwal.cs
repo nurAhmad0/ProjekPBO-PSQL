@@ -14,8 +14,9 @@ namespace ProjekPBO_PSQL.Models
         private int BanyakAnggota;
         private string Status;
         private List<DetailAnggotaJadwal> daftarAnggota;
+        private decimal TotalUpah;
 
-        public Jadwal(int idJadwal, DateTime tanggal, string keteranganKegiatan, string tipeJadwal, int banyakAnggota, string status)
+        public Jadwal(int idJadwal, DateTime tanggal, string keteranganKegiatan, string tipeJadwal, int banyakAnggota, string status, decimal totalUpah)
         {
             this.IdJadwal = idJadwal;
             this.tanggal = tanggal;
@@ -24,6 +25,7 @@ namespace ProjekPBO_PSQL.Models
             this.BanyakAnggota = banyakAnggota;
             this.Status = status;
             this.daftarAnggota = new List<DetailAnggotaJadwal>();
+            TotalUpah = totalUpah;
         }
 
         public List<DetailAnggotaJadwal> getDaftarAnggota()
@@ -59,7 +61,11 @@ namespace ProjekPBO_PSQL.Models
         public string getStatus()
         {
             return Status;
-        
+        }
+
+        public decimal getTotalUpah()
+        {
+            return TotalUpah;
         }
         public void setTanggal(DateTime tanggal)
         {

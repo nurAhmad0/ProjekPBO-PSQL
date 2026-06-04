@@ -13,7 +13,7 @@ namespace ProjekPBO_PSQL.Models
         private int JumlahDitanam;
 
 
-        public JadwalFarmer(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string namaLahan, string namaTanaman, DateTime tanggalDitanam, int jumlahDitanam, int idLahan) : base (idJadwal, tanggal, keteranganKegiatan, "Farmer", banyakAnggota, status)
+        public JadwalFarmer(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string namaLahan, string namaTanaman, DateTime tanggalDitanam, int jumlahDitanam, int idLahan, decimal totalUpah) : base (idJadwal, tanggal, keteranganKegiatan, "Farmer", banyakAnggota, status, totalUpah)
         {
             this.NamaLahan = namaLahan;
             this.NamaTanaman = namaTanaman;

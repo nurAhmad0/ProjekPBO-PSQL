@@ -18,24 +18,29 @@ namespace ProjekPBO_PSQL.Models
                 {
                     using var conn = DataBaseHelper.GetConnection();
                     conn.Open();
-                    using var query1 = new NpgsqlCommand("SELECT pl.id_penanaman,pl.tanggal_ditanam,pl.jumlah_tanaman,pl.status_penanaman,l.id_lahan,l.nama_lahan,l.luas_lahan,t.id_tanaman,t.nama_tanaman,t.harga FROM Penanaman_Lahan pl INNER JOIN Lahan l ON pl.id_lahan = l.id_lahan INNER JOIN Tanaman t ON pl.id_tanaman = t.id_tanaman ORDER BY pl.tanggal_ditanam DESC;", conn);
+                    using var query1 = new NpgsqlCommand("SELECT pl.id_penanaman,pl.tanggal_ditanam,pl.jumlah_tanaman,pl.status_penanaman,l.id_lahan,l.nama_lahan,l.luas_lahan,l.status_lahan,t.id_tanaman,t.nama_tanaman,t.harga, t.estimasi_kadaluarsa FROM Penanaman_Lahan pl INNER JOIN Lahan l ON pl.id_lahan = l.id_lahan INNER JOIN Tanaman t ON pl.id_tanaman = t.id_tanaman ORDER BY pl.tanggal_ditanam DESC;", conn);
                     using var reader = query1.ExecuteReader();
                     while (reader.Read())
                     {
+
+                        Lahan dataLahan = new Lahan(
+                            reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                            reader.IsDBNull(5) ? "-" : reader.GetString(5),
+                            reader.IsDBNull(6) ? 0 : reader.GetDecimal(6),
+                            reader.IsDBNull(7) ? "-" : reader.GetString(7));
+                        Tanaman dataTanaman = new Tanaman(
+                            reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                            reader.IsDBNull(9) ? "-" : reader.GetString(9),
+                            reader.IsDBNull(10) ? 0 : Convert.ToInt32(reader.GetDecimal(10)),
+                            reader.IsDBNull(11) ? 0 : reader.GetInt32(11));                  
+                        
                         DataPenanaman.Add(new PenanamanLahan(
-                            reader.GetInt32(0),                                                
-                            reader.IsDBNull(1) ? DateTime.Now : reader.GetDateTime(1),         
-                            reader.IsDBNull(2) ? 0 : reader.GetInt32(2),                        
-                            reader.IsDBNull(3) ? "-" : reader.GetString(3),                    
-                            reader.IsDBNull(4) ? 0 : reader.GetInt32(4),                      
-                            reader.IsDBNull(5) ? "-" : reader.GetString(5),                     
-                            reader.IsDBNull(6) ? 0 : (decimal)reader.GetDouble(6),        
-                            reader.IsDBNull(7) ? "-" : reader.GetString(7),                  
-                            reader.IsDBNull(8) ? 0 : reader.GetInt32(8),                        
-                            reader.IsDBNull(9) ? "-" : reader.GetString(9),                    
-                            reader.IsDBNull(10) ? 0 : Convert.ToInt32(reader.GetDecimal(10)),   
-                            reader.IsDBNull(11) ? 0 : reader.GetInt32(11)                      
-                        ));
+                            reader.GetInt32(0),
+                            reader.IsDBNull(1) ? DateTime.Now : reader.GetDateTime(1),
+                            reader.IsDBNull(2) ? 0 : reader.GetInt32(2),
+                            reader.IsDBNull(3) ? "-" : reader.GetString(3),
+                            dataLahan,
+                            dataTanaman));
                     }
                 }
                 catch (NpgsqlException ex)

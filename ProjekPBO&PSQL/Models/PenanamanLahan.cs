@@ -13,14 +13,16 @@ namespace ProjekPBO_PSQL.Models
         private Lahan LahanTempatMenanam;
         private Tanaman JenisTanaman;
 
-        public PenanamanLahan(int iDPenanaman, DateTime tanggalDItanam, int jumlahTanaman, string statusPenanaman, int idLahan, string namaLahan, decimal luasLahan, string statusLahan, int idTanaman, string namaTanaman, int hargaTanaman, int estimasiKadaluarsa)
+        public PenanamanLahan(int iDPenanaman, DateTime tanggalDItanam, int jumlahTanaman, string statusPenanaman, Lahan lahan, Tanaman tanaman)
         {
             IDPenanaman = iDPenanaman;
             TanggalDItanam = tanggalDItanam;
             this.jumlahTanaman = jumlahTanaman;
             this.statusPenanaman = statusPenanaman;
-            this.LahanTempatMenanam = new Lahan(idLahan, namaLahan, luasLahan, statusLahan);
-            this.JenisTanaman = new Tanaman(idTanaman, namaTanaman, hargaTanaman, estimasiKadaluarsa);
+            this.LahanTempatMenanam = lahan;
+            this.JenisTanaman = tanaman;
+
+
         }
 
         

@@ -19,7 +19,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar, status_pekerjaan, waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, nomor_nota, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan FROM view_jadwal_pengantar;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar,  waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, nomor_nota, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan, total_upah, updah_diterima FROM view_jadwal_pengantar;", conn);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
@@ -42,42 +42,43 @@ namespace ProjekPBO_PSQL.Models
                         string keterangan = reader.IsDBNull(2) ? "-" : reader.GetString(2);
                         int banyakAnggota = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
                         string status = reader.IsDBNull(4) ? "Belum Dikerjakan" : reader.GetString(4);
-                        string namaPelanggan = reader.IsDBNull(9) ? "-" : reader.GetString(9);
-                        string noTelpPelanggan = reader.IsDBNull(10) ? "-" : reader.GetString(10);
-                        string alamatTujuan = reader.IsDBNull(11) ? "Detail Alamat Tidak Ada" : reader.GetString(11);
-                        int idOrder = reader.IsDBNull(12) ? 0 : reader.GetInt32(12);
-                        DateTime tglOrder = reader.IsDBNull(13) ? DateTime.Now : reader.GetDateTime(13);
-                        int jmlProduk = reader.IsDBNull(14) ? 0 : reader.GetInt32(14);
-                        int hargaProduk = reader.IsDBNull(15) ? 0 : reader.GetInt32(15);
-                        string namaTanaman = reader.IsDBNull(16) ? "-" : reader.GetString(16);
-                        int idPelanggan = reader.IsDBNull(17) ? 0 : reader.GetInt32(17);
+                        string namaPelanggan = reader.IsDBNull(8) ? "-" : reader.GetString(8);
+                        string noTelpPelanggan = reader.IsDBNull(9) ? "-" : reader.GetString(9);
+                        string alamatTujuan = reader.IsDBNull(10) ? "Detail Alamat Tidak Ada" : reader.GetString(10);
+                        int idOrder = reader.IsDBNull(11) ? 0 : reader.GetInt32(11);
+                        DateTime tglOrder = reader.IsDBNull(12) ? DateTime.Now : reader.GetDateTime(12);
+                        int jmlProduk = reader.IsDBNull(13) ? 0 : Convert.ToInt32(reader.GetValue(13));
+                        int hargaProduk = reader.IsDBNull(14) ? 0 : Convert.ToInt32(reader.GetValue(14));
+                        string namaTanaman = reader.IsDBNull(15) ? "-" : reader.GetString(15);
+                        int idPelanggan = reader.IsDBNull(16) ? 0 : reader.GetInt32(16);
+                        decimal totalUpah = reader.IsDBNull(17) ? 0 : reader.GetDecimal(17);
 
                         jadwalEksis = new JadwalPengantaran(
-                            idJadwalCur,         
-                            tanggal,            
-                            keterangan,          
-                            banyakAnggota,       
-                            status,        
-                            namaPelanggan,       
-                            noTelpPelanggan,     
-                            alamatTujuan,        
-                            idOrder,           
-                            tglOrder,            
-                            jmlProduk,           
-                            hargaProduk,         
+                            idJadwalCur,
+                            tanggal,
+                            keterangan,
+                            banyakAnggota,
+                            status,
+                            namaPelanggan,
+                            noTelpPelanggan,
+                            alamatTujuan,
+                            idOrder,
+                            tglOrder,
+                            jmlProduk,
+                            hargaProduk,
                             namaTanaman,
-                            idPelanggan
+                            idPelanggan,
+                            totalUpah
                         );
                         DataJadwalPengantaran.Add(jadwalEksis);
                     }
-
                     if (!reader.IsDBNull(5))
                     {
                         int idPengantar = reader.GetInt32(5);
                         string namaPengantar = reader.GetString(6);
-                        string statusIndividu = reader.IsDBNull(7) ? "Belum Dikerjakan" : reader.GetString(7);
-                        DateTime waktuMulaiJoin = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8);
-                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPengantar, namaPengantar, statusIndividu, waktuMulaiJoin);
+                        DateTime waktuMulaiJoin = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7);
+                        decimal upahDiterima = reader.IsDBNull(18) ? 0 : reader.GetDecimal(18);
+                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPengantar, namaPengantar, waktuMulaiJoin, upahDiterima);
                         if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPengantar))
                         {
                             jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
@@ -106,7 +107,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer, status_pekerjaan, waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan FROM view_jadwal_farmer;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer,  waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan, total_upah, upah_diterima FROM view_jadwal_farmer;", conn);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
@@ -129,41 +130,40 @@ namespace ProjekPBO_PSQL.Models
                         string keterangan = reader.IsDBNull(2) ? "-" : reader.GetString(2);
                         int banyakAnggota = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
                         string status = reader.IsDBNull(4) ? "Belum Dikerjakan" : reader.GetString(4);
-                        string namaLahan = reader.IsDBNull(9) ? "-" : reader.GetString(9);
-                        string namaTanaman = reader.IsDBNull(10) ? "-" : reader.GetString(10);
-                        DateTime tglDitanam = reader.IsDBNull(11) ? DateTime.Now : reader.GetDateTime(11);
-                        int jmlDitanam = reader.IsDBNull(12) ? 0 : reader.GetInt32(12);
-                        int idLahan = reader.IsDBNull (13) ? 0 : reader.GetInt32(13);
+                        string namaLahan = reader.IsDBNull(8) ? "-" : reader.GetString(8);
+                        string namaTanaman = reader.IsDBNull(9) ? "-" : reader.GetString(9);
+                        DateTime tglDitanam = reader.IsDBNull(10) ? DateTime.Now : reader.GetDateTime(10);
+                        int jmlDitanam = reader.IsDBNull(11) ? 0 : reader.GetInt32(11);
+                        int idLahan = reader.IsDBNull(12) ? 0 : reader.GetInt32(12);
+                        decimal totalUpah = reader.IsDBNull(13) ? 0 : reader.GetDecimal(13);
 
                         jadwalEksis = new JadwalFarmer(
                             idJadwalCur,
                             tanggal,
                             keterangan,
-                            banyakAnggota,  
-                            status,          
+                            banyakAnggota,
+                            status,
                             namaLahan,
                             namaTanaman,
                             tglDitanam,
                             jmlDitanam,
-                            idLahan
+                            idLahan,
+                            totalUpah
                         );
-
 
                         DataJadwalFarmer.Add(jadwalEksis);
                     }
-
                     if (!reader.IsDBNull(5))
                     {
                         int idPetani = reader.GetInt32(5);
                         string namaPetani = reader.GetString(6);
-                        string statusIndividu = reader.IsDBNull(7) ? "Belum Dikerjakan" : reader.GetString(7);
-                        DateTime waktuMulaiJoin = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8);
-                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPetani, namaPetani, statusIndividu, waktuMulaiJoin);
+                        DateTime waktuMulaiJoin = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7);
+                        decimal upahDiterima = reader.IsDBNull(14) ? 0 : reader.GetDecimal(14);
+                        DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPetani, namaPetani, waktuMulaiJoin, upahDiterima);
                         if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPetani))
                         {
                             jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
                         }
-
                     }
                 }
             }

@@ -17,7 +17,7 @@ namespace ProjekPBO_PSQL.Models
         private decimal Harga;
         private string namaTanaman;
 
-        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string NamaPelanggan, string NO_TELP, string DetailAlamat, int OrderID, DateTime TanggalOrder, decimal JumlahProduk, decimal Harga, string namaTanaman, int idPelanggan) : base (idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, status)
+        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string NamaPelanggan, string NO_TELP, string DetailAlamat, int OrderID, DateTime TanggalOrder, decimal JumlahProduk, decimal Harga, string namaTanaman, int idPelanggan, decimal totalUpah) : base (idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, status, totalUpah)
         {
             this.NamaPelanggan = NamaPelanggan;
             this.NO_TELP = NO_TELP;
