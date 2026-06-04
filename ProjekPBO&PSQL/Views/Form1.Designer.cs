@@ -35,6 +35,8 @@
             PASSWORDBOX = new TextBox();
             LOGIN_BUTTON = new Button();
             label1 = new Label();
+            panel2 = new Panel();
+            panel3 = new Panel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,6 +50,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(panel2);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(USERNAMEBOX);
             panel1.Controls.Add(PASSWORDBOX);
@@ -101,6 +105,20 @@
             label1.Text = "PASSWORD";
             label1.Click += label1_Click;
             // 
+            // panel2
+            // 
+            panel2.Location = new Point(3, 2);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1183, 141);
+            panel2.TabIndex = 7;
+            // 
+            // panel3
+            // 
+            panel3.Location = new Point(5, 148);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(213, 462);
+            panel3.TabIndex = 8;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -125,5 +143,7 @@
         private Label label2;
         private TextBox USERNAMEBOX;
         private TextBox PASSWORDBOX;
+        private Panel panel3;
+        private Panel panel2;
     }
 }

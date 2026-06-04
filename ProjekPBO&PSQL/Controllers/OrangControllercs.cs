@@ -196,7 +196,28 @@ namespace ProjekPBO_PSQL.Controllers
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Gagal menghapus tanaman: " + ex.Message, "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Gagal menghapus data: " + ex.Message, "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isSuccess = false;
+                }
+            }
+
+            return isSuccess;
+        }
+
+
+        public bool UpdateSaldo(int id, decimal saldo)
+        {
+            bool isSuccess = false;
+            if (id > 0)
+            {
+                try
+                {
+                    Context.UpdateSaldo(id, saldo);
+                    isSuccess = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal update data: " + ex.Message, "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     isSuccess = false;
                 }
             }

@@ -140,5 +140,10 @@ namespace ProjekPBO_PSQL.Controllers
         {
             return Context.getTanamanYangBelumTerjual();
         }
+
+        public int getUsiaTanaman(int idLahan, int idTanaman)
+        {
+            return Context.HitungUsiaTanaman(idLahan, idTanaman);
+        }
     }
 }

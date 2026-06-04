@@ -34,17 +34,24 @@ namespace ProjekPBO_PSQL.Models
             this.password = password;
         }
 
-        public virtual decimal TarikSaldo(decimal TarikUang)
+        public virtual decimal? TarikSaldo(decimal TarikUang)
         {
-            if (TarikUang > 10000 && TarikUang < 5000000)
+            if (TarikUang < 10000)
             {
-                decimal sisaUang= Saldo - TarikUang;
-                return sisaUang;
+                return null;
             }
-            else
+            if (TarikUang > 5000000)
             {
-                return 0;
+                return null;
             }
+
+            if ((Saldo - TarikUang) < 0)
+            {
+                return null;
+            }
+
+            Saldo -= TarikUang;
+            return TarikUang;
         }
 
         public string getName()
@@ -100,6 +107,11 @@ namespace ProjekPBO_PSQL.Models
         public string getPassword()
         {
             return this.password;
+        }
+
+        public void BatalTarikSaldo(decimal nominalBatal)
+        {
+            this.Saldo += nominalBatal;
         }
     }
 }

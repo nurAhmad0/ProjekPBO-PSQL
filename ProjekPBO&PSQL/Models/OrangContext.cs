@@ -263,5 +263,35 @@ namespace ProjekPBO_PSQL.Models
             }
             return isSucces;
         }
+
+
+        public bool UpdateSaldo (int id, decimal nominal)
+        {
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("UPDATE Anggota_Perusahaan SET saldo = @saldo WHERE id=@id", conn);
+                query1.Parameters.AddWithValue("id", id);
+                query1.Parameters.AddWithValue("saldo", nominal);
+                int DampakBaris = query1.ExecuteNonQuery();
+                if (DampakBaris > 0)
+                {
+                    isSucces = true;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal update", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                isSucces = false;
+            }
+            return isSucces;
+        }
     }
 }
