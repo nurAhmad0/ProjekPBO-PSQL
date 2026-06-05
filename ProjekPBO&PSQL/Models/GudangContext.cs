@@ -133,5 +133,37 @@ namespace ProjekPBO_PSQL.Models
             }
             return isSucces;
         }
+
+        public bool? ApakahAdaNamaGudang(string nama)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select nama_gudang from gudang where nama_gudang = @nama", conn);
+                query1.Parameters.AddWithValue("nama", nama);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            
+        }
     }
 }

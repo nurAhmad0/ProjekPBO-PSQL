@@ -113,5 +113,16 @@ namespace ProjekPBO_PSQL.Controllers
 
             return isSucces;
         }
+
+        public bool? CekNamaLahanDiDataBase(string nama)
+        {
+            if (Validator.ApakahKosong(nama))
+            {
+                MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return Context.ApakahAdaNamaLahan(nama);
+        }
     }
 }

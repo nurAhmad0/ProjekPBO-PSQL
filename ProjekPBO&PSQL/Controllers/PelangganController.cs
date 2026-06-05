@@ -117,5 +117,27 @@ namespace ProjekPBO_PSQL.Controllers
 
             return isSucces;
         }
+
+        public bool? apakahAdaNoTelp(string NOTELP)
+        {
+            if (Validator.ApakahKosong(NOTELP) || Validator.ApakahPanjang(10, NOTELP, 12))
+            {
+                MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return Context.ApakahAdaNOTELP(NOTELP);
+        }
+
+        public bool? apakahAdaEmail(string Email)
+        {
+            if (Validator.ApakahKosong(Email) || Validator.ApakahPanjang(10, Email, 12))
+            {
+                MessageBox.Show("Email Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return Context.ApakahAdaNOTELP(Email);
+        }
     }
 }

@@ -293,5 +293,130 @@ namespace ProjekPBO_PSQL.Models
             }
             return isSucces;
         }
+
+        public bool? ApakahAdaNOTELP(string NOTELP)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select no_telp from anggota_perusahaan where no_telp ilike @notelp", conn);
+                query1.Parameters.AddWithValue("notelp", NOTELP);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public bool? ApakahAdaEmail(string Email)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select email from anggota_perusahaan where email ilike @email", conn);
+                query1.Parameters.AddWithValue("email", Email);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public bool? ApakahAdaUsername(string nama)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select username from anggota_perusahaan where username ilike @nama", conn);
+                query1.Parameters.AddWithValue("nama", nama);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public int GetIdAnggota(string username, string password)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                string sql = "SELECT id_anggota FROM anggota_perusahaan WHERE username = @username AND password = @password";
+
+                using var query1 = new NpgsqlCommand(sql, conn);
+                query1.Parameters.AddWithValue("username", username);
+                query1.Parameters.AddWithValue("password", password);
+
+                using var reader = query1.ExecuteReader();
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader["id_anggota"]);
+                }
+
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal autentikasi ke database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem login: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            return 0;
+        }
     }
 }

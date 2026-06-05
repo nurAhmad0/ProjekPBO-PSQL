@@ -10,6 +10,7 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private OrangContext Context = new OrangContext();
 
+
         public List<Orang> CariBerdasarkanID(int id)
         {
             List<Orang> dataOrang = new List<Orang>();
@@ -223,6 +224,60 @@ namespace ProjekPBO_PSQL.Controllers
             }
 
             return isSuccess;
+        }
+
+        public bool? apakahAdaNoTelp(string NOTELP)
+        {
+            NOTELP = NOTELP.Trim();
+            if (Validator.ApakahKosong(NOTELP) || Validator.ApakahPanjang(10, NOTELP, 12))
+            {
+                MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return Context.ApakahAdaNOTELP(NOTELP);
+        }
+
+        public bool? apakahAdaEmail(string Email)
+        {
+            Email = Email.Trim();
+            if (Validator.ApakahKosong(Email) || Validator.ApakahPanjang(10, Email, 12))
+            {
+                MessageBox.Show("Email Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return Context.ApakahAdaNOTELP(Email);
+        }
+
+        public bool? apakahAdaUsername(string username)
+        {
+            username = username.Trim();
+            if (Validator.ApakahKosong(username))
+            {
+                MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+
+            return Context.ApakahAdaUsername(username);
+        }
+
+
+        public int GetIDanggota(string username, string password)
+        {
+            if (Validator.ApakahKosong(username))
+            {
+                MessageBox.Show("username Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+
+            if (Validator.ApakahKosong(password))
+            {
+                MessageBox.Show("password Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+
+            return Context.GetIdAnggota(username, password);
         }
     }
 }

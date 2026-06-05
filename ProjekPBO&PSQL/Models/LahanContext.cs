@@ -127,5 +127,37 @@ namespace ProjekPBO_PSQL.Models
             }
             return isSucces;
         }
+
+        public bool? ApakahAdaNamaLahan(string nama)
+        {
+            nama = nama.Trim();
+            try
+            { 
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select nama_lahan from Lahan where nama_lahan ilike @nama", conn);
+                query1.Parameters.AddWithValue("nama", nama);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
     }
 }

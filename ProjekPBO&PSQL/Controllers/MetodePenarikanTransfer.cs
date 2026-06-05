@@ -1,24 +1,24 @@
-﻿using System;
+﻿using ProjekPBO_PSQL.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Forms;
-using ProjekPBO_PSQL.Models;
 
 namespace ProjekPBO_PSQL.Controllers
 {
-    class MetodePenarikanCash : MetodePenarikan
+    
+    class MetodePenarikanTransfer : MetodePenarikan
     {
         OrangController orangController = new OrangController();
         RiwayatPenarikanController penarikanController = new RiwayatPenarikanController();
 
-        public override bool MenarikUang(decimal jumlah, Orang orang, string namaOrang)
+        public override bool MenarikUang(decimal jumlah, Orang orang, string noRek)
         {
-
-            if (Validator.ApakahKosong(namaOrang.Trim()))
+            if (Validator.ApakahKosong(noRek) || Validator.ApakahAngka(noRek) || Validator.ApakahPanjang(15, noRek, 16))
             {
-                MessageBox.Show("Penarikan Gagal! Nama pengambil uang tunai wajib diisi.", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Penarikan Gagal! Transfer hanya mendukung Bank BRI dengan nomor rekening valid (15 digit angka).", "Metode Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
 
             decimal? nominalDitarik = orang.TarikSaldo(jumlah);
 

@@ -133,5 +133,69 @@ namespace ProjekPBO_PSQL.Models
             }
             return isSucces;
         }
+
+        public bool? ApakahAdaNOTELP(string NOTELP)
+        {
+            NOTELP = NOTELP.Trim();
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select no_telp from Pelanggan where no_telp ilike @notelp", conn);
+                query1.Parameters.AddWithValue("notelp", NOTELP);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public bool? ApakahAdaEmail(string Email)
+        {
+            Email = Email.Trim();
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("Select email from Pelanggan where email ilike @email", conn);
+                query1.Parameters.AddWithValue("email", Email);
+                using var reader = query1.ExecuteReader();
+                if (reader.Read() == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
     }
 }

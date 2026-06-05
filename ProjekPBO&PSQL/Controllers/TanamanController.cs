@@ -145,5 +145,16 @@ namespace ProjekPBO_PSQL.Controllers
         {
             return Context.HitungUsiaTanaman(idLahan, idTanaman);
         }
+
+        public bool? ApakahAdaNamaTanaman(string nama)
+        {
+            nama = nama.Trim();
+            if (Validator.ApakahKosong(nama))
+            {
+                MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            return Context.ApakahAdaNamaTanaman(nama);
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace ProjekPBO_PSQL
     abstract class MetodePenarikan
     {
 
-        public abstract bool MenarikUang(decimal jumlah, Orang orang);
+        public abstract bool MenarikUang(decimal jumlah, Orang orang, string Input);
     }
 }
