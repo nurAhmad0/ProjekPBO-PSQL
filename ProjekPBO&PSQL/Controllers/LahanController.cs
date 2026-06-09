@@ -57,7 +57,7 @@ namespace ProjekPBO_PSQL.Controllers
 
         public bool TambahLahan(Lahan lahan)
         {
-            if (Validator.ApakahKosong(lahan.getNamaLahan()) && Validator.ApakahAngka(lahan.getNamaLahan()))
+            if (Validator.ApakahKosong(lahan.getNamaLahan()))
             {
                 MessageBox.Show("Nama Lahan Tidak Boleh Kosong dan Hanya Angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -75,8 +75,8 @@ namespace ProjekPBO_PSQL.Controllers
                 return false;
             }
 
-            Context.AddLahan(lahan);
-            return true;
+            
+            return Context.AddLahan(lahan);
         }
 
         public bool updateLahan(Lahan lahan)
@@ -84,8 +84,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UPDATELahan(lahan);
-                isSucces = true;
+                
+                isSucces = Context.UPDATELahan(lahan);
             }
             catch
             {
@@ -102,8 +102,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.DELETELahan(id);
-                isSucces = true;
+                
+                isSucces = Context.DELETELahan(id);
             }
             catch
             {
@@ -119,10 +119,10 @@ namespace ProjekPBO_PSQL.Controllers
             if (Validator.ApakahKosong(nama))
             {
                 MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return null;
             }
 
-            return Context.ApakahAdaNamaLahan(nama);
+            return Context.ApakahAdaNamaLahan(nama.Trim());
         }
     }
 }

@@ -3,6 +3,7 @@ using ProjekPBO_PSQL.Controllers;
 using ProjekPBO_PSQL.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Net.NetworkInformation;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace ProjekPBO_PSQL.Models
 {
     class JadwalContext
     {
-        public List<JadwalPengantaran> GetALLJadwalPengataran()
+        public List<JadwalPengantaran> GetALLJadwalPengataran(int idJadwal)
         {
             List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
 
@@ -19,7 +20,8 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar,  waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, nomor_nota, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan, total_upah, updah_diterima FROM view_jadwal_pengantar;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar,  waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, nomor_nota, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan, total_upah, upah_diterima FROM view_jadwal_pengantar where id_jadwal = @id;", conn);
+                query1.Parameters.AddWithValue("id", idJadwal);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
@@ -98,7 +100,7 @@ namespace ProjekPBO_PSQL.Models
             return DataJadwalPengantaran;
         }
 
-        public List<JadwalFarmer> GetALLJadwalFarmer()
+        public List<JadwalFarmer> GetALLJadwalFarmer(int idJadwal)
         {
             List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
 
@@ -107,7 +109,8 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer,  waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan, total_upah, upah_diterima FROM view_jadwal_farmer;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer,  waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan, total_upah, upah_diterima FROM view_jadwal_farmer where id_jadwal = @id;", conn);
+                query1.Parameters.AddWithValue("id", idJadwal);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
@@ -179,92 +182,210 @@ namespace ProjekPBO_PSQL.Models
             return DataJadwalFarmer;
         }
 
-        public bool UPDATEJadwal(Jadwal jadwal, int idAnggota = 0, string Status = "")
+        public DataTable getjadwalFarmer()
         {
-            bool isSucces = false;
+            DataTable dataJadwalFarmer = new DataTable();
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                if (!string.IsNullOrEmpty(Status) && idAnggota > 0)
+                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Farmer'", conn);
+                
                 {
-                    using var query1 = new NpgsqlCommand(
-                        "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
-                    query1.Parameters.AddWithValue("status", Status);
-                    query1.Parameters.AddWithValue("id_anggota", idAnggota);
-                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
-                    int DampakBaris = query1.ExecuteNonQuery();
-                    if (DampakBaris > 0)
+                    using (var da = new NpgsqlDataAdapter(query1))
                     {
-                        isSucces = true;
+                        da.Fill(dataJadwalFarmer);
                     }
                 }
-                else if (!string.IsNullOrEmpty(Status) && idAnggota == 0)
-                {
-                    var daftar = jadwal.getDaftarAnggota();
-
-                    if (daftar != null && daftar.Count > 0)
-                    {
-                        
-                        foreach (DetailAnggotaJadwal anggota in daftar)
-                        {
-                            using var query1 = new NpgsqlCommand(
-                                "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal", conn);
-
-                            query1.Parameters.AddWithValue("status", Status); 
-                            query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
-
-                            int DampakBaris = query1.ExecuteNonQuery();
-                            if (DampakBaris > 0)
-                            {
-                                isSucces = true;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    using var query1 = new NpgsqlCommand(
-                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal, banyaknya_anggota=@banyakAnggota, status_global=@status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
-                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
-                    query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
-                    query1.Parameters.AddWithValue("keteranganKegiatan", jadwal.getKeteranganKegiatan());
-                    query1.Parameters.AddWithValue("tipeJadwal", jadwal.getTipeJadwal());
-                    query1.Parameters.AddWithValue("banyakAnggota", jadwal.getBanyakAnggota());
-                    query1.Parameters.AddWithValue("status", jadwal.getStatus());
-                    if(jadwal is JadwalFarmer farmer)
-                    {
-                        query1.Parameters.AddWithValue("idLahan", farmer.getIDLahan());
-                        query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
-                    }
-                    else if (jadwal is JadwalPengantaran pengantaran)
-                    {
-                        query1.Parameters.AddWithValue("idLahan", DBNull.Value);
-                        query1.Parameters.AddWithValue("idPelanggan", pengantaran.getIDPelanggan());
-                    }
-                    else
-                    {
-                        query1.Parameters.AddWithValue("idLahan", DBNull.Value);
-                        query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
-                    }
-                    int DampakBaris = query1.ExecuteNonQuery();
-                    if (DampakBaris > 0)
-                    {
-                        isSucces = true;
-                    }
-                }
+                return dataJadwalFarmer;
             }
             catch (NpgsqlException ex)
             {
-                MessageBox.Show("Gagal Update data: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalFarmer;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalFarmer;
             }
-
-            return isSucces;
         }
+
+        public DataTable getJadwalPengantaran()
+        {
+            DataTable dataJadwalPengantar = new DataTable();
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Pengantar'", conn);
+                
+                {
+                    using (var da = new NpgsqlDataAdapter(query1))
+                    {
+                        da.Fill(dataJadwalPengantar);
+                    }
+                }
+                return dataJadwalPengantar;
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalPengantar;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalPengantar;
+            }
+        }
+
+        public DataTable getjadwalFarmerHariIni()
+        {
+            DataTable dataJadwalFarmer = new DataTable();
+            try
+            {
+                DateTime TanggalSekarang = DateTime.Today;
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Farmer' and tanggal = @tanggal", conn);
+                query1.Parameters.AddWithValue("tanggal", TanggalSekarang);
+                {
+                    using (var da = new NpgsqlDataAdapter(query1))
+                    {
+                        da.Fill(dataJadwalFarmer);
+                    }
+                }
+                return dataJadwalFarmer;
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalFarmer;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalFarmer;
+            }
+        }
+
+        public DataTable getJadwalPengantaranHariIni()
+        {
+            DataTable dataJadwalPengantar = new DataTable();
+            try
+            {
+                DateTime TanggalSekarang = DateTime.Today;
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Pengantar' and tanggal = @tanggal", conn);
+                query1.Parameters.AddWithValue("tanggal", TanggalSekarang);
+                {
+                    using (var da = new NpgsqlDataAdapter(query1))
+                    {
+                        da.Fill(dataJadwalPengantar);
+                    }
+                }
+                return dataJadwalPengantar;
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal mengambil data dari database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalPengantar;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dataJadwalPengantar;
+            }
+        }
+
+        //public bool UPDATEJadwal(Jadwal jadwal, int idAnggota = 0, string Status = "")
+        //{
+        //    bool isSucces = false;
+        //    try
+        //    {
+        //        using var conn = DataBaseHelper.GetConnection();
+        //        conn.Open();
+        //        if (!string.IsNullOrEmpty(Status) && idAnggota > 0)
+        //        {
+        //            using var query1 = new NpgsqlCommand(
+        //                "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal and id_anggota = @id_anggota", conn);
+        //            query1.Parameters.AddWithValue("status", Status);
+        //            query1.Parameters.AddWithValue("id_anggota", idAnggota);
+        //            query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+        //            int DampakBaris = query1.ExecuteNonQuery();
+        //            if (DampakBaris > 0)
+        //            {
+        //                isSucces = true;
+        //            }
+        //        }
+        //        else if (!string.IsNullOrEmpty(Status) && idAnggota == 0)
+        //        {
+        //            var daftar = jadwal.getDaftarAnggota();
+
+        //            if (daftar != null && daftar.Count > 0)
+        //            {
+                        
+        //                foreach (DetailAnggotaJadwal anggota in daftar)
+        //                {
+        //                    using var query1 = new NpgsqlCommand(
+        //                        "update Detail_Jadwal set status = @status where id_jadwal = @id_jadwal", conn);
+
+        //                    query1.Parameters.AddWithValue("status", Status); 
+        //                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+
+        //                    int DampakBaris = query1.ExecuteNonQuery();
+        //                    if (DampakBaris > 0)
+        //                    {
+        //                        isSucces = true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            using var query1 = new NpgsqlCommand(
+        //                "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal, banyaknya_anggota=@banyakAnggota, status_global=@status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
+        //            query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+        //            query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
+        //            query1.Parameters.AddWithValue("keteranganKegiatan", jadwal.getKeteranganKegiatan());
+        //            query1.Parameters.AddWithValue("tipeJadwal", jadwal.getTipeJadwal());
+        //            query1.Parameters.AddWithValue("banyakAnggota", jadwal.getBanyakAnggota());
+        //            query1.Parameters.AddWithValue("status", jadwal.getStatus());
+        //            if(jadwal is JadwalFarmer farmer)
+        //            {
+        //                query1.Parameters.AddWithValue("idLahan", farmer.getIDLahan());
+        //                query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
+        //            }
+        //            else if (jadwal is JadwalPengantaran pengantaran)
+        //            {
+        //                query1.Parameters.AddWithValue("idLahan", DBNull.Value);
+        //                query1.Parameters.AddWithValue("idPelanggan", pengantaran.getIDPelanggan());
+        //            }
+        //            else
+        //            {
+        //                query1.Parameters.AddWithValue("idLahan", DBNull.Value);
+        //                query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
+        //            }
+        //            int DampakBaris = query1.ExecuteNonQuery();
+        //            if (DampakBaris > 0)
+        //            {
+        //                isSucces = true;
+        //            }
+        //        }
+        //    }
+        //    catch (NpgsqlException ex)
+        //    {
+        //        MessageBox.Show("Gagal Update data: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+
+        //    return isSucces;
+        //}
 
         public bool ADDJadwal(Jadwal jadwal)
         {
@@ -360,6 +481,73 @@ namespace ProjekPBO_PSQL.Models
             {
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return isSucces;
+        }
+
+
+        public bool UPDATEJadwal(Jadwal jadwal, string Status = "")
+        {
+            bool isSucces = false;
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                
+                if (!string.IsNullOrEmpty(Status))
+                {
+                    using var query1 = new NpgsqlCommand(
+                        "update Jadwal set status_global = @status where id_jadwal = @id_jadwal", conn);
+
+                    query1.Parameters.AddWithValue("status", Status);
+                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+
+                    int DampakBaris = query1.ExecuteNonQuery();
+                    if (DampakBaris > 0)
+                    {
+                        isSucces = true;
+                    }
+                }
+                else
+                {
+                    using var query1 = new NpgsqlCommand(
+                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal, banyaknya_anggota=@banyakAnggota, status_global=@status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
+                    query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
+                    query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
+                    query1.Parameters.AddWithValue("keteranganKegiatan", jadwal.getKeteranganKegiatan());
+                    query1.Parameters.AddWithValue("tipeJadwal", jadwal.getTipeJadwal());
+                    query1.Parameters.AddWithValue("banyakAnggota", jadwal.getBanyakAnggota());
+                    query1.Parameters.AddWithValue("status", jadwal.getStatus());
+                    if (jadwal is JadwalFarmer farmer)
+                    {
+                        query1.Parameters.AddWithValue("idLahan", farmer.getIDLahan());
+                        query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
+                    }
+                    else if (jadwal is JadwalPengantaran pengantaran)
+                    {
+                        query1.Parameters.AddWithValue("idLahan", DBNull.Value);
+                        query1.Parameters.AddWithValue("idPelanggan", pengantaran.getIDPelanggan());
+                    }
+                    else
+                    {
+                        query1.Parameters.AddWithValue("idLahan", DBNull.Value);
+                        query1.Parameters.AddWithValue("idPelanggan", DBNull.Value);
+                    }
+                    int DampakBaris = query1.ExecuteNonQuery();
+                    if (DampakBaris > 0)
+                    {
+                        isSucces = true;
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show("Gagal Update data: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             return isSucces;
         }
     }

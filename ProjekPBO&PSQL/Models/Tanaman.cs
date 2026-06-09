@@ -8,10 +8,10 @@ namespace ProjekPBO_PSQL.Models
     {
         private int idTanaman;
         private string namaTanaman;
-        private int hargaTanaman;
+        private decimal hargaTanaman;
         private int estimasiKadaluarsa;
 
-        public Tanaman(int idTanaman, string namaTanaman, int hargaTanaman, int estimasiKadaluarsa)
+        public Tanaman(int idTanaman, string namaTanaman, decimal hargaTanaman, int estimasiKadaluarsa)
         {
             this.idTanaman = idTanaman;
             this.namaTanaman = namaTanaman;
@@ -29,7 +29,7 @@ namespace ProjekPBO_PSQL.Models
             return this.namaTanaman;
         }
 
-        public int getHargaTanaman()
+        public decimal getHargaTanaman()
         {
             return this.hargaTanaman;
         }

@@ -26,8 +26,8 @@ namespace ProjekPBO_PSQL.Models
                         reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
                         reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
                         reader.IsDBNull(5) ? "Tidak Ada Keterangan Jadwal" : reader.GetString(5),
-                        reader.IsDBNull(4) ? "Tidak Ada Nama Anggota" : reader.GetString(6),
-                        reader.IsDBNull(4) ? DateTime.Now : reader.GetDateTime(7)
+                        reader.IsDBNull(6) ? "Tidak Ada Nama Anggota" : reader.GetString(6),
+                        reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7)
                         ));
                 }
             }

@@ -80,8 +80,8 @@ namespace ProjekPBO_PSQL.Controllers
                 return false;
             }
 
-            Context.ADDPelanggan(pelanggan);
-            return true;
+            
+            return Context.ADDPelanggan(pelanggan);
         }
 
         public bool updatePelanggan(Pelanggan pelanggan)
@@ -89,8 +89,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UpdatePelanggan(pelanggan);
-                isSucces = true;
+                
+                isSucces = Context.UpdatePelanggan(pelanggan);
             }
             catch
             {
@@ -106,8 +106,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.DelatePelanggan(id);
-                isSucces = true;
+                
+                isSucces = Context.DelatePelanggan(id);
             }
             catch
             {
@@ -120,24 +120,24 @@ namespace ProjekPBO_PSQL.Controllers
 
         public bool? apakahAdaNoTelp(string NOTELP)
         {
-            if (Validator.ApakahKosong(NOTELP) || Validator.ApakahPanjang(10, NOTELP, 12))
+            if (Validator.ApakahKosong(NOTELP) || !Validator.ApakahPanjang(10, NOTELP, 12))
             {
-                MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                MessageBox.Show("Nomer telpon Tidak Boleh Kosong dan harus sesuai", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
             }
 
-            return Context.ApakahAdaNOTELP(NOTELP);
+            return Context.ApakahAdaNOTELP(NOTELP.Trim());
         }
 
         public bool? apakahAdaEmail(string Email)
         {
-            if (Validator.ApakahKosong(Email) || Validator.ApakahPanjang(10, Email, 12))
+            if (Validator.ApakahKosong(Email) || !Validator.ApakahEmailValid(Email))
             {
                 MessageBox.Show("Email Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                return null;
             }
 
-            return Context.ApakahAdaNOTELP(Email);
+            return Context.ApakahAdaEmail(Email.Trim());
         }
     }
 }

@@ -36,8 +36,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                context.UpdateGudang(gudang);
-                isSucces = true;
+                
+                isSucces = context.UpdateGudang(gudang);
             }
             catch
             {
@@ -53,8 +53,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                context.DelateGudang(id);
-                isSucces = true;
+                
+                isSucces = context.DelateGudang(id);
             }
             catch
             {
@@ -72,7 +72,7 @@ namespace ProjekPBO_PSQL.Controllers
             if (Validator.ApakahKosong(nama))
             {
                 MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                return null;
             }
 
             return context.ApakahAdaNamaGudang(nama);

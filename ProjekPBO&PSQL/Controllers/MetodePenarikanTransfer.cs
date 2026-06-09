@@ -13,7 +13,7 @@ namespace ProjekPBO_PSQL.Controllers
 
         public override bool MenarikUang(decimal jumlah, Orang orang, string noRek)
         {
-            if (Validator.ApakahKosong(noRek) || Validator.ApakahAngka(noRek) || Validator.ApakahPanjang(15, noRek, 16))
+            if (Validator.ApakahKosong(noRek) || !Validator.ApakahAngka(noRek) || !Validator.ApakahPanjang(15, noRek, 16))
             {
                 MessageBox.Show("Penarikan Gagal! Transfer hanya mendukung Bank BRI dengan nomor rekening valid (15 digit angka).", "Metode Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -32,11 +32,11 @@ namespace ProjekPBO_PSQL.Controllers
             bool apakahDatabaseSukses = orangController.UpdateSaldo(orang.getIDOrang(), saldoTerbaru);
             if (apakahDatabaseSukses)
             {
-                bool apakahRiwayatTercatat = penarikanController.TambahRiwayat(jumlah, "Cash", orang.getIDOrang());
+                bool apakahRiwayatTercatat = penarikanController.TambahRiwayat(jumlah, "Transfer", orang.getIDOrang());
                 if (apakahRiwayatTercatat)
                 {
 
-                    MessageBox.Show($"Berhasil menarik uang Silakan ambil uang tunai di Owner.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Berhasil menarik uang.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
                 else

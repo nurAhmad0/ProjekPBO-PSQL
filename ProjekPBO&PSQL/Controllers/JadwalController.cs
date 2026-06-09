@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ProjekPBO_PSQL.Models;
 using System.Windows.Forms;
+using System.Data;
 
 namespace ProjekPBO_PSQL.Controllers
 {
@@ -10,139 +11,90 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private JadwalContext Context = new JadwalContext();
 
-        public List<Jadwal> GetAllJadwalOwner()
+        public DataTable GetAllJadwalOwner()
         {
-            List<Jadwal> jadwalOwner = new List<Jadwal>();
-            List<JadwalFarmer> jadwalFarmer = Context.GetALLJadwalFarmer();
-            List<JadwalPengantaran> jadwalPengantar = Context.GetALLJadwalPengataran();
+            DataTable jadwalFarmer = Context.getjadwalFarmer();
+            DataTable jadwalPengantar = Context.getJadwalPengantaran();
+            jadwalFarmer.Merge(jadwalPengantar);
 
-            foreach (var Jf in jadwalFarmer)
-            {
-                jadwalOwner.Add(Jf);
-            }
-
-            foreach (var Jp in jadwalPengantar)
-            {
-                jadwalOwner.Add(Jp);
-            }
-
-            return jadwalOwner;
+            return jadwalFarmer;
         }
 
-        public List<Jadwal> GetAllJadwalOwnerHariIni()
+        public DataTable GetAllJadwalOwnerHariIni()
         {
-            List<Jadwal> jadwalOwner = new List<Jadwal>();
-            List<JadwalFarmer> jadwalFarmer = GetAllJadwalFarmerIni();
-            List<JadwalPengantaran> jadwalPengantar = GetAllJadwalPengantaranHariIni();
+            DataTable jadwalFarmer = Context.getjadwalFarmerHariIni();
+            DataTable jadwalPengantar = Context.getJadwalPengantaranHariIni();
+            jadwalFarmer.Merge(jadwalPengantar);
 
-            DateTime TanggalSekarang = DateTime.Today;
-
-            foreach (var Jf in jadwalFarmer)
-            {
-                if (Jf.getTanggal().Date == TanggalSekarang)
-                {
-                    jadwalOwner.Add(Jf);
-                }
-            }
-
-            foreach (var Jp in jadwalPengantar)
-            {
-                if (Jp.getTanggal().Date == TanggalSekarang)
-                {
-                    jadwalOwner.Add(Jp);
-                }
-            }
-
-            return jadwalOwner;
-
+            return jadwalFarmer;
         }
 
-        public List<JadwalFarmer> GetAllJadwalFarmerIni()
+        public DataTable GetAllJadwalFarmerHariIni()
         {
-            List<JadwalFarmer> dataJadwalFarmer = new List<JadwalFarmer>();
-
-            List<JadwalFarmer> jadwalFarmer = Context.GetALLJadwalFarmer();
-
-            DateTime TanggalSekarang = DateTime.Today;
-
-            foreach (var Jf in jadwalFarmer)
-            {
-                if (Jf.getTanggal().Date == TanggalSekarang)
-                {
-                    dataJadwalFarmer.Add(Jf);
-                }
-            }
+            DataTable dataJadwalFarmer = Context.getjadwalFarmerHariIni();
 
             return dataJadwalFarmer;
 
         }
 
-        public List<JadwalFarmer> GetAllJadwalFarmer()
+        public List<JadwalFarmer> GetAllJadwalFarmer(int id)
         {
-            return Context.GetALLJadwalFarmer();
+            List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
+            if (id <= 0)
+            {
+                
+                MessageBox.Show("ID Jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return DataJadwalFarmer;
+            }
+            
+            return Context.GetALLJadwalFarmer(id);
         }
 
 
-        public List<JadwalPengantaran> GetAllJadwalPengantaranHariIni()
+        public DataTable GetAllJadwalPengantaranHariIni()
         {
-            List<JadwalPengantaran> dataJadwalPengantaran = new List<JadwalPengantaran>();
+            DataTable dataJadwalPengantar = Context.getJadwalPengantaranHariIni();
 
-            List<JadwalPengantaran> jadwalPengantaran = Context.GetALLJadwalPengataran();
+            return dataJadwalPengantar;
 
-            DateTime TanggalSekarang = DateTime.Today;
+        }
 
-            foreach (var Jp in jadwalPengantaran)
+        public List<JadwalPengantaran> GetAllJadwalPengantaran(int id)
+        {
+            List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
+            if (id <= 0)
             {
-                if (Jp.getTanggal().Date == TanggalSekarang)
-                {
-                    dataJadwalPengantaran.Add(Jp);
-                }
+
+                MessageBox.Show("ID jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return DataJadwalPengantaran;
             }
 
-            return dataJadwalPengantaran;
-        }
-
-        public List<JadwalPengantaran> GetAllJadwalPengantaran()
-        {
-            return Context.GetALLJadwalPengataran();
+            return Context.GetALLJadwalPengataran(id);
         }
 
 
         public bool tambahJadwal(Jadwal jadwal)
         {
-            bool isSucces = false;
             DateTime TanggalSekarang = DateTime.Today;
             if (jadwal.getTanggal().Date < TanggalSekarang)
             {
-                isSucces = false;
                 MessageBox.Show("Tanggal Tidak Boleh Kemarin", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return isSucces;
+                return false;
             }
-            else
-            {
-                if (!Validator.ApakahKosong(jadwal.getKeteranganKegiatan()) & Validator.ApakahHurufdanAngka(jadwal.getKeteranganKegiatan()) & !Validator.ApakahAngka(jadwal.getKeteranganKegiatan()))
-                {
-                    if (Validator.ApakahKosong(jadwal.getTipeJadwal()))
-                    {
-                        isSucces = false;
-                        MessageBox.Show("Tipe Jadwal Salah", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return isSucces;
-                    }
-                    else
-                    {
-                        Context.ADDJadwal(jadwal);
-                        isSucces = true;
-                        return isSucces;
-                    }
-                }
-                else
-                {
-                    isSucces = false;
-                    MessageBox.Show("Keterangan jadwal tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return isSucces;
-                }
 
+            if (Validator.ApakahKosong(jadwal.getKeteranganKegiatan()))
+            {
+                MessageBox.Show("Keterangan jadwal tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
+
+            if (Validator.ApakahKosong(jadwal.getTipeJadwal()))
+            {
+                MessageBox.Show("Tipe Jadwal tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return Context.ADDJadwal(jadwal);
         }
 
 
@@ -153,12 +105,12 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 try
                 {
-                    Context.delateJadwal(id); 
-                    isSuccess = true;
+                    
+                    isSuccess = Context.delateJadwal(id);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Gagal menghapus tanaman: " + ex.Message, "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Gagal menghapus Jadwal " + ex.Message, "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     isSuccess = false;
                 }
             }
@@ -171,8 +123,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UPDATEJadwal(jadwal);
-                isSucces = true;
+                
+                isSucces = Context.UPDATEJadwal(jadwal);
             }
             catch 
             {
@@ -182,5 +134,20 @@ namespace ProjekPBO_PSQL.Controllers
             return isSucces;
         }
 
+        public bool UpdateStatusjadwal(Jadwal jadwal, string status)
+        {
+            bool isSucces = false;
+            try
+            {
+                
+                isSucces = Context.UPDATEJadwal(jadwal, status);
+            }
+            catch
+            {
+                return isSucces;
+            }
+
+            return isSucces;
+        }
     }
 }

@@ -81,7 +81,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
+                    "update pelanggan set Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat where ID_pelanggan=@ID_pelanggan", conn);
                 query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
                 query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
                 query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());

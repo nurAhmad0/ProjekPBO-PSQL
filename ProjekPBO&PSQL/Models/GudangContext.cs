@@ -3,6 +3,7 @@ using ProjekPBO_PSQL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace ProjekPBO_PSQL.Models
 {
@@ -81,7 +82,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "update Gudang set Nama_Gudang=@Nama_Gudang, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat where ID_Gudang=@ID_Gudang", conn);
+                    "UPDATE gudang SET nama_gudang=@Nama_Gudang, stock=@Stock, tanggal_masuk=@Tanggal_Masuk, id_tanaman=@ID_Tanaman WHERE id_gudang=@ID_Gudang", conn);
                 query1.Parameters.AddWithValue("ID_Gudang", Gudang.getIDGudang());
                 query1.Parameters.AddWithValue("Nama_Gudang", Gudang.getNamaGudang());
                 query1.Parameters.AddWithValue("Stock", Gudang.getStock());

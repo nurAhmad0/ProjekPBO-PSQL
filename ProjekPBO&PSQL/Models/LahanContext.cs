@@ -78,8 +78,8 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                var query1 = new NpgsqlCommand(
-                    "INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES (@NamaLahan, @LuasLahan, @Status", conn);
+                using var query1 = new NpgsqlCommand(
+                    "INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES (@NamaLahan, @LuasLahan, @Status)", conn);
                 query1.Parameters.AddWithValue("LuasLahan", lahan.getLuasLahan());
                 query1.Parameters.AddWithValue("NamaLahan", lahan.getNamaLahan());
                 query1.Parameters.AddWithValue("Status", lahan.getStatusLahan());
@@ -107,7 +107,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("DELETE FROM LAHAN WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("CALL hapus_lahan(@id)", conn);
                 query1.Parameters.AddWithValue("id", id);
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)

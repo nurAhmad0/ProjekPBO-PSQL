@@ -12,7 +12,7 @@ namespace ProjekPBO_PSQL.Models
         public List<Order> GetALLdataOrder()
         {
             List<Order> DataOrder = new List<Order>();
-            string Query1 = @"SELECT o.id_order, o.tanggal_order, o.id_anggota, o.id_pelanggan, od.id_order_detils, od.harga, od.jumlah_produk, od.id_order, od.id_tanaman FROM ""order"" o JOIN order_details od using (id_order)";
+            string Query1 = @"SELECT o.id_order, o.tanggal_order, o.id_anggota, o.id_pelanggan, od.id_order_details, od.harga, od.jumlah_produk, od.id_order, od.id_tanaman FROM ""order"" o JOIN order_details od using (id_order)";
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
@@ -83,6 +83,7 @@ namespace ProjekPBO_PSQL.Models
                     cmdOrderD.Parameters.AddWithValue("@idOrder", idOrderBaru); 
                     cmdOrderD.Parameters.AddWithValue("@idTanaman", OrderD.getIDTanaman());
                     cmdOrderD.Parameters.AddWithValue("@jumlah", OrderD.getJumlahOrder());
+                    cmdOrderD.Parameters.AddWithValue("@harga", OrderD.getHarga());
                     cmdOrderD.ExecuteNonQuery();
                 }
                 MessageBox.Show("Transaksi Berhasil Disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);

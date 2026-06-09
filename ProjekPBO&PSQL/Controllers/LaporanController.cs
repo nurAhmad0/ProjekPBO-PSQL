@@ -43,8 +43,8 @@ namespace ProjekPBO_PSQL.Controllers
                 return false;
             }
 
-            Context.ADDLaporan(laporan);
-            return true;
+            
+            return Context.ADDLaporan(laporan);
         }
     }
 }

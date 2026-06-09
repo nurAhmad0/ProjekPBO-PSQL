@@ -24,7 +24,7 @@ namespace ProjekPBO_PSQL.Models
                     DataTanaman.Add(new Tanaman(
                         reader.GetInt32(0),
                         reader.IsDBNull(1) ? "Tanpa Nama" : reader.GetString(1),
-                        reader.IsDBNull(2) ? 0 : reader.GetInt32(2),
+                        reader.IsDBNull(2) ? 0 : reader.GetDecimal(2),
                         reader.IsDBNull(3) ? 0 : reader.GetInt32(3)
                         ));
                 }
@@ -49,8 +49,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES (@ID_Tanaman, @Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa)", conn);
-                query1.Parameters.AddWithValue("ID_Tanaman", Tanaman.getIdTanaman());
+                    "INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES (@Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa)", conn);
                 query1.Parameters.AddWithValue("Nama_Tanaman", Tanaman.getNamaTanaman());
                 query1.Parameters.AddWithValue("Harga", Tanaman.getHargaTanaman());
                 query1.Parameters.AddWithValue("Estimasi_Kadaluarsa", Tanaman.getEstimasiKadaluarsa());
@@ -81,7 +80,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "update Tanaman set Nama_Tanaman=@Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa where ID_Tanaman=@ID_Tanaman", conn);
+                    "update Tanaman set Nama_Tanaman=@Nama_Tanaman, harga=@Harga, estimasi_kadaluarsa=@Estimasi_Kadaluarsa where ID_Tanaman=@ID_Tanaman", conn);
                 query1.Parameters.AddWithValue("ID_Tanaman", Tanaman.getIdTanaman());
                 query1.Parameters.AddWithValue("Nama_Tanaman", Tanaman.getNamaTanaman());
                 query1.Parameters.AddWithValue("Harga", Tanaman.getHargaTanaman());
@@ -171,7 +170,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT od.harga AS Dimensi_Harga, od.jumlah_produk AS Dimensi_Jumlah_Terjual, t.nama_tanaman AS Nama Tanaman, SUM(od.jumlah_produk) AS 'Akumulasi Tanaman Terjual' FROM order_details od INNER JOIN 'order' o ON od.id_order = o.id_order INNER JOIN Tanaman t ON od.id_tanaman = t.id_tanaman GROUP BY CUBE (od.harga, od.jumlah_produk, t.nama_tanaman);", conn);
+                using var query1 = new NpgsqlCommand("SELECT od.harga AS Dimensi_Harga, od.jumlah_produk AS Dimensi_Jumlah_Terjual, t.nama_tanaman AS Nama Tanaman, SUM(od.jumlah_produk) AS 'Akumulasi Tanaman Terjual' FROM order_details od INNER JOIN \"order\" o ON od.id_order = o.id_order INNER JOIN Tanaman t ON od.id_tanaman = t.id_tanaman GROUP BY CUBE (od.harga, od.jumlah_produk, t.nama_tanaman);", conn);
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
                     {

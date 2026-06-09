@@ -36,7 +36,7 @@ namespace ProjekPBO_PSQL.Models
             return this.JumlahOrder;
         }
 
-        private int getIDOrder()
+        public int getIDOrder()
         {
             return this.idOrder;
         }

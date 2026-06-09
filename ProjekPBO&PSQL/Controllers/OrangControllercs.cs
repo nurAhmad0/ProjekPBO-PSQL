@@ -129,8 +129,8 @@ namespace ProjekPBO_PSQL.Controllers
                 return false;
             }
 
-            Context.ADDOrang(orang);
-            return true;
+            
+            return Context.ADDOrang(orang);
         }
 
         public bool UbahPassword(Orang orang, string password)
@@ -138,8 +138,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UpdateOrang(orang, Password: password);
-                isSucces = true;
+                
+                isSucces = Context.UpdateOrang(orang, Password: password);
             }
             catch
             {
@@ -155,8 +155,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UpdateOrang(orang, Username: username);
-                isSucces = true;
+                
+                isSucces = Context.UpdateOrang(orang, Username: username);
             }
             catch
             {
@@ -172,8 +172,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UpdateOrang(orang);
-                isSucces = true;
+                
+                isSucces = Context.UpdateOrang(orang);
             }
             catch
             {
@@ -192,8 +192,8 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 try
                 {
-                    Context.DelateOrang(id); 
-                    isSuccess = true;
+                    
+                    isSuccess = Context.DelateOrang(id);
                 }
                 catch (Exception ex)
                 {
@@ -213,8 +213,8 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 try
                 {
-                    Context.UpdateSaldo(id, saldo);
-                    isSuccess = true;
+                    
+                    isSuccess = Context.UpdateSaldo(id, saldo);
                 }
                 catch (Exception ex)
                 {
@@ -229,10 +229,10 @@ namespace ProjekPBO_PSQL.Controllers
         public bool? apakahAdaNoTelp(string NOTELP)
         {
             NOTELP = NOTELP.Trim();
-            if (Validator.ApakahKosong(NOTELP) || Validator.ApakahPanjang(10, NOTELP, 12))
+            if (Validator.ApakahKosong(NOTELP) || !Validator.ApakahPanjang(10, NOTELP, 12))
             {
                 MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                return null;
             }
 
             return Context.ApakahAdaNOTELP(NOTELP);
@@ -241,13 +241,13 @@ namespace ProjekPBO_PSQL.Controllers
         public bool? apakahAdaEmail(string Email)
         {
             Email = Email.Trim();
-            if (Validator.ApakahKosong(Email) || Validator.ApakahPanjang(10, Email, 12))
+            if (Validator.ApakahKosong(Email) || !Validator.ApakahEmailValid(Email))
             {
-                MessageBox.Show("Email Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                MessageBox.Show("Email Tidak Boleh Kosong dan tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
             }
 
-            return Context.ApakahAdaNOTELP(Email);
+            return Context.ApakahAdaEmail(Email);
         }
 
         public bool? apakahAdaUsername(string username)
@@ -255,8 +255,8 @@ namespace ProjekPBO_PSQL.Controllers
             username = username.Trim();
             if (Validator.ApakahKosong(username))
             {
-                MessageBox.Show("Nomer telpon Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                MessageBox.Show("Nomer Username Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
             }
 
             return Context.ApakahAdaUsername(username);

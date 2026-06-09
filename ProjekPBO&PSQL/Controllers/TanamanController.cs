@@ -68,8 +68,8 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 try
                 {
-                    Context.DelateTanaman(id); 
-                    isSuccess = true;
+                   
+                    isSuccess = Context.DelateTanaman(id);
                 }
                 catch (Exception ex)
                 {
@@ -87,8 +87,8 @@ namespace ProjekPBO_PSQL.Controllers
             bool isSucces = false;
             try
             {
-                Context.UpdateTanaman(tanaman);
-                isSucces = true;
+                
+                isSucces = Context.UpdateTanaman(tanaman);
             }
             catch
             {
@@ -106,14 +106,14 @@ namespace ProjekPBO_PSQL.Controllers
                 return false;
             }
 
-            if (tanaman.getEstimasiKadaluarsa() == 0 )
+            if (tanaman.getEstimasiKadaluarsa() <= 0 )
             {
                 MessageBox.Show("Estimasi kadaluarsa Tidak Bisa 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            Context.ADDTanaman(tanaman);
-            return true;
+            
+            return Context.ADDTanaman(tanaman);
         }
 
         public List<Tanaman> GetAllTanaman()
@@ -152,7 +152,7 @@ namespace ProjekPBO_PSQL.Controllers
             if (Validator.ApakahKosong(nama))
             {
                 MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return true;
+                return null;
             }
             return Context.ApakahAdaNamaTanaman(nama);
         }
