@@ -1,30 +1,33 @@
-﻿using System;
+﻿using Npgsql;
+using ProjekPBO_PSQL.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Npgsql;
-using ProjekPBO_PSQL.Helpers;
 
 namespace ProjekPBO_PSQL.Models
 {
-    class CRUDPelanggan
+    class LaporanContext
     {
-        public List<Pelanggan> getAllPelanggan()
+        public List<Laporan> getAllLaporan()
         {
-            List<Pelanggan> DataPelanggan = new List<Pelanggan>();
+            List<Laporan> DataLaporan = new List<Laporan>();
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("Select ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat from Pelanggan", conn);
+                using var query1 = new NpgsqlCommand("SELECT l.id_laporan, l.isi_laporan, l.waktu_lapor, l.id_jadwal, l.id_anggota, j.keterangan_kegiatan, ap.nama_anggota, j.tanggal AS tanggal_jadwal FROM laporan_jadwal l INNER JOIN jadwal j ON l.id_jadwal = j.id_jadwal INNER JOIN anggota_perusahaan ap ON l.id_anggota = ap.id_anggota;", conn);
                 using var reader = query1.ExecuteReader();
                 while (reader.Read())
                 {
-                    DataPelanggan.Add(new Pelanggan(
+                    DataLaporan.Add(new Laporan(
                         reader.GetInt32(0),
-                        reader.IsDBNull(1) ? "Tanpa Nama" : reader.GetString(1),
-                        reader.IsDBNull(2) ? "-" : reader.GetString(2),
-                        reader.IsDBNull(3) ? "Tidak Ada Email" : reader.GetString(3),
-                        reader.IsDBNull(4) ? "Alamat Tidak Ada" : reader.GetString(4)
+                        reader.IsDBNull(1) ? "Laporan Tidak Ada Isi" : reader.GetString(1),
+                        reader.IsDBNull(2) ? DateTime.Now : reader.GetDateTime(2),
+                        reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                        reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        reader.IsDBNull(5) ? "Tidak Ada Keterangan Jadwal" : reader.GetString(5),
+                        reader.IsDBNull(6) ? "Tidak Ada Nama Anggota" : reader.GetString(6),
+                        reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7)
                         ));
                 }
             }
@@ -37,10 +40,10 @@ namespace ProjekPBO_PSQL.Models
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return DataPelanggan;
+            return DataLaporan;
         }
 
-        public bool ADDPelanggan(Pelanggan pelanggan)
+        public bool ADDLaporan(Laporan Laporan)
         {
             bool isSucces = false;
             try
@@ -48,12 +51,10 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "Insert into pelanggan (ID_pelanggan, Nama_Pelanggan, NO_TELP, Email, Detail_Alamat) values (@ID_pelanggan, @Nama_Pelanggan, @NO_TELP, @Email, @Detail_Alamat)", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                    "INSERT INTO laporan_jadwal (isi_laporan, id_jadwal, id_anggota) VALUES (@Isi_laporan, @Id_jadwal, @Id_anggota)", conn);
+                query1.Parameters.AddWithValue("Isi_laporan", Laporan.getIsiLaporan());
+                query1.Parameters.AddWithValue("Id_jadwal", Laporan.getidJadwal());
+                query1.Parameters.AddWithValue("Id_anggota", Laporan.getIdAnggota());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
@@ -73,7 +74,7 @@ namespace ProjekPBO_PSQL.Models
             return isSucces;
         }
 
-        public bool UpdatePelanggan(Pelanggan pelanggan)
+        public bool UpdateLaporan(Laporan Laporan)
         {
             bool isSucces = false;
             try
@@ -81,12 +82,9 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "update pelanggan set ID_pelanggan=@ID_pelanggan, Nama_Pelanggan=@Nama_Pelanggan, NO_TELP=@NO_TELP, Email=@Email, Detail_Alamat=@Detail_Alamat", conn);
-                query1.Parameters.AddWithValue("ID_pelanggan", pelanggan.getIdPelanggan());
-                query1.Parameters.AddWithValue("Nama_Pelanggan", pelanggan.getNamePelanggan());
-                query1.Parameters.AddWithValue("NO_TELP", pelanggan.getNO_TELP());
-                query1.Parameters.AddWithValue("Email", pelanggan.getEmail());
-                query1.Parameters.AddWithValue("Detail_Alamat", pelanggan.getDetailAlamat());
+                    "update laporan_jadwal set isi_laporan=@Isi_laporan where id_laporan = @IDLaporan", conn);
+                query1.Parameters.AddWithValue("Isi_laporan", Laporan.getIsiLaporan());
+                query1.Parameters.AddWithValue("IDLaporan", Laporan.getIdlaporan());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
@@ -106,14 +104,14 @@ namespace ProjekPBO_PSQL.Models
             return isSucces;
         }
 
-        public bool DelatePelanggan(int id)
+        public bool DelateLaporan(int id)
         {
             bool isSucces = false;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("DELETE FROM Pelanggan WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("DELETE FROM Laporan WHERE id=@id", conn);
                 query1.Parameters.AddWithValue("id", id);
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)

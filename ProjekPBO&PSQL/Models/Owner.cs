@@ -6,16 +6,8 @@ namespace ProjekPBO_PSQL.Models
 {
     class Owner : Orang
     {
-        public Owner(string name, int idOrang, decimal saldo) : base(name, idOrang, saldo)
+        public Owner(int idOrang, string name, string NO_Telp, decimal saldo, DateTime TanggalLahir, string Email, string StatusKerja, int ID_Role, string username, string password) : base(idOrang, name, NO_Telp, saldo, TanggalLahir, Email, StatusKerja, "Owner", ID_Role, username, password)
         {
-        }
-        public override void MelihatJadwalOP()
-        {
-            throw new NotImplementedException();
-        }
-        public override void MelihatJadwalHariIni()
-        {
-            throw new NotImplementedException();
         }
     }
 }

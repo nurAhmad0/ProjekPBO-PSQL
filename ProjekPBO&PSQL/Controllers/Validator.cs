@@ -70,31 +70,6 @@ namespace ProjekPBO_PSQL.Controllers
             }
         }
 
-        public static bool ApakahAdaUsername(string username)
-        {
-            if (username == "wow")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
-        public static bool ApakahadaNama(string nama)
-        {
-            if (nama == "wow")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public static bool ApakahEmailValid(string email)
         {
             try
