@@ -238,6 +238,7 @@
             Controls.Add(panel1);
             Name = "FormTambahJadwal";
             Text = "Form1";
+            Load += FormTambahJadwal_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

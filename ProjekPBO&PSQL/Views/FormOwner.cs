@@ -5,14 +5,22 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ProjekPBO_PSQL.Models;
+using ProjekPBO_PSQL.Controllers;
 
 namespace ProjekPBO_PSQL.Views
 {
     public partial class FormOwner : Form
     {
-        public FormOwner()
+        OrangController Controllers = new OrangController();
+        Orang owner;
+        public FormOwner(int id)
         {
             InitializeComponent();
+            owner = Controllers.CariBerdasarkanID(id)!;
+
+            label7.Text = owner.getSaldo().ToString("N0");
+            lblNama.Text = owner.getUsername();
         }
 
         private void dgvLahan_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -23,6 +31,15 @@ namespace ProjekPBO_PSQL.Views
         private void btnKaryawan_Click(object sender, EventArgs e)
         {
             PindahPanel(panelKaryawan, "Karyawan");
+            List<Orang> listAsli = Controllers.GetAllKaryawan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                ID = o.getIDOrang(),
+                Nama = o.getName(),
+                Role = o.getNamaRole()
+            }).ToList();
+            dgvKaryawan.DataSource = dataUntukGrid;
+            dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btnLahan_Click(object sender, EventArgs e)
@@ -49,7 +66,7 @@ namespace ProjekPBO_PSQL.Views
         {
             PindahPanel(panelLaporan, "Laporan");
         }
-        // Add/Edit
+        
         private void btnTambahKaryawan_Click(object sender, EventArgs e)
         {
             FormTambahKaryawan popUpTambah = new FormTambahKaryawan();
@@ -59,23 +76,36 @@ namespace ProjekPBO_PSQL.Views
         {
             if (dgvKaryawan.CurrentRow == null)
             {
-                MessageBox.Show("Silakan pilih salah satu baris karyawan terlebih dahulu!", "Peringatan");
+                MessageBox.Show("Silakan pilih salah satu baris karyawan terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            FormEditKaryawan popUpEdit = new FormEditKaryawan();
-            popUpEdit.txtIdAnggota.Text = dgvKaryawan.CurrentRow.Cells["colIdAnggota"].Value.ToString();
-            popUpEdit.txtNama.Text = dgvKaryawan.CurrentRow.Cells["colNamaAnggota"].Value.ToString();
-            popUpEdit.txtNoTelp.Text = dgvKaryawan.CurrentRow.Cells["colNoTelp"].Value.ToString();
-            popUpEdit.dtpTanggalLahir.Value = Convert.ToDateTime(dgvKaryawan.CurrentRow.Cells["colTanggalLahir"].Value);
-            popUpEdit.txtEmail.Text = dgvKaryawan.CurrentRow.Cells["colEmail"].Value.ToString();
-            popUpEdit.cbStatusKerja.Text = dgvKaryawan.CurrentRow.Cells["colStatusKerja"].Value.ToString();
-            popUpEdit.txtSaldo.Text = dgvKaryawan.CurrentRow.Cells["colSaldo"].Value.ToString();
-            popUpEdit.txtUsername.Text = dgvKaryawan.CurrentRow.Cells["colUsername"].Value.ToString();
-            popUpEdit.txtPassword.Text = dgvKaryawan.CurrentRow.Cells["colPassword"].Value.ToString();
-            popUpEdit.txtIdRole.Text = dgvKaryawan.CurrentRow.Cells["colIdRole"].Value.ToString(); // Menggunakan sistem input ID angka langsung
-
-            popUpEdit.ShowDialog();
+            try
+            {
+                int idTerpilih = Convert.ToInt32(dgvKaryawan.CurrentRow.Cells["ID"].Value);
+                Orang karyawanTerpilih = Controllers.CariBerdasarkanID(idTerpilih)!;
+                if (karyawanTerpilih == null)
+                {
+                    MessageBox.Show("Data karyawan tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                FormEditKaryawan popUpEdit = new FormEditKaryawan();
+                popUpEdit.txtIdAnggota.Text = karyawanTerpilih.getIDOrang().ToString();
+                popUpEdit.idkaryawan = karyawanTerpilih.getIDOrang();
+                popUpEdit.txtNama.Text = karyawanTerpilih.getName();
+                popUpEdit.txtNoTelp.Text = karyawanTerpilih.getNO_TELP();
+                popUpEdit.dtpTanggalLahir.Value = karyawanTerpilih.getTanggalLahir();
+                popUpEdit.txtEmail.Text = karyawanTerpilih.getEmail();
+                popUpEdit.cbStatusKerja.Text = karyawanTerpilih.getStatus();
+                popUpEdit.txtSaldo.Text = karyawanTerpilih.getSaldo().ToString();
+                popUpEdit.txtUsername.Text = karyawanTerpilih.getUsername();
+                popUpEdit.txtPassword.Text = karyawanTerpilih.getPassword();
+                popUpEdit.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan saat mengambil data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btnTambahLahan_Click(object sender, EventArgs e)
         {
@@ -167,6 +197,16 @@ namespace ProjekPBO_PSQL.Views
             popUpEdit.txtAlamat.Text = dgvPelanggan.CurrentRow.Cells["colAlamatPelanggan"].Value.ToString();
 
             popUpEdit.ShowDialog();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvLaporan_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

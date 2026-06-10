@@ -30,14 +30,14 @@
         {
             USERNAME = new Label();
             panel1 = new Panel();
-            txtPassword = new TextBox();
-            txtUsername = new TextBox();
-            btnLogin = new Button();
-            label1 = new Label();
-            linkSignUp = new LinkLabel();
-            label2 = new Label();
-            label3 = new Label();
             panel2 = new Panel();
+            txtPassword = new TextBox();
+            label3 = new Label();
+            txtUsername = new TextBox();
+            label2 = new Label();
+            btnLogin = new Button();
+            linkSignUp = new LinkLabel();
+            label1 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -60,67 +60,6 @@
             panel1.Size = new Size(709, 410);
             panel1.TabIndex = 4;
             // 
-            // txtPassword
-            // 
-            txtPassword.Location = new Point(218, 121);
-            txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(187, 27);
-            txtPassword.TabIndex = 1;
-            // 
-            // txtUsername
-            // 
-            txtUsername.Location = new Point(218, 60);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(187, 27);
-            txtUsername.TabIndex = 0;
-            // 
-            // btnLogin
-            // 
-            btnLogin.Location = new Point(263, 181);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(94, 29);
-            btnLogin.TabIndex = 2;
-            btnLogin.Text = "LOGIN";
-            btnLogin.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(129, 60);
-            label1.Name = "label1";
-            label1.Size = new Size(75, 20);
-            label1.TabIndex = 3;
-            label1.Text = "Username\r\n";
-            // 
-            // linkSignUp
-            // 
-            linkSignUp.AutoSize = true;
-            linkSignUp.Location = new Point(343, 225);
-            linkSignUp.Name = "linkSignUp";
-            linkSignUp.Size = new Size(61, 20);
-            linkSignUp.TabIndex = 4;
-            linkSignUp.TabStop = true;
-            linkSignUp.Text = "Sign Up";
-            linkSignUp.LinkClicked += linkSignUp_LinkClicked;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(129, 124);
-            label2.Name = "label2";
-            label2.Size = new Size(70, 20);
-            label2.TabIndex = 5;
-            label2.Text = "Password";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(201, 225);
-            label3.Name = "label3";
-            label3.Size = new Size(136, 20);
-            label3.TabIndex = 6;
-            label3.Text = "Belum Punya akun?";
-            // 
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -136,6 +75,68 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(586, 286);
             panel2.TabIndex = 7;
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(218, 121);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(187, 27);
+            txtPassword.TabIndex = 1;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(201, 225);
+            label3.Name = "label3";
+            label3.Size = new Size(136, 20);
+            label3.TabIndex = 6;
+            label3.Text = "Belum Punya akun?";
+            // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(218, 60);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(187, 27);
+            txtUsername.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(129, 124);
+            label2.Name = "label2";
+            label2.Size = new Size(70, 20);
+            label2.TabIndex = 5;
+            label2.Text = "Password";
+            // 
+            // btnLogin
+            // 
+            btnLogin.Location = new Point(263, 181);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(94, 29);
+            btnLogin.TabIndex = 2;
+            btnLogin.Text = "LOGIN";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
+            // 
+            // linkSignUp
+            // 
+            linkSignUp.AutoSize = true;
+            linkSignUp.Location = new Point(343, 225);
+            linkSignUp.Name = "linkSignUp";
+            linkSignUp.Size = new Size(61, 20);
+            linkSignUp.TabIndex = 4;
+            linkSignUp.TabStop = true;
+            linkSignUp.Text = "Sign Up";
+            linkSignUp.LinkClicked += linkSignUp_LinkClicked;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(129, 60);
+            label1.Name = "label1";
+            label1.Size = new Size(75, 20);
+            label1.TabIndex = 3;
+            label1.Text = "Username\r\n";
             // 
             // FormLogin
             // 

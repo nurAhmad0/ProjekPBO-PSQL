@@ -92,6 +92,7 @@
             groupBox1.TabIndex = 14;
             groupBox1.TabStop = false;
             groupBox1.Text = "Role";
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // rdoPengantar
             // 
@@ -114,6 +115,7 @@
             rdoFarmer.TabStop = true;
             rdoFarmer.Text = "Farmer";
             rdoFarmer.UseVisualStyleBackColor = true;
+            rdoFarmer.CheckedChanged += rdoFarmer_CheckedChanged;
             // 
             // label6
             // 
@@ -139,6 +141,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(210, 27);
             txtPassword.TabIndex = 10;
+            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // txtUsername
             // 
@@ -146,6 +149,7 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(210, 27);
             txtUsername.TabIndex = 9;
+            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // label4
             // 
@@ -189,6 +193,7 @@
             txtTelp.Name = "txtTelp";
             txtTelp.Size = new Size(250, 27);
             txtTelp.TabIndex = 4;
+            txtTelp.TextChanged += txtTelp_TextChanged;
             // 
             // txtEmail
             // 
@@ -196,6 +201,7 @@
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(250, 27);
             txtEmail.TabIndex = 3;
+            txtEmail.TextChanged += txtEmail_TextChanged;
             // 
             // txtNama
             // 
@@ -203,6 +209,7 @@
             txtNama.Name = "txtNama";
             txtNama.Size = new Size(250, 27);
             txtNama.TabIndex = 2;
+            txtNama.TextChanged += txtNama_TextChanged;
             // 
             // dtpLahir
             // 
@@ -212,6 +219,7 @@
             dtpLahir.Name = "dtpLahir";
             dtpLahir.Size = new Size(250, 27);
             dtpLahir.TabIndex = 1;
+            dtpLahir.ValueChanged += dtpLahir_ValueChanged;
             // 
             // btnSignUp
             // 
@@ -221,6 +229,7 @@
             btnSignUp.TabIndex = 0;
             btnSignUp.Text = "SIGN UP";
             btnSignUp.UseVisualStyleBackColor = true;
+            btnSignUp.Click += btnSignUp_Click;
             // 
             // FormSignUp
             // 

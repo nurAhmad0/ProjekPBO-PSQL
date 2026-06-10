@@ -9,9 +9,9 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private LahanContext Context = new LahanContext();
 
-        public List<Lahan> CariBerdasarkanID(int id)
+        public Lahan? CariBerdasarkanID(int id)
         {
-            List<Lahan> dataLahan = new List<Lahan>();
+            if (id <= 0) return null;
 
             List<Lahan> getData = Context.GETALLLahan();
 
@@ -19,12 +19,12 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 if (L.getIdLahan() == id)
                 {
-                    dataLahan.Add(L);
-                    break;
+                    return L;
+                    
                 }
             }
 
-            return dataLahan;
+            return null;
         }
 
         public List<Lahan> CariBerdasarkanNama(string nama)

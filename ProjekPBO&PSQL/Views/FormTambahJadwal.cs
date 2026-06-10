@@ -23,5 +23,10 @@ namespace ProjekPBO_PSQL.Views
         {
             this.Close();
         }
+
+        private void FormTambahJadwal_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace ProjekPBO_PSQL.Models
 {
     class Orang
     {
+
         protected string Name;
         protected int IDOrang;
         protected decimal Saldo;

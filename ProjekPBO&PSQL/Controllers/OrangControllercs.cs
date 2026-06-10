@@ -11,9 +11,27 @@ namespace ProjekPBO_PSQL.Controllers
         private OrangContext Context = new OrangContext();
 
 
-        public List<Orang> CariBerdasarkanID(int id)
+        //public List<Orang> CariBerdasarkanID(int id)
+        //{
+        //    List<Orang> dataOrang = new List<Orang>();
+
+        //    List<Orang> getData = GetAllKaryawan();
+
+        //    foreach (var L in getData)
+        //    {
+        //        if (L.getIDOrang() == id)
+        //        {
+        //            dataOrang.Add(L);
+        //            break;
+        //        }
+        //    }
+
+        //    return dataOrang;
+        //}
+
+        public Orang? CariBerdasarkanID(int id)
         {
-            List<Orang> dataOrang = new List<Orang>();
+            if (id <= 0) return null;
 
             List<Orang> getData = GetAllKaryawan();
 
@@ -21,12 +39,11 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 if (L.getIDOrang() == id)
                 {
-                    dataOrang.Add(L);
-                    break;
+                    return L;
+
                 }
             }
-
-            return dataOrang;
+            return null;
         }
 
         public List<Orang> CariBerdasarkanNama(string nama)
@@ -263,21 +280,15 @@ namespace ProjekPBO_PSQL.Controllers
         }
 
 
-        public int GetIDanggota(string username, string password)
+        public Tuple<int, int> LoginOtentikasi(string username, string password)
         {
-            if (Validator.ApakahKosong(username))
+            if (Validator.ApakahKosong(username) || Validator.ApakahKosong(password))
             {
-                MessageBox.Show("username Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return 0;
+                MessageBox.Show("Username dan Password Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return new Tuple<int, int>(0, 0);
             }
 
-            if (Validator.ApakahKosong(password))
-            {
-                MessageBox.Show("password Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return 0;
-            }
-
-            return Context.GetIdAnggota(username, password);
+            return Context.GetIdAnggotadanRole(username, password);
         }
     }
 }

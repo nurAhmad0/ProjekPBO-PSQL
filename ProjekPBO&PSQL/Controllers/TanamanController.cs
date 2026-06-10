@@ -11,9 +11,27 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private TanamanContext Context = new TanamanContext();
 
-        public List<Tanaman> CariBerdasarkanID(int id)
+        //public List<Tanaman> CariBerdasarkanID(int id)
+        //{
+        //    List<Tanaman> dataTanaman = new List<Tanaman>();
+
+        //    List<Tanaman> getData = Context.GETALLTanaman();
+
+        //    foreach (var L in getData)
+        //    {
+        //        if (L.getIdTanaman() == id)
+        //        {
+        //            dataTanaman.Add(L);
+        //            break;
+        //        }
+        //    }
+
+        //    return dataTanaman;
+        //}
+
+        public Tanaman? CariBerdasarkanID(int id)
         {
-            List<Tanaman> dataTanaman = new List<Tanaman>();
+            if (id <= 0) return null;
 
             List<Tanaman> getData = Context.GETALLTanaman();
 
@@ -21,12 +39,12 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 if (L.getIdTanaman() == id)
                 {
-                    dataTanaman.Add(L);
-                    break;
+                    return L;
+
                 }
             }
 
-            return dataTanaman;
+            return null;
         }
 
         public List<Tanaman> CariBerdasarkanNama(string nama)

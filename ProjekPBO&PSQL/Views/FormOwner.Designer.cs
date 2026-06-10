@@ -48,6 +48,7 @@
         private void InitializeComponent()
         {
             panelTop = new Panel();
+            label7 = new Label();
             lblSaldo = new Label();
             lblNama = new Label();
             pictureBox1 = new PictureBox();
@@ -116,16 +117,6 @@
             btnTambahKaryawan = new Button();
             btnEditKaryawan = new Button();
             dgvKaryawan = new DataGridView();
-            colIdAnggota = new DataGridViewTextBoxColumn();
-            colNamaAnggota = new DataGridViewTextBoxColumn();
-            colNoTelp = new DataGridViewTextBoxColumn();
-            colTanggalLahir = new DataGridViewTextBoxColumn();
-            colEmail = new DataGridViewTextBoxColumn();
-            colStatusKerja = new DataGridViewTextBoxColumn();
-            colSaldo = new DataGridViewTextBoxColumn();
-            colUsername = new DataGridViewTextBoxColumn();
-            colPassword = new DataGridViewTextBoxColumn();
-            colIdRole = new DataGridViewTextBoxColumn();
             panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelBottom.SuspendLayout();
@@ -147,6 +138,7 @@
             // panelTop
             // 
             panelTop.BackColor = Color.RosyBrown;
+            panelTop.Controls.Add(label7);
             panelTop.Controls.Add(lblSaldo);
             panelTop.Controls.Add(lblNama);
             panelTop.Controls.Add(pictureBox1);
@@ -155,6 +147,18 @@
             panelTop.Name = "panelTop";
             panelTop.Size = new Size(1037, 107);
             panelTop.TabIndex = 0;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.Transparent;
+            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(225, 63);
+            label7.Name = "label7";
+            label7.Size = new Size(75, 31);
+            label7.TabIndex = 3;
+            label7.Text = "Nama";
+            label7.Click += label7_Click;
             // 
             // lblSaldo
             // 
@@ -308,6 +312,7 @@
             dgvLaporan.RowHeadersWidth = 51;
             dgvLaporan.Size = new Size(1031, 330);
             dgvLaporan.TabIndex = 0;
+            dgvLaporan.CellContentClick += dgvLaporan_CellContentClick;
             // 
             // colIdLaporan
             // 
@@ -765,82 +770,11 @@
             // dgvKaryawan
             // 
             dgvKaryawan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKaryawan.Columns.AddRange(new DataGridViewColumn[] { colIdAnggota, colNamaAnggota, colNoTelp, colTanggalLahir, colEmail, colStatusKerja, colSaldo, colUsername, colPassword, colIdRole });
             dgvKaryawan.Location = new Point(3, 50);
             dgvKaryawan.Name = "dgvKaryawan";
             dgvKaryawan.RowHeadersWidth = 51;
             dgvKaryawan.Size = new Size(1031, 330);
             dgvKaryawan.TabIndex = 0;
-            // 
-            // colIdAnggota
-            // 
-            colIdAnggota.HeaderText = "ID";
-            colIdAnggota.MinimumWidth = 6;
-            colIdAnggota.Name = "colIdAnggota";
-            colIdAnggota.Width = 125;
-            // 
-            // colNamaAnggota
-            // 
-            colNamaAnggota.HeaderText = "Nama Karyawan";
-            colNamaAnggota.MinimumWidth = 6;
-            colNamaAnggota.Name = "colNamaAnggota";
-            colNamaAnggota.Width = 125;
-            // 
-            // colNoTelp
-            // 
-            colNoTelp.HeaderText = "No. Telp";
-            colNoTelp.MinimumWidth = 6;
-            colNoTelp.Name = "colNoTelp";
-            colNoTelp.Width = 125;
-            // 
-            // colTanggalLahir
-            // 
-            colTanggalLahir.HeaderText = "Tanggal Lahir";
-            colTanggalLahir.MinimumWidth = 6;
-            colTanggalLahir.Name = "colTanggalLahir";
-            colTanggalLahir.Width = 125;
-            // 
-            // colEmail
-            // 
-            colEmail.HeaderText = "Email";
-            colEmail.MinimumWidth = 6;
-            colEmail.Name = "colEmail";
-            colEmail.Width = 125;
-            // 
-            // colStatusKerja
-            // 
-            colStatusKerja.HeaderText = "Status Kerja";
-            colStatusKerja.MinimumWidth = 6;
-            colStatusKerja.Name = "colStatusKerja";
-            colStatusKerja.Width = 125;
-            // 
-            // colSaldo
-            // 
-            colSaldo.HeaderText = "Saldo";
-            colSaldo.MinimumWidth = 6;
-            colSaldo.Name = "colSaldo";
-            colSaldo.Width = 125;
-            // 
-            // colUsername
-            // 
-            colUsername.HeaderText = "Username";
-            colUsername.MinimumWidth = 6;
-            colUsername.Name = "colUsername";
-            colUsername.Width = 125;
-            // 
-            // colPassword
-            // 
-            colPassword.HeaderText = "Password";
-            colPassword.MinimumWidth = 6;
-            colPassword.Name = "colPassword";
-            colPassword.Width = 125;
-            // 
-            // colIdRole
-            // 
-            colIdRole.HeaderText = "Role";
-            colIdRole.MinimumWidth = 6;
-            colIdRole.Name = "colIdRole";
-            colIdRole.Width = 125;
             // 
             // FormOwner
             // 
@@ -950,15 +884,6 @@
         private DataGridViewTextBoxColumn colTotalUpah;
         private DataGridViewTextBoxColumn colStatusGlobal;
         private DataGridViewTextBoxColumn colLahanPelangganJadwal;
-        private DataGridViewTextBoxColumn colIdAnggota;
-        private DataGridViewTextBoxColumn colNamaAnggota;
-        private DataGridViewTextBoxColumn colNoTelp;
-        private DataGridViewTextBoxColumn colTanggalLahir;
-        private DataGridViewTextBoxColumn colEmail;
-        private DataGridViewTextBoxColumn colStatusKerja;
-        private DataGridViewTextBoxColumn colSaldo;
-        private DataGridViewTextBoxColumn colUsername;
-        private DataGridViewTextBoxColumn colPassword;
-        private DataGridViewTextBoxColumn colIdRole;
+        private Label label7;
     }
 }

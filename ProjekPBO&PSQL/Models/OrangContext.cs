@@ -131,17 +131,17 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "INSERT INTO anggota_perusahaan (id_anggota, nama_anggota, no_telp, tanggal_lahir, email, status_kerja, saldo, username, password, id_role) VALUES  (@Id_anggota, @Nama_anggota, @No_telp, @Tanggal_lahir, @Email, @Status_kerja, @Saldo, @Username, @Password, @Id_role)", conn);
-                query1.Parameters.AddWithValue("ID_Anggota", Orang.getIDOrang());
-                query1.Parameters.AddWithValue("Nama_Anggota", Orang.getName());
-                query1.Parameters.AddWithValue("NO_TELP", Orang.getNO_TELP());
-                query1.Parameters.AddWithValue("Tanggal_Lahir", Orang.getTanggalLahir());
-                query1.Parameters.AddWithValue("Email", Orang.getEmail());
-                query1.Parameters.AddWithValue("Status_kerja", Orang.getStatus());
-                query1.Parameters.AddWithValue("Saldo", Orang.getSaldo());
-                query1.Parameters.AddWithValue("Username", Orang.getUsername());
-                query1.Parameters.AddWithValue("Password", Orang.getPassword());
-                query1.Parameters.AddWithValue("Id_role", Orang.getId_Role());
+                    "INSERT INTO anggota_perusahaan (nama_anggota, no_telp, tanggal_lahir, email, status_kerja, saldo, username, password, id_role) VALUES (@nama, @no_telp, @tanggal_lahir, @email, @status_kerja::status_kerja, @saldo, @username, @password, @id_role)", conn);
+
+                query1.Parameters.AddWithValue("nama", Orang.getName());
+                query1.Parameters.AddWithValue("no_telp", Orang.getNO_TELP());
+                query1.Parameters.AddWithValue("tanggal_lahir", Orang.getTanggalLahir());
+                query1.Parameters.AddWithValue("email", Orang.getEmail());
+                query1.Parameters.AddWithValue("status_kerja", Orang.getStatus());
+                query1.Parameters.AddWithValue("saldo", Orang.getSaldo());
+                query1.Parameters.AddWithValue("username", Orang.getUsername());
+                query1.Parameters.AddWithValue("password", Orang.getPassword());
+                query1.Parameters.AddWithValue("id_role", Orang.getId_Role());
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)
                 {
@@ -195,7 +195,7 @@ namespace ProjekPBO_PSQL.Models
                 else if (string.IsNullOrEmpty(Username) && string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(Status))
                 {
                     using var query1 = new NpgsqlCommand(
-                        "Update anggota_perusahaan set status_kerja=@Status where id_anggota = @ID_Anggota ", conn);
+                        "Update anggota_perusahaan set status_kerja=@Status::status_kerja where id_anggota = @ID_Anggota ", conn);
                     query1.Parameters.AddWithValue("Status", Status);
                     query1.Parameters.AddWithValue("ID_Anggota", Orang.getIDOrang());
                     int DampakBaris = query1.ExecuteNonQuery();
@@ -207,7 +207,7 @@ namespace ProjekPBO_PSQL.Models
                 else
                 {
                     using var query1 = new NpgsqlCommand(
-                        "Update anggota_perusahaan set nama_anggota=@Nama_Anggota, no_telp=@NO_TELP, tanggal_lahir=@Tanggal_Lahir, email=@Email, status_kerja=@Status_kerja, saldo=@Saldo, id_role=@Id_role where id_anggota = @ID_Anggota", conn);
+                        "Update anggota_perusahaan set nama_anggota=@Nama_Anggota, no_telp=@NO_TELP, tanggal_lahir=@Tanggal_Lahir, email=@Email, status_kerja=@Status_kerja::status_kerja, saldo=@Saldo, id_role=@Id_role where id_anggota = @ID_Anggota", conn);
                     query1.Parameters.AddWithValue("ID_Anggota", Orang.getIDOrang());
                     query1.Parameters.AddWithValue("Nama_Anggota", Orang.getName());
                     query1.Parameters.AddWithValue("NO_TELP", Orang.getNO_TELP());
@@ -387,36 +387,41 @@ namespace ProjekPBO_PSQL.Models
             }
         }
 
-        public int GetIdAnggota(string username, string password)
+
+
+        public Tuple<int, int> GetIdAnggotadanRole(string username, string password)
         {
+            int idAnggota = 0;
+            int idRole = 0;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                string sql = "SELECT id_anggota FROM anggota_perusahaan WHERE username = @username AND password = @password";
 
-                using var query1 = new NpgsqlCommand(sql, conn);
+                using var query1 = new NpgsqlCommand("SELECT id_anggota, id_role FROM anggota_perusahaan WHERE username = @username AND password = @password", conn);
                 query1.Parameters.AddWithValue("username", username);
                 query1.Parameters.AddWithValue("password", password);
 
                 using var reader = query1.ExecuteReader();
                 if (reader.Read())
                 {
-                    return Convert.ToInt32(reader["id_anggota"]);
+                    idAnggota = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                    idRole = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
                 }
+                return new Tuple<int, int>(idAnggota, idRole);
 
             }
             catch (NpgsqlException ex)
             {
                 MessageBox.Show("Gagal autentikasi ke database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
+                return new Tuple<int, int>(idAnggota, idRole);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Terjadi kesalahan sistem login: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
+                return new Tuple<int, int>(idAnggota, idRole);
             }
-            return 0;
+            
         }
     }
 }

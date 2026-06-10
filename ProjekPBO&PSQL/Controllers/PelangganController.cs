@@ -9,9 +9,27 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private PelangganContext Context = new PelangganContext();
 
-        public List<Pelanggan> CariBerdasarkanID(int id)
+        //public List<Pelanggan> CariBerdasarkanID(int id)
+        //{
+        //    List<Pelanggan> dataPelanggan = new List<Pelanggan>();
+
+        //    List<Pelanggan> getData = Context.getAllPelanggan();
+
+        //    foreach (var L in getData)
+        //    {
+        //        if (L.getIdPelanggan() == id)
+        //        {
+        //            dataPelanggan.Add(L);
+        //            break;
+        //        }
+        //    }
+
+        //    return dataPelanggan;
+        //}
+
+        public Pelanggan? CariBerdasarkanID(int id)
         {
-            List<Pelanggan> dataPelanggan = new List<Pelanggan>();
+            if (id <= 0) return null;
 
             List<Pelanggan> getData = Context.getAllPelanggan();
 
@@ -19,12 +37,11 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 if (L.getIdPelanggan() == id)
                 {
-                    dataPelanggan.Add(L);
-                    break;
+                    return L;
+
                 }
             }
-
-            return dataPelanggan;
+            return null;
         }
 
         public List<Pelanggan> CariBerdasarkanNama(string nama)
