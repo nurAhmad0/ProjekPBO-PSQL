@@ -398,7 +398,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
 
-                using var query1 = new NpgsqlCommand("SELECT id_anggota, id_role FROM anggota_perusahaan WHERE username = @username AND password = @password", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_anggota, id_role FROM anggota_perusahaan WHERE username = @username AND password = @password and Status_kerja = 'Aktif'", conn);
                 query1.Parameters.AddWithValue("username", username);
                 query1.Parameters.AddWithValue("password", password);
 

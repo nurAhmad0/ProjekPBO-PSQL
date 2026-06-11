@@ -58,6 +58,11 @@ namespace ProjekPBO_PSQL.Controllers
             }
         }
 
+        public static bool ApakahHanyaHurufDanSpasi(string input)
+        {
+            return input.All(ch => char.IsLetter(ch) || char.IsWhiteSpace(ch));
+        }
+
         public static bool ApakahHurufdanAngka(string input)
         {
             if (input.All(ch => char.IsLetterOrDigit(ch)))

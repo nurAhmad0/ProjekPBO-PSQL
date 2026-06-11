@@ -12,15 +12,27 @@ namespace ProjekPBO_PSQL.Views
 {
     public partial class FormOwner : Form
     {
-        OrangController Controllers = new OrangController();
+        OrangController ControllersOrang = new OrangController();
+        TanamanController ControllersTanaman = new TanamanController();
         Orang owner;
         public FormOwner(int id)
         {
             InitializeComponent();
-            owner = Controllers.CariBerdasarkanID(id)!;
+            owner = ControllersOrang.CariBerdasarkanID(id)!;
 
             label7.Text = owner.getSaldo().ToString("N0");
             lblNama.Text = owner.getUsername();
+            panelKaryawan.Visible = true;
+            panelDetailKaryawan.Visible = false;
+            List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                ID = o.getIDOrang(),
+                Nama = o.getName(),
+                Role = o.getNamaRole()
+            }).ToList();
+            dgvKaryawan.DataSource = dataUntukGrid;
+            dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void dgvLahan_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -31,7 +43,7 @@ namespace ProjekPBO_PSQL.Views
         private void btnKaryawan_Click(object sender, EventArgs e)
         {
             PindahPanel(panelKaryawan, "Karyawan");
-            List<Orang> listAsli = Controllers.GetAllKaryawan();
+            List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
             var dataUntukGrid = listAsli.Select(o => new
             {
                 ID = o.getIDOrang(),
@@ -50,6 +62,16 @@ namespace ProjekPBO_PSQL.Views
         private void btnTanaman_Click(object sender, EventArgs e)
         {
             PindahPanel(panelTanaman, "Tanaman");
+            List<Tanaman> listAsli = ControllersTanaman.GetAllTanaman();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                ID = o.getIdTanaman(),
+                Nama = o.getNamaTanaman(),
+                Harga = o.getHargaTanaman(),
+                Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
+            }).ToList();
+            dgvKaryawan.DataSource = dataUntukGrid;
+            dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btnJadwal_Click(object sender, EventArgs e)
@@ -66,7 +88,7 @@ namespace ProjekPBO_PSQL.Views
         {
             PindahPanel(panelLaporan, "Laporan");
         }
-        
+
         private void btnTambahKaryawan_Click(object sender, EventArgs e)
         {
             FormTambahKaryawan popUpTambah = new FormTambahKaryawan();
@@ -74,6 +96,7 @@ namespace ProjekPBO_PSQL.Views
         }
         private void btnEditKaryawan_Click(object sender, EventArgs e)
         {
+            PindahPanel(panelDetailKaryawan, "DetailKaryawan");
             if (dgvKaryawan.CurrentRow == null)
             {
                 MessageBox.Show("Silakan pilih salah satu baris karyawan terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -83,24 +106,22 @@ namespace ProjekPBO_PSQL.Views
             try
             {
                 int idTerpilih = Convert.ToInt32(dgvKaryawan.CurrentRow.Cells["ID"].Value);
-                Orang karyawanTerpilih = Controllers.CariBerdasarkanID(idTerpilih)!;
+                Orang karyawanTerpilih = ControllersOrang.CariBerdasarkanID(idTerpilih)!;
                 if (karyawanTerpilih == null)
                 {
                     MessageBox.Show("Data karyawan tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                FormEditKaryawan popUpEdit = new FormEditKaryawan();
-                popUpEdit.txtIdAnggota.Text = karyawanTerpilih.getIDOrang().ToString();
-                popUpEdit.idkaryawan = karyawanTerpilih.getIDOrang();
-                popUpEdit.txtNama.Text = karyawanTerpilih.getName();
-                popUpEdit.txtNoTelp.Text = karyawanTerpilih.getNO_TELP();
-                popUpEdit.dtpTanggalLahir.Value = karyawanTerpilih.getTanggalLahir();
-                popUpEdit.txtEmail.Text = karyawanTerpilih.getEmail();
-                popUpEdit.cbStatusKerja.Text = karyawanTerpilih.getStatus();
-                popUpEdit.txtSaldo.Text = karyawanTerpilih.getSaldo().ToString();
-                popUpEdit.txtUsername.Text = karyawanTerpilih.getUsername();
-                popUpEdit.txtPassword.Text = karyawanTerpilih.getPassword();
-                popUpEdit.ShowDialog();
+                lbID.Text = karyawanTerpilih.getIDOrang().ToString();
+                lbNama.Text = karyawanTerpilih.getName();
+                lbNOTELP.Text = karyawanTerpilih.getNO_TELP();
+                lbTanggalLahir.Text = karyawanTerpilih.getTanggalLahir().ToString("dd MMMM yyyy");
+                lbEmail.Text = karyawanTerpilih.getEmail();
+                lbStatusKerja.Text = karyawanTerpilih.getStatus();
+                lbSaldo.Text = karyawanTerpilih.getSaldo().ToString("N0");
+                lbUsername.Text = karyawanTerpilih.getUsername();
+                lbPassword.Text = karyawanTerpilih.getPassword();
+                lbRole.Text = karyawanTerpilih.getNamaRole();
             }
             catch (Exception ex)
             {
@@ -131,23 +152,70 @@ namespace ProjekPBO_PSQL.Views
         private void btnTambahTanaman_Click(object sender, EventArgs e)
         {
             FormTambahTanaman popUpTambah = new FormTambahTanaman();
-            popUpTambah.ShowDialog();
+            this.Hide();
+            DialogResult hasil = popUpTambah.ShowDialog();
+            this.Show();
+            if (hasil == DialogResult.OK)
+            {
+                List<Tanaman> listAsli = ControllersTanaman.GetAllTanaman();
+                var dataUntukGrid = listAsli.Select(o => new
+                {
+                    ID = o.getIdTanaman(),
+                    Nama = o.getNamaTanaman(),
+                    Harga = o.getHargaTanaman(),
+                    Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
+                }).ToList();
+                dgvKaryawan.DataSource = dataUntukGrid;
+                dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
         }
         private void btnEditTanaman_Click(object sender, EventArgs e)
         {
             if (dgvTanaman.CurrentRow == null)
             {
-                MessageBox.Show("Silakan pilih salah satu baris tanaman terlebih dahulu!", "Peringatan");
+                MessageBox.Show("Silakan pilih salah satu baris tanaman terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            FormEditTanaman popUpEdit = new FormEditTanaman();
-            popUpEdit.txtIdTanaman.Text = dgvTanaman.CurrentRow.Cells["colIdTanaman"].Value.ToString();
-            popUpEdit.txtNamaTanaman.Text = dgvTanaman.CurrentRow.Cells["colNamaTanaman"].Value.ToString();
-            popUpEdit.txtDurasiPanen.Text = dgvTanaman.CurrentRow.Cells["colDurasiPanen"].Value.ToString();
-            popUpEdit.txtHargaTanaman.Text = dgvTanaman.CurrentRow.Cells["colHargaTanaman"].Value.ToString();
+            try
+            {
+                int idTerpilih = Convert.ToInt32(dgvTanaman.CurrentRow.Cells["ID"].Value);
+                Tanaman tanamanTerpilih = ControllersTanaman.CariBerdasarkanID(idTerpilih)!;
+                if (tanamanTerpilih == null)
+                {
+                    MessageBox.Show("Data tanaman tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            popUpEdit.ShowDialog();
+                FormEditTanaman popUpEdit = new FormEditTanaman();
+                popUpEdit.txtIdTanaman.Text = tanamanTerpilih.getIdTanaman().ToString();
+                popUpEdit.txtNamaTanaman.Text = tanamanTerpilih.getNamaTanaman();
+                popUpEdit.txtDurasiPanen.Text = tanamanTerpilih.getEstimasiKadaluarsa().ToString();
+                popUpEdit.txtHargaTanaman.Text = tanamanTerpilih.getHargaTanaman().ToString();
+
+                this.Hide();
+                DialogResult hasil = popUpEdit.ShowDialog();
+                this.Show();
+                if (hasil == DialogResult.OK)
+                {
+                    List<Tanaman> listAsli = ControllersTanaman.GetAllTanaman();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIdTanaman(),
+                        Nama = o.getNamaTanaman(),
+                        Harga = o.getHargaTanaman(),
+                        Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
+                    }).ToList();
+                    dgvKaryawan.DataSource = dataUntukGrid;
+                    dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan saat mengambil data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
         private void btnTambahJadwal_Click(object sender, EventArgs e)
         {
@@ -207,6 +275,141 @@ namespace ProjekPBO_PSQL.Views
         private void dgvLaporan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btBack_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelKaryawan, "Karyawan");
+            List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                ID = o.getIDOrang(),
+                Nama = o.getName(),
+                Role = o.getNamaRole()
+            }).ToList();
+            dgvKaryawan.DataSource = dataUntukGrid;
+            dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void btHapus_Click(object sender, EventArgs e)
+        {
+            //DialogResult konfirmasi = MessageBox.Show("Apakah Anda yakin ingin menonaktifkan data ini?","Konfirmasi Hapus",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            //if (konfirmasi == DialogResult.Yes)
+            //{
+            //    try
+            //    {
+            //        // --- TARUH LOGIKA PANGGIL CONTROLLER HAPUS DI SINI ---
+            //        // Contoh: 
+            //        // bool apakahSukses = ControllersOrang.HapusKaryawan(idTerpilih);
+
+            //        // if (apakahSukses) {
+            //        //     MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        //     // Refresh grid kamu di sini
+            //        // }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Gagal menghapus data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+        }
+
+        private void btEdit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idTerpilih = Convert.ToInt32(lbID.Text);
+                Orang karyawanTerpilih = ControllersOrang.CariBerdasarkanID(idTerpilih)!;
+                if (karyawanTerpilih == null)
+                {
+                    MessageBox.Show("Data karyawan tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                FormEditKaryawan popUpEdit = new FormEditKaryawan();
+                popUpEdit.txtIdAnggota.Text = karyawanTerpilih.getIDOrang().ToString();
+                popUpEdit.txtNama.Text = karyawanTerpilih.getName();
+                popUpEdit.txtNoTelp.Text = karyawanTerpilih.getNO_TELP();
+                popUpEdit.dtpTanggalLahir.Value = karyawanTerpilih.getTanggalLahir();
+                popUpEdit.txtEmail.Text = karyawanTerpilih.getEmail();
+                popUpEdit.cbStatusKerja.Text = karyawanTerpilih.getStatus();
+                popUpEdit.txtSaldo.Text = karyawanTerpilih.getSaldo().ToString();
+                popUpEdit.txtUsername.Text = karyawanTerpilih.getUsername();
+                popUpEdit.txtPassword.Text = karyawanTerpilih.getPassword();
+                this.Hide();
+                DialogResult hasil = popUpEdit.ShowDialog();
+                this.Show();
+                if (hasil == DialogResult.OK)
+                {
+                    Orang karyawanTerbaru = ControllersOrang.CariBerdasarkanID(idTerpilih)!;
+
+                    if (karyawanTerbaru != null)
+                    {
+                        lbID.Text = karyawanTerbaru.getIDOrang().ToString();
+                        lbNama.Text = karyawanTerbaru.getName();
+                        lbNOTELP.Text = karyawanTerbaru.getNO_TELP();
+                        lbTanggalLahir.Text = karyawanTerbaru.getTanggalLahir().ToString("dd MMMM yyyy");
+                        lbEmail.Text = karyawanTerbaru.getEmail();
+                        lbStatusKerja.Text = karyawanTerbaru.getStatus();
+                        lbSaldo.Text = karyawanTerbaru.getSaldo().ToString("N0");
+                        lbUsername.Text = karyawanTerbaru.getUsername();
+                        lbPassword.Text = karyawanTerbaru.getPassword();
+                        lbRole.Text = karyawanTerbaru.getNamaRole();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan saat mengambil data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = ControllersTanaman.Get10TanamanPalingDIbeli();
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    dgvTanaman.DataSource = dt;
+                    dgvTanaman.Columns["id_tanaman"]!.HeaderText = "ID Tanaman";
+                    dgvTanaman.Columns["nama_tanaman"]!.HeaderText = "Nama Tanaman";
+                    dgvTanaman.Columns["harga"]!.HeaderText = "Harga Jual (Rp)";
+                    dgvTanaman.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+                else
+                {
+                    MessageBox.Show("Tidak ada data tanaman yang ditemukan atau belum ada transaksi.", "Data Kosong", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dgvTanaman.DataSource = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat data ke tabel: " + ex.Message, "Kesalahan Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btTanmanaBelumLaku_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = ControllersTanaman.GetTanamanBelumlaku();
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    dgvTanaman.DataSource = dt;
+                    dgvTanaman.Columns["id_tanaman"]!.HeaderText = "ID Tanaman";
+                    dgvTanaman.Columns["nama_tanaman"]!.HeaderText = "Nama Tanaman";
+                    dgvTanaman.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+                else
+                {
+                    MessageBox.Show("Tidak ada data tanaman yang ditemukan atau belum ada transaksi.", "Data Kosong", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dgvTanaman.DataSource = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat data ke tabel: " + ex.Message, "Kesalahan Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

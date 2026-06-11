@@ -41,6 +41,7 @@
             panelJadwal.Visible = false;
             panelPelanggan.Visible = false;
             panelLaporan.Visible = false;
+            panelDetailKaryawan.Visible = false;
 
             panelTujuan.Visible = true;
             bagianAktif = namaBagian;
@@ -60,67 +61,62 @@
             btnLahan = new Button();
             btnKaryawan = new Button();
             panelMiddle = new Panel();
+            panelDetailKaryawan = new Panel();
+            btEdit = new Button();
+            btBack = new Button();
+            lbPassword = new Label();
+            lbUsername = new Label();
+            lbSaldo = new Label();
+            lbRole = new Label();
+            label12 = new Label();
+            lbTanggalLahir = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            lbStatusKerja = new Label();
+            label16 = new Label();
+            label15 = new Label();
+            label14 = new Label();
+            TanggalLahir = new Label();
+            lbID = new Label();
+            label11 = new Label();
+            lbEmail = new Label();
+            lbNOTELP = new Label();
+            lbNama = new Label();
             panelLaporan = new Panel();
             label6 = new Label();
             dgvLaporan = new DataGridView();
-            colIdLaporan = new DataGridViewTextBoxColumn();
-            colWaktuLapor = new DataGridViewTextBoxColumn();
-            colIsiLaporan = new DataGridViewTextBoxColumn();
-            colTanggalJadwalLaporan = new DataGridViewTextBoxColumn();
-            colKeteranganJadwalLaporan = new DataGridViewTextBoxColumn();
-            colDivisiLaporan = new DataGridViewTextBoxColumn();
-            colNamaPelapor = new DataGridViewTextBoxColumn();
-            colNoTelpPelapor = new DataGridViewTextBoxColumn();
             panelPelanggan = new Panel();
             label5 = new Label();
             btnTambahPelanggan = new Button();
             btnEditPelanggan = new Button();
             dgvPelanggan = new DataGridView();
-            colIdPelanggan = new DataGridViewTextBoxColumn();
-            colNamaPelanggan = new DataGridViewTextBoxColumn();
-            colNoTelpPelanggan = new DataGridViewTextBoxColumn();
-            colEmailPelanggan = new DataGridViewTextBoxColumn();
-            colAlamatPelanggan = new DataGridViewTextBoxColumn();
             panelJadwal = new Panel();
             label4 = new Label();
             btnTambahJadwal = new Button();
             btnEditJadwal = new Button();
             dgvJadwal = new DataGridView();
-            colIdJadwal = new DataGridViewTextBoxColumn();
-            colTanggalJadwal = new DataGridViewTextBoxColumn();
-            colKeteranganKegiatan = new DataGridViewTextBoxColumn();
-            colTipeJadwal = new DataGridViewTextBoxColumn();
-            colJumlahAnggota = new DataGridViewTextBoxColumn();
-            colTotalUpah = new DataGridViewTextBoxColumn();
-            colStatusGlobal = new DataGridViewTextBoxColumn();
-            colLahanPelangganJadwal = new DataGridViewTextBoxColumn();
             panelTanaman = new Panel();
             label3 = new Label();
             btnTambahTanaman = new Button();
             btnEditTanaman = new Button();
             dgvTanaman = new DataGridView();
-            colIdTanaman = new DataGridViewTextBoxColumn();
-            colNamaTanaman = new DataGridViewTextBoxColumn();
-            colDurasiPanen = new DataGridViewTextBoxColumn();
-            colHargaTanaman = new DataGridViewTextBoxColumn();
             panelLahan = new Panel();
             label2 = new Label();
             btnTambahLahan = new Button();
             btnEditLahan = new Button();
             dgvLahan = new DataGridView();
-            colIdLahan = new DataGridViewTextBoxColumn();
-            colNamaLahan = new DataGridViewTextBoxColumn();
-            colLuasLahan = new DataGridViewTextBoxColumn();
-            colStatusLahan = new DataGridViewTextBoxColumn();
             panelKaryawan = new Panel();
             label1 = new Label();
             btnTambahKaryawan = new Button();
             btnEditKaryawan = new Button();
             dgvKaryawan = new DataGridView();
+            bt10TanamanPalingBanyakDitanam = new Button();
+            btTanmanaBelumLaku = new Button();
             panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelBottom.SuspendLayout();
             panelMiddle.SuspendLayout();
+            panelDetailKaryawan.SuspendLayout();
             panelLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).BeginInit();
             panelPelanggan.SuspendLayout();
@@ -271,10 +267,11 @@
             // 
             // panelMiddle
             // 
+            panelMiddle.Controls.Add(panelTanaman);
+            panelMiddle.Controls.Add(panelDetailKaryawan);
             panelMiddle.Controls.Add(panelLaporan);
             panelMiddle.Controls.Add(panelPelanggan);
             panelMiddle.Controls.Add(panelJadwal);
-            panelMiddle.Controls.Add(panelTanaman);
             panelMiddle.Controls.Add(panelLahan);
             panelMiddle.Controls.Add(panelKaryawan);
             panelMiddle.Dock = DockStyle.Fill;
@@ -282,6 +279,216 @@
             panelMiddle.Name = "panelMiddle";
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 2;
+            // 
+            // panelDetailKaryawan
+            // 
+            panelDetailKaryawan.Controls.Add(btEdit);
+            panelDetailKaryawan.Controls.Add(btBack);
+            panelDetailKaryawan.Controls.Add(lbPassword);
+            panelDetailKaryawan.Controls.Add(lbUsername);
+            panelDetailKaryawan.Controls.Add(lbSaldo);
+            panelDetailKaryawan.Controls.Add(lbRole);
+            panelDetailKaryawan.Controls.Add(label12);
+            panelDetailKaryawan.Controls.Add(lbTanggalLahir);
+            panelDetailKaryawan.Controls.Add(label9);
+            panelDetailKaryawan.Controls.Add(label8);
+            panelDetailKaryawan.Controls.Add(lbStatusKerja);
+            panelDetailKaryawan.Controls.Add(label16);
+            panelDetailKaryawan.Controls.Add(label15);
+            panelDetailKaryawan.Controls.Add(label14);
+            panelDetailKaryawan.Controls.Add(TanggalLahir);
+            panelDetailKaryawan.Controls.Add(lbID);
+            panelDetailKaryawan.Controls.Add(label11);
+            panelDetailKaryawan.Controls.Add(lbEmail);
+            panelDetailKaryawan.Controls.Add(lbNOTELP);
+            panelDetailKaryawan.Controls.Add(lbNama);
+            panelDetailKaryawan.Location = new Point(0, 0);
+            panelDetailKaryawan.Name = "panelDetailKaryawan";
+            panelDetailKaryawan.Size = new Size(1037, 377);
+            panelDetailKaryawan.TabIndex = 4;
+            // 
+            // btEdit
+            // 
+            btEdit.Location = new Point(158, 15);
+            btEdit.Name = "btEdit";
+            btEdit.Size = new Size(94, 29);
+            btEdit.TabIndex = 19;
+            btEdit.Text = "Edit";
+            btEdit.UseVisualStyleBackColor = true;
+            btEdit.Click += btEdit_Click;
+            // 
+            // btBack
+            // 
+            btBack.Location = new Point(22, 15);
+            btBack.Name = "btBack";
+            btBack.Size = new Size(94, 29);
+            btBack.TabIndex = 18;
+            btBack.Text = "Kembali";
+            btBack.UseVisualStyleBackColor = true;
+            btBack.Click += btBack_Click;
+            // 
+            // lbPassword
+            // 
+            lbPassword.AutoSize = true;
+            lbPassword.Location = new Point(816, 323);
+            lbPassword.Name = "lbPassword";
+            lbPassword.Size = new Size(70, 20);
+            lbPassword.TabIndex = 17;
+            lbPassword.Text = "Password";
+            // 
+            // lbUsername
+            // 
+            lbUsername.AutoSize = true;
+            lbUsername.Location = new Point(816, 264);
+            lbUsername.Name = "lbUsername";
+            lbUsername.Size = new Size(75, 20);
+            lbUsername.TabIndex = 16;
+            lbUsername.Text = "Username";
+            // 
+            // lbSaldo
+            // 
+            lbSaldo.AutoSize = true;
+            lbSaldo.Location = new Point(816, 200);
+            lbSaldo.Name = "lbSaldo";
+            lbSaldo.Size = new Size(47, 20);
+            lbSaldo.TabIndex = 15;
+            lbSaldo.Text = "Saldo";
+            // 
+            // lbRole
+            // 
+            lbRole.AutoSize = true;
+            lbRole.Location = new Point(816, 149);
+            lbRole.Name = "lbRole";
+            lbRole.Size = new Size(39, 20);
+            lbRole.TabIndex = 14;
+            lbRole.Text = "Role";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(95, 323);
+            label12.Name = "label12";
+            label12.Size = new Size(94, 20);
+            label12.TabIndex = 13;
+            label12.Text = "Status Kerja :";
+            // 
+            // lbTanggalLahir
+            // 
+            lbTanggalLahir.AutoSize = true;
+            lbTanggalLahir.Location = new Point(95, 264);
+            lbTanggalLahir.Name = "lbTanggalLahir";
+            lbTanggalLahir.Size = new Size(104, 20);
+            lbTanggalLahir.TabIndex = 12;
+            lbTanggalLahir.Text = "Tanggal Lahir :";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(95, 200);
+            label9.Name = "label9";
+            label9.Size = new Size(53, 20);
+            label9.TabIndex = 11;
+            label9.Text = "Email :";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(95, 149);
+            label8.Name = "label8";
+            label8.Size = new Size(94, 20);
+            label8.TabIndex = 10;
+            label8.Text = "Nomer Telp :";
+            // 
+            // lbStatusKerja
+            // 
+            lbStatusKerja.AutoSize = true;
+            lbStatusKerja.Location = new Point(225, 323);
+            lbStatusKerja.Name = "lbStatusKerja";
+            lbStatusKerja.Size = new Size(87, 20);
+            lbStatusKerja.TabIndex = 9;
+            lbStatusKerja.Text = "Status Kerja";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(681, 200);
+            label16.Name = "label16";
+            label16.Size = new Size(54, 20);
+            label16.TabIndex = 8;
+            label16.Text = "Saldo :";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(681, 149);
+            label15.Name = "label15";
+            label15.Size = new Size(90, 20);
+            label15.TabIndex = 7;
+            label15.Text = "Nama Role :";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(681, 264);
+            label14.Name = "label14";
+            label14.Size = new Size(82, 20);
+            label14.TabIndex = 6;
+            label14.Text = "Username :";
+            // 
+            // TanggalLahir
+            // 
+            TanggalLahir.AutoSize = true;
+            TanggalLahir.Location = new Point(225, 264);
+            TanggalLahir.Name = "TanggalLahir";
+            TanggalLahir.Size = new Size(93, 20);
+            TanggalLahir.TabIndex = 5;
+            TanggalLahir.Text = "TanggalLahir";
+            // 
+            // lbID
+            // 
+            lbID.AutoSize = true;
+            lbID.Location = new Point(382, 94);
+            lbID.Name = "lbID";
+            lbID.Size = new Size(22, 20);
+            lbID.TabIndex = 4;
+            lbID.Text = "id";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(681, 323);
+            label11.Name = "label11";
+            label11.Size = new Size(77, 20);
+            label11.TabIndex = 3;
+            label11.Text = "Password :";
+            // 
+            // lbEmail
+            // 
+            lbEmail.AutoSize = true;
+            lbEmail.Location = new Point(225, 200);
+            lbEmail.Name = "lbEmail";
+            lbEmail.Size = new Size(46, 20);
+            lbEmail.TabIndex = 2;
+            lbEmail.Text = "Email";
+            // 
+            // lbNOTELP
+            // 
+            lbNOTELP.AutoSize = true;
+            lbNOTELP.Location = new Point(225, 149);
+            lbNOTELP.Name = "lbNOTELP";
+            lbNOTELP.Size = new Size(54, 20);
+            lbNOTELP.TabIndex = 1;
+            lbNOTELP.Text = "noTelp";
+            // 
+            // lbNama
+            // 
+            lbNama.AutoSize = true;
+            lbNama.Font = new Font("Segoe UI Black", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbNama.Location = new Point(429, 80);
+            lbNama.Name = "lbNama";
+            lbNama.Size = new Size(99, 38);
+            lbNama.TabIndex = 0;
+            lbNama.Text = "Nama";
             // 
             // panelLaporan
             // 
@@ -297,7 +504,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(13, 15);
+            label6.Location = new Point(12, 11);
             label6.Name = "label6";
             label6.Size = new Size(120, 20);
             label6.TabIndex = 3;
@@ -306,69 +513,12 @@
             // dgvLaporan
             // 
             dgvLaporan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLaporan.Columns.AddRange(new DataGridViewColumn[] { colIdLaporan, colWaktuLapor, colIsiLaporan, colTanggalJadwalLaporan, colKeteranganJadwalLaporan, colDivisiLaporan, colNamaPelapor, colNoTelpPelapor });
-            dgvLaporan.Location = new Point(3, 50);
+            dgvLaporan.Location = new Point(2, 46);
             dgvLaporan.Name = "dgvLaporan";
             dgvLaporan.RowHeadersWidth = 51;
             dgvLaporan.Size = new Size(1031, 330);
             dgvLaporan.TabIndex = 0;
             dgvLaporan.CellContentClick += dgvLaporan_CellContentClick;
-            // 
-            // colIdLaporan
-            // 
-            colIdLaporan.HeaderText = "ID";
-            colIdLaporan.MinimumWidth = 6;
-            colIdLaporan.Name = "colIdLaporan";
-            colIdLaporan.Width = 125;
-            // 
-            // colWaktuLapor
-            // 
-            colWaktuLapor.HeaderText = "Waktu Lapor";
-            colWaktuLapor.MinimumWidth = 6;
-            colWaktuLapor.Name = "colWaktuLapor";
-            colWaktuLapor.Width = 125;
-            // 
-            // colIsiLaporan
-            // 
-            colIsiLaporan.HeaderText = "Isi Laporan";
-            colIsiLaporan.MinimumWidth = 6;
-            colIsiLaporan.Name = "colIsiLaporan";
-            colIsiLaporan.Width = 125;
-            // 
-            // colTanggalJadwalLaporan
-            // 
-            colTanggalJadwalLaporan.HeaderText = "Tanggal Jadwal";
-            colTanggalJadwalLaporan.MinimumWidth = 6;
-            colTanggalJadwalLaporan.Name = "colTanggalJadwalLaporan";
-            colTanggalJadwalLaporan.Width = 125;
-            // 
-            // colKeteranganJadwalLaporan
-            // 
-            colKeteranganJadwalLaporan.HeaderText = "Keterangan Jadwal";
-            colKeteranganJadwalLaporan.MinimumWidth = 6;
-            colKeteranganJadwalLaporan.Name = "colKeteranganJadwalLaporan";
-            colKeteranganJadwalLaporan.Width = 125;
-            // 
-            // colDivisiLaporan
-            // 
-            colDivisiLaporan.HeaderText = "Divisi";
-            colDivisiLaporan.MinimumWidth = 6;
-            colDivisiLaporan.Name = "colDivisiLaporan";
-            colDivisiLaporan.Width = 125;
-            // 
-            // colNamaPelapor
-            // 
-            colNamaPelapor.HeaderText = "Nama";
-            colNamaPelapor.MinimumWidth = 6;
-            colNamaPelapor.Name = "colNamaPelapor";
-            colNamaPelapor.Width = 125;
-            // 
-            // colNoTelpPelapor
-            // 
-            colNoTelpPelapor.HeaderText = "No. Telp";
-            colNoTelpPelapor.MinimumWidth = 6;
-            colNoTelpPelapor.Name = "colNoTelpPelapor";
-            colNoTelpPelapor.Width = 125;
             // 
             // panelPelanggan
             // 
@@ -415,47 +565,11 @@
             // dgvPelanggan
             // 
             dgvPelanggan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPelanggan.Columns.AddRange(new DataGridViewColumn[] { colIdPelanggan, colNamaPelanggan, colNoTelpPelanggan, colEmailPelanggan, colAlamatPelanggan });
             dgvPelanggan.Location = new Point(3, 50);
             dgvPelanggan.Name = "dgvPelanggan";
             dgvPelanggan.RowHeadersWidth = 51;
             dgvPelanggan.Size = new Size(1031, 330);
             dgvPelanggan.TabIndex = 0;
-            // 
-            // colIdPelanggan
-            // 
-            colIdPelanggan.HeaderText = "ID";
-            colIdPelanggan.MinimumWidth = 6;
-            colIdPelanggan.Name = "colIdPelanggan";
-            colIdPelanggan.Width = 125;
-            // 
-            // colNamaPelanggan
-            // 
-            colNamaPelanggan.HeaderText = "Nama Pelanggan";
-            colNamaPelanggan.MinimumWidth = 6;
-            colNamaPelanggan.Name = "colNamaPelanggan";
-            colNamaPelanggan.Width = 125;
-            // 
-            // colNoTelpPelanggan
-            // 
-            colNoTelpPelanggan.HeaderText = "No. Telp Pelanggan";
-            colNoTelpPelanggan.MinimumWidth = 6;
-            colNoTelpPelanggan.Name = "colNoTelpPelanggan";
-            colNoTelpPelanggan.Width = 125;
-            // 
-            // colEmailPelanggan
-            // 
-            colEmailPelanggan.HeaderText = "Email Pelanggan";
-            colEmailPelanggan.MinimumWidth = 6;
-            colEmailPelanggan.Name = "colEmailPelanggan";
-            colEmailPelanggan.Width = 125;
-            // 
-            // colAlamatPelanggan
-            // 
-            colAlamatPelanggan.HeaderText = "Alamat Pelanggan";
-            colAlamatPelanggan.MinimumWidth = 6;
-            colAlamatPelanggan.Name = "colAlamatPelanggan";
-            colAlamatPelanggan.Width = 125;
             // 
             // panelJadwal
             // 
@@ -502,71 +616,16 @@
             // dgvJadwal
             // 
             dgvJadwal.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvJadwal.Columns.AddRange(new DataGridViewColumn[] { colIdJadwal, colTanggalJadwal, colKeteranganKegiatan, colTipeJadwal, colJumlahAnggota, colTotalUpah, colStatusGlobal, colLahanPelangganJadwal });
             dgvJadwal.Location = new Point(3, 50);
             dgvJadwal.Name = "dgvJadwal";
             dgvJadwal.RowHeadersWidth = 51;
             dgvJadwal.Size = new Size(1031, 330);
             dgvJadwal.TabIndex = 0;
             // 
-            // colIdJadwal
-            // 
-            colIdJadwal.HeaderText = "ID";
-            colIdJadwal.MinimumWidth = 6;
-            colIdJadwal.Name = "colIdJadwal";
-            colIdJadwal.Width = 125;
-            // 
-            // colTanggalJadwal
-            // 
-            colTanggalJadwal.HeaderText = "Tanggal";
-            colTanggalJadwal.MinimumWidth = 6;
-            colTanggalJadwal.Name = "colTanggalJadwal";
-            colTanggalJadwal.Width = 125;
-            // 
-            // colKeteranganKegiatan
-            // 
-            colKeteranganKegiatan.HeaderText = "Kegiatan";
-            colKeteranganKegiatan.MinimumWidth = 6;
-            colKeteranganKegiatan.Name = "colKeteranganKegiatan";
-            colKeteranganKegiatan.Width = 125;
-            // 
-            // colTipeJadwal
-            // 
-            colTipeJadwal.HeaderText = "Tipe Jadwal";
-            colTipeJadwal.MinimumWidth = 6;
-            colTipeJadwal.Name = "colTipeJadwal";
-            colTipeJadwal.Width = 125;
-            // 
-            // colJumlahAnggota
-            // 
-            colJumlahAnggota.HeaderText = "Jumlah Anggota";
-            colJumlahAnggota.MinimumWidth = 6;
-            colJumlahAnggota.Name = "colJumlahAnggota";
-            colJumlahAnggota.Width = 125;
-            // 
-            // colTotalUpah
-            // 
-            colTotalUpah.HeaderText = "Total Upah";
-            colTotalUpah.MinimumWidth = 6;
-            colTotalUpah.Name = "colTotalUpah";
-            colTotalUpah.Width = 125;
-            // 
-            // colStatusGlobal
-            // 
-            colStatusGlobal.HeaderText = "Status";
-            colStatusGlobal.MinimumWidth = 6;
-            colStatusGlobal.Name = "colStatusGlobal";
-            colStatusGlobal.Width = 125;
-            // 
-            // colLahanPelangganJadwal
-            // 
-            colLahanPelangganJadwal.HeaderText = "Lahan / Pelanggan";
-            colLahanPelangganJadwal.MinimumWidth = 6;
-            colLahanPelangganJadwal.Name = "colLahanPelangganJadwal";
-            colLahanPelangganJadwal.Width = 125;
-            // 
             // panelTanaman
             // 
+            panelTanaman.Controls.Add(btTanmanaBelumLaku);
+            panelTanaman.Controls.Add(bt10TanamanPalingBanyakDitanam);
             panelTanaman.Controls.Add(label3);
             panelTanaman.Controls.Add(btnTambahTanaman);
             panelTanaman.Controls.Add(btnEditTanaman);
@@ -610,40 +669,11 @@
             // dgvTanaman
             // 
             dgvTanaman.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvTanaman.Columns.AddRange(new DataGridViewColumn[] { colIdTanaman, colNamaTanaman, colDurasiPanen, colHargaTanaman });
             dgvTanaman.Location = new Point(3, 50);
             dgvTanaman.Name = "dgvTanaman";
             dgvTanaman.RowHeadersWidth = 51;
             dgvTanaman.Size = new Size(1031, 330);
             dgvTanaman.TabIndex = 0;
-            // 
-            // colIdTanaman
-            // 
-            colIdTanaman.HeaderText = "ID";
-            colIdTanaman.MinimumWidth = 6;
-            colIdTanaman.Name = "colIdTanaman";
-            colIdTanaman.Width = 125;
-            // 
-            // colNamaTanaman
-            // 
-            colNamaTanaman.HeaderText = "Nama Tanaman";
-            colNamaTanaman.MinimumWidth = 6;
-            colNamaTanaman.Name = "colNamaTanaman";
-            colNamaTanaman.Width = 125;
-            // 
-            // colDurasiPanen
-            // 
-            colDurasiPanen.HeaderText = "Durasi Panen";
-            colDurasiPanen.MinimumWidth = 6;
-            colDurasiPanen.Name = "colDurasiPanen";
-            colDurasiPanen.Width = 125;
-            // 
-            // colHargaTanaman
-            // 
-            colHargaTanaman.HeaderText = "Harga Tanaman";
-            colHargaTanaman.MinimumWidth = 6;
-            colHargaTanaman.Name = "colHargaTanaman";
-            colHargaTanaman.Width = 125;
             // 
             // panelLahan
             // 
@@ -690,40 +720,11 @@
             // dgvLahan
             // 
             dgvLahan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLahan.Columns.AddRange(new DataGridViewColumn[] { colIdLahan, colNamaLahan, colLuasLahan, colStatusLahan });
             dgvLahan.Location = new Point(3, 50);
             dgvLahan.Name = "dgvLahan";
             dgvLahan.RowHeadersWidth = 51;
             dgvLahan.Size = new Size(1031, 330);
             dgvLahan.TabIndex = 0;
-            // 
-            // colIdLahan
-            // 
-            colIdLahan.HeaderText = "ID";
-            colIdLahan.MinimumWidth = 6;
-            colIdLahan.Name = "colIdLahan";
-            colIdLahan.Width = 125;
-            // 
-            // colNamaLahan
-            // 
-            colNamaLahan.HeaderText = "Nama Lahan";
-            colNamaLahan.MinimumWidth = 6;
-            colNamaLahan.Name = "colNamaLahan";
-            colNamaLahan.Width = 125;
-            // 
-            // colLuasLahan
-            // 
-            colLuasLahan.HeaderText = "Luas Lahan";
-            colLuasLahan.MinimumWidth = 6;
-            colLuasLahan.Name = "colLuasLahan";
-            colLuasLahan.Width = 125;
-            // 
-            // colStatusLahan
-            // 
-            colStatusLahan.HeaderText = "Status Lahan";
-            colStatusLahan.MinimumWidth = 6;
-            colStatusLahan.Name = "colStatusLahan";
-            colStatusLahan.Width = 125;
             // 
             // panelKaryawan
             // 
@@ -776,6 +777,26 @@
             dgvKaryawan.Size = new Size(1031, 330);
             dgvKaryawan.TabIndex = 0;
             // 
+            // bt10TanamanPalingBanyakDitanam
+            // 
+            bt10TanamanPalingBanyakDitanam.Location = new Point(392, 6);
+            bt10TanamanPalingBanyakDitanam.Name = "bt10TanamanPalingBanyakDitanam";
+            bt10TanamanPalingBanyakDitanam.Size = new Size(257, 38);
+            bt10TanamanPalingBanyakDitanam.TabIndex = 4;
+            bt10TanamanPalingBanyakDitanam.Text = "10 Tanaman Paling Banyak Ditanam";
+            bt10TanamanPalingBanyakDitanam.UseVisualStyleBackColor = true;
+            bt10TanamanPalingBanyakDitanam.Click += button1_Click;
+            // 
+            // btTanmanaBelumLaku
+            // 
+            btTanmanaBelumLaku.Location = new Point(669, 6);
+            btTanmanaBelumLaku.Name = "btTanmanaBelumLaku";
+            btTanmanaBelumLaku.Size = new Size(186, 38);
+            btTanmanaBelumLaku.TabIndex = 5;
+            btTanmanaBelumLaku.Text = "Tanaman Belum Laku";
+            btTanmanaBelumLaku.UseVisualStyleBackColor = true;
+            btTanmanaBelumLaku.Click += btTanmanaBelumLaku_Click;
+            // 
             // FormOwner
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -792,6 +813,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelBottom.ResumeLayout(false);
             panelMiddle.ResumeLayout(false);
+            panelDetailKaryawan.ResumeLayout(false);
+            panelDetailKaryawan.PerformLayout();
             panelLaporan.ResumeLayout(false);
             panelLaporan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).EndInit();
@@ -837,10 +860,6 @@
         private Button btnTambahLahan;
         private Button btnEditLahan;
         private DataGridView dgvLahan;
-        private DataGridViewTextBoxColumn colIdLahan;
-        private DataGridViewTextBoxColumn colNamaLahan;
-        private DataGridViewTextBoxColumn colLuasLahan;
-        private DataGridViewTextBoxColumn colStatusLahan;
         private Panel panelTanaman;
         private Label label3;
         private Button btnTambahTanaman;
@@ -856,34 +875,32 @@
         private Button btnTambahPelanggan;
         private Button btnEditPelanggan;
         private DataGridView dgvPelanggan;
-        private DataGridViewTextBoxColumn colIdPelanggan;
-        private DataGridViewTextBoxColumn colNamaPelanggan;
-        private DataGridViewTextBoxColumn colNoTelpPelanggan;
-        private DataGridViewTextBoxColumn colEmailPelanggan;
-        private DataGridViewTextBoxColumn colAlamatPelanggan;
         private Panel panelLaporan;
         private Label label6;
         private DataGridView dgvLaporan;
-        private DataGridViewTextBoxColumn colIdTanaman;
-        private DataGridViewTextBoxColumn colNamaTanaman;
-        private DataGridViewTextBoxColumn colDurasiPanen;
-        private DataGridViewTextBoxColumn colHargaTanaman;
-        private DataGridViewTextBoxColumn colIdLaporan;
-        private DataGridViewTextBoxColumn colWaktuLapor;
-        private DataGridViewTextBoxColumn colIsiLaporan;
-        private DataGridViewTextBoxColumn colTanggalJadwalLaporan;
-        private DataGridViewTextBoxColumn colKeteranganJadwalLaporan;
-        private DataGridViewTextBoxColumn colDivisiLaporan;
-        private DataGridViewTextBoxColumn colNamaPelapor;
-        private DataGridViewTextBoxColumn colNoTelpPelapor;
-        private DataGridViewTextBoxColumn colIdJadwal;
-        private DataGridViewTextBoxColumn colTanggalJadwal;
-        private DataGridViewTextBoxColumn colKeteranganKegiatan;
-        private DataGridViewTextBoxColumn colTipeJadwal;
-        private DataGridViewTextBoxColumn colJumlahAnggota;
-        private DataGridViewTextBoxColumn colTotalUpah;
-        private DataGridViewTextBoxColumn colStatusGlobal;
-        private DataGridViewTextBoxColumn colLahanPelangganJadwal;
         private Label label7;
+        private Panel panelDetailKaryawan;
+        private Label lbStatusKerja;
+        private Label label16;
+        private Label label15;
+        private Label label14;
+        private Label TanggalLahir;
+        private Label lbID;
+        private Label label11;
+        private Label lbEmail;
+        private Label lbNOTELP;
+        private Label lbNama;
+        private Label label8;
+        private Label lbPassword;
+        private Label lbUsername;
+        private Label lbSaldo;
+        private Label lbRole;
+        private Label label12;
+        private Label lbTanggalLahir;
+        private Label label9;
+        private Button btEdit;
+        private Button btBack;
+        private Button btTanmanaBelumLaku;
+        private Button bt10TanamanPalingBanyakDitanam;
     }
 }

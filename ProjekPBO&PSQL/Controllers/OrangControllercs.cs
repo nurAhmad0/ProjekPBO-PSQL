@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ProjekPBO_PSQL.Controllers
 {
@@ -174,6 +175,23 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 
                 isSucces = Context.UpdateOrang(orang, Username: username);
+            }
+            catch
+            {
+                MessageBox.Show("Gagal", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                isSucces = false;
+            }
+
+            return isSucces;
+        }
+
+        public bool UbbahStatusKerja (Orang orang, string status)
+        {
+            bool isSucces = false;
+            try
+            {
+
+                isSucces = Context.UpdateOrang(orang, Status: status);
             }
             catch
             {

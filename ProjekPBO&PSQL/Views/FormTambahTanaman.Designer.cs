@@ -28,26 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtHargaTanaman = new ComboBox();
             txtNamaTanaman = new TextBox();
             txtDurasiPanen = new TextBox();
             btnTambah = new Button();
             panel1 = new Panel();
+            txtHargaTanaman = new TextBox();
             label5 = new Label();
             label2 = new Label();
             label1 = new Label();
             btnBatal = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // txtHargaTanaman
-            // 
-            txtHargaTanaman.FormattingEnabled = true;
-            txtHargaTanaman.Items.AddRange(new object[] { "Aktif", "Tidak Aktif" });
-            txtHargaTanaman.Location = new Point(384, 326);
-            txtHargaTanaman.Name = "txtHargaTanaman";
-            txtHargaTanaman.Size = new Size(310, 28);
-            txtHargaTanaman.TabIndex = 16;
             // 
             // txtNamaTanaman
             // 
@@ -71,6 +62,7 @@
             btnTambah.TabIndex = 10;
             btnTambah.Text = "TAMBAH";
             btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
             // panel1
             // 
@@ -88,10 +80,17 @@
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 3;
             // 
+            // txtHargaTanaman
+            // 
+            txtHargaTanaman.Location = new Point(384, 329);
+            txtHargaTanaman.Name = "txtHargaTanaman";
+            txtHargaTanaman.Size = new Size(310, 27);
+            txtHargaTanaman.TabIndex = 16;
+            // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(239, 329);
+            label5.Location = new Point(211, 329);
             label5.Name = "label5";
             label5.Size = new Size(50, 20);
             label5.TabIndex = 5;
@@ -100,16 +99,16 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(239, 216);
+            label2.Location = new Point(211, 212);
             label2.Name = "label2";
-            label2.Size = new Size(51, 20);
+            label2.Size = new Size(140, 20);
             label2.TabIndex = 2;
-            label2.Text = "Durasi";
+            label2.Text = "Estimasi Kadaluarsa";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(239, 111);
+            label1.Location = new Point(211, 115);
             label1.Name = "label1";
             label1.Size = new Size(112, 20);
             label1.TabIndex = 1;
@@ -145,8 +144,8 @@
         private Label label2;
         private Label label1;
         private Button btnBatal;
-        public ComboBox txtHargaTanaman;
         public TextBox txtNamaTanaman;
         public TextBox txtDurasiPanen;
+        public TextBox txtHargaTanaman;
     }
 }

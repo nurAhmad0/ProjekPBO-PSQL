@@ -30,7 +30,6 @@
         {
             panel1 = new Panel();
             txtIdRole = new ComboBox();
-            btnHapus = new Button();
             txtPassword = new TextBox();
             txtIdAnggota = new TextBox();
             txtUsername = new TextBox();
@@ -59,7 +58,6 @@
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
             panel1.Controls.Add(txtIdRole);
-            panel1.Controls.Add(btnHapus);
             panel1.Controls.Add(txtPassword);
             panel1.Controls.Add(txtIdAnggota);
             panel1.Controls.Add(txtUsername);
@@ -94,16 +92,6 @@
             txtIdRole.Name = "txtIdRole";
             txtIdRole.Size = new Size(310, 28);
             txtIdRole.TabIndex = 38;
-            // 
-            // btnHapus
-            // 
-            btnHapus.BackColor = Color.FromArgb(255, 128, 128);
-            btnHapus.Location = new Point(807, 463);
-            btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(126, 29);
-            btnHapus.TabIndex = 23;
-            btnHapus.Text = "HAPUS BARIS";
-            btnHapus.UseVisualStyleBackColor = false;
             // 
             // txtPassword
             // 
@@ -148,7 +136,7 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(128, 255, 128);
-            btnUpdate.Location = new Point(685, 463);
+            btnUpdate.Location = new Point(814, 461);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 10;
@@ -181,6 +169,7 @@
             txtNama.Name = "txtNama";
             txtNama.Size = new Size(310, 27);
             txtNama.TabIndex = 33;
+            txtNama.TextChanged += txtNama_TextChanged;
             // 
             // label1
             // 
@@ -312,7 +301,6 @@
         private Panel panel1;
         private Button btnBatal;
         private Button btnUpdate;
-        private Button btnHapus;
         private Label label10;
         public ComboBox txtIdRole;
         public TextBox txtPassword;

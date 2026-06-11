@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using ProjekPBO_PSQL.Controllers;
+using MyValidator = ProjekPBO_PSQL.Controllers.Validator;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ProjekPBO_PSQL.Views
@@ -16,7 +17,7 @@ namespace ProjekPBO_PSQL.Views
     public partial class FormEditKaryawan : Form
     {
         OrangController controller = new OrangController();
-        public int idkaryawan;
+
         public FormEditKaryawan()
         {
             InitializeComponent();
@@ -29,37 +30,79 @@ namespace ProjekPBO_PSQL.Views
         private void btnUpdate_Click(object sender, EventArgs e)
         {
 
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahKosong(txtNama.Text))
+            if (MyValidator.ApakahKosong(txtNama.Text))
             {
                 MessageBox.Show("Nama karyawan wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNama.Focus();
                 return;
             }
+            if (!MyValidator.ApakahHanyaHurufDanSpasi(txtNama.Text))
+            {
+                MessageBox.Show("Nama karyawan hanya boleh berisi huruf dan spasi! Tidak boleh mengandung angka atau karakter khusus.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNama.Focus();
+                return;
+            }
 
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahKosong(txtNoTelp.Text))
+            if (MyValidator.ApakahKosong(txtNoTelp.Text))
             {
                 MessageBox.Show("Nomor Telepon wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNoTelp.Focus();
                 return;
             }
+            if (!MyValidator.ApakahAngka(txtNoTelp.Text))
+            {
+                MessageBox.Show("Nomor Telepon harus berupa angka penuh!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNoTelp.Focus();
+                return;
+            }
+            if (!MyValidator.ApakahPanjang(10, txtNoTelp.Text, 13))
+            {
+                MessageBox.Show("Nomor Telepon harus berpanjang antara 10 sampai 13 karakter!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNoTelp.Focus();
+                return;
+            }
 
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahKosong(txtEmail.Text))
+            if (MyValidator.ApakahKosong(txtEmail.Text))
             {
                 MessageBox.Show("Email wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtEmail.Focus();
                 return;
             }
-
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahKosong(txtUsername.Text))
+            if (!MyValidator.ApakahEmailValid(txtEmail.Text))
             {
-                MessageBox.Show("Username baru wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Format email tidak valid! (Contoh: karyawan@gmail.com)", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
+
+            if (MyValidator.ApakahKosong(txtUsername.Text))
+            {
+                MessageBox.Show("Username wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtUsername.Focus();
+                return;
+            }
+            if (!MyValidator.ApakahHurufdanAngka(txtUsername.Text))
+            {
+                MessageBox.Show("Username hanya boleh kombinasi huruf dan angka tanpa spasi/simbol!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtUsername.Focus();
+                return;
+            }
+            if (!MyValidator.ApakahPanjang(4, txtUsername.Text, 20))
+            {
+                MessageBox.Show("Username minimal berpanjang 4 karakter dan maksimal 20 karakter!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtUsername.Focus();
                 return;
             }
 
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahKosong(txtPassword.Text))
+            if (MyValidator.ApakahKosong(txtPassword.Text))
             {
                 MessageBox.Show("Password wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPassword.Focus();
+                return;
+            }
+            if (!MyValidator.ApakahPanjang(6, txtPassword.Text))
+            {
+                MessageBox.Show("Demi keamanan, password minimal harus memiliki panjang 6 karakter!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPassword.Focus();
                 return;
             }
@@ -80,7 +123,8 @@ namespace ProjekPBO_PSQL.Views
 
             try
             {
-                Orang Karyawan = controller.CariBerdasarkanID(idkaryawan)!;
+                int idTerpilih = Convert.ToInt32(txtIdAnggota);
+                Orang Karyawan = controller.CariBerdasarkanID(idTerpilih)!;
 
                 if (Karyawan == null)
                 {
@@ -147,6 +191,16 @@ namespace ProjekPBO_PSQL.Views
             {
                 MessageBox.Show("Terjadi kesalahan format data: " + ex.Message, "Kesalahan Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void txtNama_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -139,15 +139,6 @@ namespace ProjekPBO_PSQL.Controllers
             return Context.GETALLTanaman();
         }
 
-        public DataTable GetHistoriHargaTanaman()
-        {
-            return Context.getALLHistoriHarga();
-        }
-
-        public DataTable GetJumlahTanamanBerdasarkanBulan()
-        {
-            return Context.getJumlahTanamanBerdasarkanBulan();
-        }
 
         public DataTable Get10TanamanPalingDIbeli()
         {
