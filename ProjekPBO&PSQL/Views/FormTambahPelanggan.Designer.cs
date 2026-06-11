@@ -64,6 +64,7 @@
             btnTambah.TabIndex = 10;
             btnTambah.Text = "TAMBAH";
             btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
             // panel1
             // 
@@ -142,6 +143,7 @@
             btnBatal.TabIndex = 0;
             btnBatal.Text = "BATAL";
             btnBatal.UseVisualStyleBackColor = true;
+            btnBatal.Click += btnBatal_Click;
             // 
             // FormTambahPelanggan
             // 

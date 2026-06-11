@@ -9,7 +9,7 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private LahanContext Context = new LahanContext();
 
-        public Lahan? CariBerdasarkanID(int id)
+        public Lahan? Cari(int id)
         {
             if (id <= 0) return null;
 
@@ -27,7 +27,7 @@ namespace ProjekPBO_PSQL.Controllers
             return null;
         }
 
-        public List<Lahan> CariBerdasarkanNama(string nama)
+        public List<Lahan> Cari(string nama)
         {
             List<Lahan> dataLahan = new List<Lahan>();
 

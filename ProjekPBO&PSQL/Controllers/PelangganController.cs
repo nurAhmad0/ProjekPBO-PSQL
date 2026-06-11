@@ -9,7 +9,7 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private PelangganContext Context = new PelangganContext();
 
-        //public List<Pelanggan> CariBerdasarkanID(int id)
+        //public List<Pelanggan> Cari(int id)
         //{
         //    List<Pelanggan> dataPelanggan = new List<Pelanggan>();
 
@@ -27,7 +27,7 @@ namespace ProjekPBO_PSQL.Controllers
         //    return dataPelanggan;
         //}
 
-        public Pelanggan? CariBerdasarkanID(int id)
+        public Pelanggan? Cari(int id)
         {
             if (id <= 0) return null;
 
@@ -44,7 +44,7 @@ namespace ProjekPBO_PSQL.Controllers
             return null;
         }
 
-        public List<Pelanggan> CariBerdasarkanNama(string nama)
+        public List<Pelanggan> Cari(string nama)
         {
             List<Pelanggan> dataPelanggan = new List<Pelanggan>();
 

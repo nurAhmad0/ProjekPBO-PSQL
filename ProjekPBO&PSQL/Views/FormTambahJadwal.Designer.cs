@@ -34,7 +34,6 @@
             btnTambah = new Button();
             label9 = new Label();
             label8 = new Label();
-            label5 = new Label();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
@@ -43,10 +42,9 @@
             txtIdLahan = new TextBox();
             txtJumlahAnggota = new TextBox();
             label6 = new Label();
-            cbStatusGlobal = new ComboBox();
-            cbTipeJadwal = new ComboBox();
             label1 = new Label();
             btnBatal = new Button();
+            textBox1 = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -101,15 +99,6 @@
             label8.TabIndex = 8;
             label8.Text = "Lahan";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(57, 366);
-            label5.Name = "label5";
-            label5.Size = new Size(49, 20);
-            label5.TabIndex = 5;
-            label5.Text = "Status";
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -140,19 +129,17 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
+            panel1.Controls.Add(textBox1);
             panel1.Controls.Add(txtIdPelanggan);
             panel1.Controls.Add(txtIdLahan);
             panel1.Controls.Add(txtJumlahAnggota);
             panel1.Controls.Add(label6);
-            panel1.Controls.Add(cbStatusGlobal);
             panel1.Controls.Add(dtpTanggal);
-            panel1.Controls.Add(cbTipeJadwal);
             panel1.Controls.Add(txtKeterangan);
             panel1.Controls.Add(txtTotalUpah);
             panel1.Controls.Add(btnTambah);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(label8);
-            panel1.Controls.Add(label5);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
@@ -193,24 +180,6 @@
             label6.TabIndex = 23;
             label6.Text = "Tipe Jadwal";
             // 
-            // cbStatusGlobal
-            // 
-            cbStatusGlobal.FormattingEnabled = true;
-            cbStatusGlobal.Items.AddRange(new object[] { "Belum Dikerjakan", "Dalam Pengerjaan", "Sudah Dikerjakan", "Gagal", "Kendala" });
-            cbStatusGlobal.Location = new Point(192, 363);
-            cbStatusGlobal.Name = "cbStatusGlobal";
-            cbStatusGlobal.Size = new Size(310, 28);
-            cbStatusGlobal.TabIndex = 21;
-            // 
-            // cbTipeJadwal
-            // 
-            cbTipeJadwal.FormattingEnabled = true;
-            cbTipeJadwal.Items.AddRange(new object[] { "Farmer", "Pengantar" });
-            cbTipeJadwal.Location = new Point(192, 197);
-            cbTipeJadwal.Name = "cbTipeJadwal";
-            cbTipeJadwal.Size = new Size(310, 28);
-            cbTipeJadwal.TabIndex = 16;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -230,6 +199,14 @@
             btnBatal.UseVisualStyleBackColor = true;
             btnBatal.Click += btnBatal_Click_1;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(192, 200);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(310, 27);
+            textBox1.TabIndex = 27;
+            // 
             // FormTambahJadwal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -248,7 +225,6 @@
         private Button btnTambah;
         private Label label9;
         private Label label8;
-        private Label label5;
         private Label label4;
         private Label label3;
         private Label label2;
@@ -259,10 +235,9 @@
         public DateTimePicker dtpTanggal;
         public TextBox txtKeterangan;
         public TextBox txtTotalUpah;
-        public ComboBox cbStatusGlobal;
         public TextBox txtJumlahAnggota;
-        public ComboBox cbTipeJadwal;
         public TextBox txtIdPelanggan;
         public TextBox txtIdLahan;
+        public TextBox textBox1;
     }
 }

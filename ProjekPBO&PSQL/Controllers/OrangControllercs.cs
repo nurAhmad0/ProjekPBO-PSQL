@@ -12,7 +12,7 @@ namespace ProjekPBO_PSQL.Controllers
         private OrangContext Context = new OrangContext();
 
 
-        //public List<Orang> CariBerdasarkanID(int id)
+        //public List<Orang> Cari(int id)
         //{
         //    List<Orang> dataOrang = new List<Orang>();
 
@@ -30,7 +30,7 @@ namespace ProjekPBO_PSQL.Controllers
         //    return dataOrang;
         //}
 
-        public Orang? CariBerdasarkanID(int id)
+        public Orang? Cari(int id)
         {
             if (id <= 0) return null;
 
@@ -47,7 +47,7 @@ namespace ProjekPBO_PSQL.Controllers
             return null;
         }
 
-        public List<Orang> CariBerdasarkanNama(string nama)
+        public List<Orang> Cari(string nama)
         {
             List<Orang> dataOrang = new List<Orang>();
 
@@ -196,7 +196,7 @@ namespace ProjekPBO_PSQL.Controllers
             catch
             {
                 MessageBox.Show("Gagal", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                isSucces = false;
+                isSucces = false; 
             }
 
             return isSucces;

@@ -6,7 +6,7 @@ namespace ProjekPBO_PSQL.Controllers
 {
     interface ISearch<T>
     {
-        T? CariBerdasarkanID(int id);
-        List<T> CariBerdasarkanNama(string nama);
+        T? Cari(int id);
+        List<T> Cari(string nama);
     }
 }

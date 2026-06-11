@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            btnHapus = new Button();
-            btnUpdate = new Button();
-            txtIdLahan = new TextBox();
-            label10 = new Label();
-            btnBatal = new Button();
             cbStatusLahan = new ComboBox();
+            btnHapus = new Button();
             txtNamaLahan = new TextBox();
+            btnUpdate = new Button();
             txtLuasLahan = new TextBox();
+            txtIdLahan = new TextBox();
             label1 = new Label();
+            label10 = new Label();
             label5 = new Label();
             label2 = new Label();
+            btnBatal = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -62,6 +62,15 @@
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 3;
             // 
+            // cbStatusLahan
+            // 
+            cbStatusLahan.FormattingEnabled = true;
+            cbStatusLahan.Items.AddRange(new object[] { "Aktif", "Tidak Aktif" });
+            cbStatusLahan.Location = new Point(377, 338);
+            cbStatusLahan.Name = "cbStatusLahan";
+            cbStatusLahan.Size = new Size(310, 28);
+            cbStatusLahan.TabIndex = 28;
+            // 
             // btnHapus
             // 
             btnHapus.BackColor = Color.FromArgb(255, 128, 128);
@@ -72,6 +81,13 @@
             btnHapus.Text = "HAPUS BARIS";
             btnHapus.UseVisualStyleBackColor = false;
             // 
+            // txtNamaLahan
+            // 
+            txtNamaLahan.Location = new Point(377, 120);
+            txtNamaLahan.Name = "txtNamaLahan";
+            txtNamaLahan.Size = new Size(310, 27);
+            txtNamaLahan.TabIndex = 27;
+            // 
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(128, 255, 128);
@@ -81,6 +97,14 @@
             btnUpdate.TabIndex = 25;
             btnUpdate.Text = "UPDATE";
             btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
+            // 
+            // txtLuasLahan
+            // 
+            txtLuasLahan.Location = new Point(377, 221);
+            txtLuasLahan.Name = "txtLuasLahan";
+            txtLuasLahan.Size = new Size(310, 27);
+            txtLuasLahan.TabIndex = 26;
             // 
             // txtIdLahan
             // 
@@ -90,48 +114,6 @@
             txtIdLahan.Size = new Size(310, 27);
             txtIdLahan.TabIndex = 24;
             // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(85, 467);
-            label10.Name = "label10";
-            label10.Size = new Size(24, 20);
-            label10.TabIndex = 23;
-            label10.Text = "ID";
-            // 
-            // btnBatal
-            // 
-            btnBatal.Location = new Point(3, 3);
-            btnBatal.Name = "btnBatal";
-            btnBatal.Size = new Size(94, 29);
-            btnBatal.TabIndex = 0;
-            btnBatal.Text = "BATAL";
-            btnBatal.UseVisualStyleBackColor = true;
-            btnBatal.Click += btnBatal_Click;
-            // 
-            // cbStatusLahan
-            // 
-            cbStatusLahan.FormattingEnabled = true;
-            cbStatusLahan.Items.AddRange(new object[] { "Aktif", "Tidak Aktif" });
-            cbStatusLahan.Location = new Point(377, 338);
-            cbStatusLahan.Name = "cbStatusLahan";
-            cbStatusLahan.Size = new Size(310, 28);
-            cbStatusLahan.TabIndex = 28;
-            // 
-            // txtNamaLahan
-            // 
-            txtNamaLahan.Location = new Point(377, 120);
-            txtNamaLahan.Name = "txtNamaLahan";
-            txtNamaLahan.Size = new Size(310, 27);
-            txtNamaLahan.TabIndex = 27;
-            // 
-            // txtLuasLahan
-            // 
-            txtLuasLahan.Location = new Point(377, 221);
-            txtLuasLahan.Name = "txtLuasLahan";
-            txtLuasLahan.Size = new Size(310, 27);
-            txtLuasLahan.TabIndex = 26;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -140,6 +122,15 @@
             label1.Size = new Size(92, 20);
             label1.TabIndex = 23;
             label1.Text = "Nama Lahan";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(85, 467);
+            label10.Name = "label10";
+            label10.Size = new Size(24, 20);
+            label10.TabIndex = 23;
+            label10.Text = "ID";
             // 
             // label5
             // 
@@ -158,6 +149,16 @@
             label2.Size = new Size(81, 20);
             label2.TabIndex = 24;
             label2.Text = "Luas Lahan";
+            // 
+            // btnBatal
+            // 
+            btnBatal.Location = new Point(3, 3);
+            btnBatal.Name = "btnBatal";
+            btnBatal.Size = new Size(94, 29);
+            btnBatal.TabIndex = 0;
+            btnBatal.Text = "BATAL";
+            btnBatal.UseVisualStyleBackColor = true;
+            btnBatal.Click += btnBatal_Click;
             // 
             // FormEditLahan
             // 

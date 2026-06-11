@@ -189,7 +189,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Farmer'", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Farmer'", conn);
                 
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -218,7 +218,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Pengantar'", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Pengantar'", conn);
                 
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -248,7 +248,7 @@ namespace ProjekPBO_PSQL.Models
                 DateTime TanggalSekarang = DateTime.Today;
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Farmer' and tanggal = @tanggal", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Farmer' and tanggal = @tanggal", conn);
                 query1.Parameters.AddWithValue("tanggal", TanggalSekarang);
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -278,7 +278,7 @@ namespace ProjekPBO_PSQL.Models
                 DateTime TanggalSekarang = DateTime.Today;
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT * FROM jadwal where text_tipe_jadwal = 'Pengantar' and tanggal = @tanggal", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Pengantar' and tanggal = @tanggal", conn);
                 query1.Parameters.AddWithValue("tanggal", TanggalSekarang);
                 {
                     using (var da = new NpgsqlDataAdapter(query1))

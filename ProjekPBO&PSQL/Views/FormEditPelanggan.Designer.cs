@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            btnHapus = new Button();
-            txtIdPelanggan = new TextBox();
-            label10 = new Label();
-            btnUpdate = new Button();
-            btnBatal = new Button();
             txtAlamat = new TextBox();
+            btnHapus = new Button();
             label3 = new Label();
+            txtIdPelanggan = new TextBox();
             txtEmail = new TextBox();
+            label10 = new Label();
             txtNama = new TextBox();
+            btnUpdate = new Button();
             txtNoTelp = new TextBox();
             label5 = new Label();
+            btnBatal = new Button();
             label2 = new Label();
             label1 = new Label();
             panel1.SuspendLayout();
@@ -66,6 +66,14 @@
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 5;
             // 
+            // txtAlamat
+            // 
+            txtAlamat.Location = new Point(395, 350);
+            txtAlamat.Multiline = true;
+            txtAlamat.Name = "txtAlamat";
+            txtAlamat.Size = new Size(310, 27);
+            txtAlamat.TabIndex = 26;
+            // 
             // btnHapus
             // 
             btnHapus.BackColor = Color.FromArgb(255, 128, 128);
@@ -76,6 +84,15 @@
             btnHapus.Text = "HAPUS BARIS";
             btnHapus.UseVisualStyleBackColor = false;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(250, 353);
+            label3.Name = "label3";
+            label3.Size = new Size(57, 20);
+            label3.TabIndex = 25;
+            label3.Text = "Alamat";
+            // 
             // txtIdPelanggan
             // 
             txtIdPelanggan.Location = new Point(194, 467);
@@ -83,6 +100,13 @@
             txtIdPelanggan.ReadOnly = true;
             txtIdPelanggan.Size = new Size(310, 27);
             txtIdPelanggan.TabIndex = 33;
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(395, 276);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(310, 27);
+            txtEmail.TabIndex = 24;
             // 
             // label10
             // 
@@ -93,6 +117,13 @@
             label10.TabIndex = 32;
             label10.Text = "ID";
             // 
+            // txtNama
+            // 
+            txtNama.Location = new Point(395, 124);
+            txtNama.Name = "txtNama";
+            txtNama.Size = new Size(310, 27);
+            txtNama.TabIndex = 23;
+            // 
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(128, 255, 128);
@@ -102,46 +133,7 @@
             btnUpdate.TabIndex = 31;
             btnUpdate.Text = "UPDATE";
             btnUpdate.UseVisualStyleBackColor = false;
-            // 
-            // btnBatal
-            // 
-            btnBatal.Location = new Point(3, 3);
-            btnBatal.Name = "btnBatal";
-            btnBatal.Size = new Size(94, 29);
-            btnBatal.TabIndex = 0;
-            btnBatal.Text = "BATAL";
-            btnBatal.UseVisualStyleBackColor = true;
-            // 
-            // txtAlamat
-            // 
-            txtAlamat.Location = new Point(395, 350);
-            txtAlamat.Multiline = true;
-            txtAlamat.Name = "txtAlamat";
-            txtAlamat.Size = new Size(310, 27);
-            txtAlamat.TabIndex = 26;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(250, 353);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 20);
-            label3.TabIndex = 25;
-            label3.Text = "Alamat";
-            // 
-            // txtEmail
-            // 
-            txtEmail.Location = new Point(395, 276);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(310, 27);
-            txtEmail.TabIndex = 24;
-            // 
-            // txtNama
-            // 
-            txtNama.Location = new Point(395, 124);
-            txtNama.Name = "txtNama";
-            txtNama.Size = new Size(310, 27);
-            txtNama.TabIndex = 23;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // txtNoTelp
             // 
@@ -158,6 +150,16 @@
             label5.Size = new Size(46, 20);
             label5.TabIndex = 21;
             label5.Text = "Email";
+            // 
+            // btnBatal
+            // 
+            btnBatal.Location = new Point(3, 3);
+            btnBatal.Name = "btnBatal";
+            btnBatal.Size = new Size(94, 29);
+            btnBatal.TabIndex = 0;
+            btnBatal.Text = "BATAL";
+            btnBatal.UseVisualStyleBackColor = true;
+            btnBatal.Click += btnBatal_Click;
             // 
             // label2
             // 

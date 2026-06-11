@@ -11,7 +11,7 @@ namespace ProjekPBO_PSQL.Controllers
     {
         private JadwalContext Context = new JadwalContext();
 
-        public DataTable GetAllJadwalOwner()
+        public DataTable GetAllJadwalOwner() // menggabungkan jadi satu jadwal
         {
             DataTable jadwalFarmer = Context.getjadwalFarmer();
             DataTable jadwalPengantar = Context.getJadwalPengantaran();
@@ -20,7 +20,7 @@ namespace ProjekPBO_PSQL.Controllers
             return jadwalFarmer;
         }
 
-        public DataTable GetAllJadwalOwnerHariIni()
+        public DataTable GetAllJadwalOwnerHariIni() //jadwal hari ini jadi satu 
         {
             DataTable jadwalFarmer = Context.getjadwalFarmerHariIni();
             DataTable jadwalPengantar = Context.getJadwalPengantaranHariIni();
@@ -29,7 +29,7 @@ namespace ProjekPBO_PSQL.Controllers
             return jadwalFarmer;
         }
 
-        public DataTable GetAllJadwalFarmerHariIni()
+        public DataTable GetAllJadwalFarmerHariIni() //jadwal farmer hari ini
         {
             DataTable dataJadwalFarmer = Context.getjadwalFarmerHariIni();
 
@@ -37,7 +37,7 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalFarmer> GetAllJadwalFarmer(int id)
+        public List<JadwalFarmer> GetAllJadwalFarmer(int id) //memasukkan id dari farmer
         {
             List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
             if (id <= 0)
@@ -51,7 +51,7 @@ namespace ProjekPBO_PSQL.Controllers
         }
 
 
-        public DataTable GetAllJadwalPengantaranHariIni()
+        public DataTable GetAllJadwalPengantaranHariIni() //jadwal pengantar hari ini
         {
             DataTable dataJadwalPengantar = Context.getJadwalPengantaranHariIni();
 
@@ -59,7 +59,7 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalPengantaran> GetAllJadwalPengantaran(int id)
+        public List<JadwalPengantaran> GetAllJadwalPengantaran(int id) //buat detail
         {
             List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
             if (id <= 0)

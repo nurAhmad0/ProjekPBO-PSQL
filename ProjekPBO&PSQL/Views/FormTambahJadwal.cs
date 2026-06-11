@@ -10,9 +10,11 @@ namespace ProjekPBO_PSQL.Views
 {
     public partial class FormTambahJadwal : Form
     {
-        public FormTambahJadwal()
+        (string tipeJadwal, string template) infoJadwal;
+        public FormTambahJadwal((string tipeJadwal, string template) infoJadwal)
         {
             InitializeComponent();
+            this.infoJadwal = infoJadwal;
         }
         private void btnBatal_Click(object sender, EventArgs e)
         {

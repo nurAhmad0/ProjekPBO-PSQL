@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjekPBO_PSQL.Controllers;
+using ProjekPBO_PSQL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,7 @@ namespace ProjekPBO_PSQL.Views
 {
     public partial class FormTambahLahan : Form
     {
+        LahanController lahanController = new LahanController();
         public FormTambahLahan()
         {
             InitializeComponent();
@@ -17,6 +20,83 @@ namespace ProjekPBO_PSQL.Views
         private void btnBatal_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnTambah_Click(object sender, EventArgs e)
+        {
+            if (Validator.ApakahKosong(txtNamaLahan.Text))
+            {
+                MessageBox.Show("Nama lahan wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNamaLahan.Focus();
+                return;
+            }
+            if (!Validator.ApakahHanyaHurufDanSpasi(txtNamaLahan.Text))
+            {
+                MessageBox.Show("Nama lahan hanya boleh berisi huruf dan spasi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNamaLahan.Focus();
+                return;
+            }
+            bool? cekNamaLahan = lahanController.CekNamaLahanDiDataBase(txtNamaLahan.Text);
+            if (cekNamaLahan == true)
+            {
+                MessageBox.Show("Nama lahan sudah digunakan! Silakan gunakan nama lahan yang lain.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNamaLahan.Focus();
+                return;
+            }
+            else if (cekNamaLahan == null)
+            {
+                return;
+            }
+            if (Validator.ApakahKosong(txtLuasLahan.Text))
+            {
+                MessageBox.Show("Luas lahan wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLuasLahan.Focus();
+                return;
+            }
+            if (!Validator.ApakahAngka(txtLuasLahan.Text))
+            {
+                MessageBox.Show("Luas lahan harus berupa angka penuh (integer)!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLuasLahan.Focus();
+                return;
+            }
+            if (Convert.ToDecimal(txtLuasLahan.Text) <= 0)
+            {
+                MessageBox.Show("Luas lahan harus bernilai positif dan lebih dari 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLuasLahan.Focus();
+                return;
+            }
+            if (cbStatusLahan.SelectedIndex == -1 || string.IsNullOrEmpty(cbStatusLahan.Text))
+            {
+                MessageBox.Show("Silakan pilih Status Lahan (Aktif/Tidak Aktif) terlebih dahulu!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbStatusLahan.Focus();
+                return;
+            }
+            try
+            {
+                string namaLahan = txtNamaLahan.Text.Trim();
+                int luasLahan = Convert.ToInt32(txtLuasLahan.Text.Trim());
+                string statusLahan = cbStatusLahan.Text;
+                Lahan lahanBaru = new Lahan(0, namaLahan, luasLahan, statusLahan);
+                bool apakahSukses = lahanController.TambahLahan(lahanBaru);
+
+                if (apakahSukses)
+                {
+                    MessageBox.Show("Data lahan baru berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtNamaLahan.Clear();
+                    txtLuasLahan.Clear();
+                    cbStatusLahan.SelectedIndex = -1;
+                    txtNamaLahan.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menyimpan data lahan ke database.", "Eror Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan sistem saat memproses data: " + ex.Message, "Kesalahan Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

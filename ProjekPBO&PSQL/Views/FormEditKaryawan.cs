@@ -124,7 +124,7 @@ namespace ProjekPBO_PSQL.Views
             try
             {
                 int idTerpilih = Convert.ToInt32(txtIdAnggota);
-                Orang Karyawan = controller.CariBerdasarkanID(idTerpilih)!;
+                Orang Karyawan = controller.Cari(idTerpilih)!;
 
                 if (Karyawan == null)
                 {

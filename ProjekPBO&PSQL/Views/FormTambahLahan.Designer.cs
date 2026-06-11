@@ -30,13 +30,13 @@
         {
             btnTambah = new Button();
             panel1 = new Panel();
-            btnBatal = new Button();
             cbStatusLahan = new ComboBox();
             txtNamaLahan = new TextBox();
+            btnBatal = new Button();
             txtLuasLahan = new TextBox();
+            label1 = new Label();
             label5 = new Label();
             label2 = new Label();
-            label1 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,6 +48,7 @@
             btnTambah.TabIndex = 10;
             btnTambah.Text = "TAMBAH";
             btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
             // panel1
             // 
@@ -65,16 +66,6 @@
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 2;
             // 
-            // btnBatal
-            // 
-            btnBatal.Location = new Point(3, 3);
-            btnBatal.Name = "btnBatal";
-            btnBatal.Size = new Size(94, 29);
-            btnBatal.TabIndex = 0;
-            btnBatal.Text = "BATAL";
-            btnBatal.UseVisualStyleBackColor = true;
-            btnBatal.Click += btnBatal_Click;
-            // 
             // cbStatusLahan
             // 
             cbStatusLahan.FormattingEnabled = true;
@@ -91,12 +82,31 @@
             txtNamaLahan.Size = new Size(310, 27);
             txtNamaLahan.TabIndex = 21;
             // 
+            // btnBatal
+            // 
+            btnBatal.Location = new Point(3, 3);
+            btnBatal.Name = "btnBatal";
+            btnBatal.Size = new Size(94, 29);
+            btnBatal.TabIndex = 0;
+            btnBatal.Text = "BATAL";
+            btnBatal.UseVisualStyleBackColor = true;
+            btnBatal.Click += btnBatal_Click;
+            // 
             // txtLuasLahan
             // 
             txtLuasLahan.Location = new Point(373, 230);
             txtLuasLahan.Name = "txtLuasLahan";
             txtLuasLahan.Size = new Size(310, 27);
             txtLuasLahan.TabIndex = 20;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(264, 132);
+            label1.Name = "label1";
+            label1.Size = new Size(92, 20);
+            label1.TabIndex = 17;
+            label1.Text = "Nama Lahan";
             // 
             // label5
             // 
@@ -115,15 +125,6 @@
             label2.Size = new Size(81, 20);
             label2.TabIndex = 18;
             label2.Text = "Luas Lahan";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(264, 132);
-            label1.Name = "label1";
-            label1.Size = new Size(92, 20);
-            label1.TabIndex = 17;
-            label1.Text = "Nama Lahan";
             // 
             // FormTambahLahan
             // 
