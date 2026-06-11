@@ -24,6 +24,9 @@ namespace ProjekPBO_PSQL.Models
             return this.idTanaman;
         }
 
+        public string nama_tanaman => this.namaTanaman;
+        public int id_tanaman => this.idTanaman;
+
         public string getNamaTanaman()
         {
             return this.namaTanaman;

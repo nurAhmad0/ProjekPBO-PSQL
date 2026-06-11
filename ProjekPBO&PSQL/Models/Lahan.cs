@@ -23,6 +23,8 @@ namespace ProjekPBO_PSQL.Models
         {
             return this.idLahan;
         }
+        public string DisplayLahan => this.namaLahan;
+        public int id_Lahan => this.idLahan;
 
         public string getNamaLahan()
         {

@@ -324,18 +324,7 @@ namespace ProjekPBO_PSQL.Views
             }
 
             FormEditJadwal popUpEdit = new FormEditJadwal();
-            popUpEdit.txtIdJadwal.Text = dgvJadwal.CurrentRow.Cells["colIdJadwal"].Value.ToString();
-            popUpEdit.dtpTanggal.Value = Convert.ToDateTime(dgvJadwal.CurrentRow.Cells["colTanggalJadwal"].Value);
-            popUpEdit.txtKeterangan.Text = dgvJadwal.CurrentRow.Cells["colKeteranganKegiatan"].Value.ToString();
-            popUpEdit.cbTipeJadwal.Text = dgvJadwal.CurrentRow.Cells["colTipeJadwal"].Value.ToString();
-            popUpEdit.txtJumlahAnggota.Text = dgvJadwal.CurrentRow.Cells["colJumlahAnggota"].Value.ToString();
-            popUpEdit.txtTotalUpah.Text = dgvJadwal.CurrentRow.Cells["colTotalUpah"].Value.ToString();
-            popUpEdit.cbStatusGlobal.Text = dgvJadwal.CurrentRow.Cells["colStatusGlobal"].Value.ToString();
-            // Mengambil nilai ID dari kolom rahasia DGV untuk dimasukkan ke TextBox Form Edit
-            popUpEdit.txtIdLahan.Text = dgvJadwal.CurrentRow.Cells["colIdLahan"].Value?.ToString() ?? "";
-            popUpEdit.txtIdPelanggan.Text = dgvJadwal.CurrentRow.Cells["colIdPelanggan"].Value?.ToString() ?? "";
 
-            popUpEdit.ShowDialog();
         }
         private void btnTambahPelanggan_Click(object sender, EventArgs e)
         {
@@ -617,7 +606,9 @@ namespace ProjekPBO_PSQL.Views
 
         private void btTanam_Click(object sender, EventArgs e)
         {
-            FormTambahJadwal TambahJadwal = new FormTambahJadwal(("Farmer", "Menanam"));
+            FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Menanam"));
+            TambahJadwal.txtKeterangan.Text = "Tanam Tanaman dilahan";
+            TambahJadwal.txtTipeJadwal.Text = "Farmer";
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();
@@ -650,7 +641,9 @@ namespace ProjekPBO_PSQL.Views
 
         private void btPanen_Click(object sender, EventArgs e)
         {
-            FormTambahJadwal TambahJadwal = new FormTambahJadwal(("Farmer", "Panen"));
+            FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Panen"));
+            TambahJadwal.txtKeterangan.Text = "Memanen Tanaman yang ada di lahan";
+            TambahJadwal.txtTipeJadwal.Text = "Farmer";
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();
@@ -683,7 +676,7 @@ namespace ProjekPBO_PSQL.Views
 
         private void btJadwalFarmerLainnya_Click(object sender, EventArgs e)
         {
-            FormTambahJadwal TambahJadwal = new FormTambahJadwal(("Farmer", "Lainnya"));
+            FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Lainnya"));
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();

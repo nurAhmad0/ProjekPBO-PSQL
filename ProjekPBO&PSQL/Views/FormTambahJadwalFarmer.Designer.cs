@@ -1,6 +1,6 @@
 ﻿namespace ProjekPBO_PSQL.Views
 {
-    partial class FormTambahJadwal
+    partial class FormTambahJadwalFarmer
     {
         /// <summary>
         /// Required designer variable.
@@ -38,13 +38,15 @@
             label3 = new Label();
             label2 = new Label();
             panel1 = new Panel();
-            txtIdPelanggan = new TextBox();
-            txtIdLahan = new TextBox();
+            cbLahan = new ComboBox();
+            cbTanaman = new ComboBox();
+            txtJumlahDitanam = new TextBox();
+            label5 = new Label();
+            txtTipeJadwal = new TextBox();
             txtJumlahAnggota = new TextBox();
             label6 = new Label();
             label1 = new Label();
             btnBatal = new Button();
-            textBox1 = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -80,15 +82,16 @@
             btnTambah.TabIndex = 10;
             btnTambah.Text = "TAMBAH";
             btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Location = new Point(542, 145);
             label9.Name = "label9";
-            label9.Size = new Size(78, 20);
+            label9.Size = new Size(68, 20);
             label9.TabIndex = 9;
-            label9.Text = "Pelanggan";
+            label9.Text = "Tanaman";
             // 
             // label8
             // 
@@ -129,9 +132,11 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(txtIdPelanggan);
-            panel1.Controls.Add(txtIdLahan);
+            panel1.Controls.Add(cbLahan);
+            panel1.Controls.Add(cbTanaman);
+            panel1.Controls.Add(txtJumlahDitanam);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(txtTipeJadwal);
             panel1.Controls.Add(txtJumlahAnggota);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(dtpTanggal);
@@ -150,19 +155,45 @@
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 2;
             // 
-            // txtIdPelanggan
+            // cbLahan
             // 
-            txtIdPelanggan.Location = new Point(635, 142);
-            txtIdPelanggan.Name = "txtIdPelanggan";
-            txtIdPelanggan.Size = new Size(310, 27);
-            txtIdPelanggan.TabIndex = 26;
+            cbLahan.FormattingEnabled = true;
+            cbLahan.Location = new Point(635, 93);
+            cbLahan.Name = "cbLahan";
+            cbLahan.Size = new Size(297, 28);
+            cbLahan.TabIndex = 31;
             // 
-            // txtIdLahan
+            // cbTanaman
             // 
-            txtIdLahan.Location = new Point(635, 88);
-            txtIdLahan.Name = "txtIdLahan";
-            txtIdLahan.Size = new Size(310, 27);
-            txtIdLahan.TabIndex = 25;
+            cbTanaman.FormattingEnabled = true;
+            cbTanaman.Location = new Point(635, 141);
+            cbTanaman.Name = "cbTanaman";
+            cbTanaman.Size = new Size(298, 28);
+            cbTanaman.TabIndex = 30;
+            // 
+            // txtJumlahDitanam
+            // 
+            txtJumlahDitanam.Location = new Point(192, 367);
+            txtJumlahDitanam.Name = "txtJumlahDitanam";
+            txtJumlahDitanam.Size = new Size(310, 27);
+            txtJumlahDitanam.TabIndex = 29;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(57, 370);
+            label5.Name = "label5";
+            label5.Size = new Size(116, 20);
+            label5.TabIndex = 28;
+            label5.Text = "Jumlah Ditanam";
+            // 
+            // txtTipeJadwal
+            // 
+            txtTipeJadwal.Location = new Point(192, 200);
+            txtTipeJadwal.Multiline = true;
+            txtTipeJadwal.Name = "txtTipeJadwal";
+            txtTipeJadwal.Size = new Size(310, 27);
+            txtTipeJadwal.TabIndex = 27;
             // 
             // txtJumlahAnggota
             // 
@@ -199,21 +230,13 @@
             btnBatal.UseVisualStyleBackColor = true;
             btnBatal.Click += btnBatal_Click_1;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(192, 200);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(310, 27);
-            textBox1.TabIndex = 27;
-            // 
-            // FormTambahJadwal
+            // FormTambahJadwalFarmer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 533);
             Controls.Add(panel1);
-            Name = "FormTambahJadwal";
+            Name = "FormTambahJadwalFarmer";
             Text = "Form1";
             Load += FormTambahJadwal_Load;
             panel1.ResumeLayout(false);
@@ -236,8 +259,10 @@
         public TextBox txtKeterangan;
         public TextBox txtTotalUpah;
         public TextBox txtJumlahAnggota;
-        public TextBox txtIdPelanggan;
-        public TextBox txtIdLahan;
-        public TextBox textBox1;
+        public TextBox txtTipeJadwal;
+        private ComboBox cbLahan;
+        private ComboBox cbTanaman;
+        private TextBox txtJumlahDitanam;
+        private Label label5;
     }
 }

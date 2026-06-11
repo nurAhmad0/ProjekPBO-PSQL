@@ -65,7 +65,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "INSERT INTO Penanaman_Lahan (tanggal_ditanam, jumlah_tanaman, status_penanaman, id_lahan, id_tanaman) VALUES (@tanggalDitanam, @JumlahTanaman, @StatusPenanaman, @idLahan, @idTanaman)", conn);
+                    "INSERT INTO Penanaman_Lahan (tanggal_ditanam, jumlah_tanaman, status_penanaman, id_lahan, id_tanaman) VALUES (@tanggalDitanam, @JumlahTanaman, @StatusPenanaman::status_penanaman, @idLahan, @idTanaman)", conn);
                 query1.Parameters.AddWithValue("tanggalDitanam", penanaman.getTanggalDitanam());
                 query1.Parameters.AddWithValue("JumlahTanaman", penanaman.getJumlahTanaman());
                 query1.Parameters.AddWithValue("StatusPenanaman", penanaman.getStatusPenanaman());
