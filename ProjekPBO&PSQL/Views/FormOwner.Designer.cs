@@ -308,6 +308,7 @@
             panelPilihanJadwalFarmer.Name = "panelPilihanJadwalFarmer";
             panelPilihanJadwalFarmer.Size = new Size(1035, 382);
             panelPilihanJadwalFarmer.TabIndex = 7;
+            panelPilihanJadwalFarmer.Visible = false;
             // 
             // label10
             // 
@@ -369,6 +370,7 @@
             panelPilihanJadwal.Name = "panelPilihanJadwal";
             panelPilihanJadwal.Size = new Size(1031, 380);
             panelPilihanJadwal.TabIndex = 4;
+            panelPilihanJadwal.Visible = false;
             // 
             // labelPilihanJadwal
             // 
@@ -713,6 +715,7 @@
             panelDetailKaryawan.Name = "panelDetailKaryawan";
             panelDetailKaryawan.Size = new Size(1037, 377);
             panelDetailKaryawan.TabIndex = 4;
+            panelDetailKaryawan.Visible = false;
             // 
             // btEdit
             // 
@@ -908,7 +911,6 @@
             panelKaryawan.Name = "panelKaryawan";
             panelKaryawan.Size = new Size(1037, 380);
             panelKaryawan.TabIndex = 0;
-            panelKaryawan.Visible = false;
             // 
             // label1
             // 

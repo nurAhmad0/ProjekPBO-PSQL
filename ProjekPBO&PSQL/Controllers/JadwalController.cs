@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ProjekPBO_PSQL.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using ProjekPBO_PSQL.Models;
-using System.Windows.Forms;
 using System.Data;
+using System.Text;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProjekPBO_PSQL.Controllers
 {
@@ -141,6 +142,22 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 
                 isSucces = Context.UPDATEJadwal(jadwal, status);
+            }
+            catch
+            {
+                return isSucces;
+            }
+
+            return isSucces;
+        }
+
+        public bool TambahDetailJadwal (int idKaryawan, int idjadwal)
+        {
+            bool isSucces = false;
+            try
+            {
+
+                isSucces = Context.ADDDetailJadwal(idKaryawan,idjadwal);
             }
             catch
             {

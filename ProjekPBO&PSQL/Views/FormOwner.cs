@@ -27,8 +27,7 @@ namespace ProjekPBO_PSQL.Views
 
             label7.Text = owner.getSaldo().ToString("N0");
             lblNama.Text = owner.getUsername();
-            panelKaryawan.Visible = true;
-            panelDetailKaryawan.Visible = false;
+            PindahPanel(panelKaryawan, "karyawan");
             List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
             var dataUntukGrid = listAsli.Select(o => new
             {
