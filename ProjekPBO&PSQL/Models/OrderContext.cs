@@ -65,7 +65,7 @@ namespace ProjekPBO_PSQL.Models
             return DataOrder;
         }
 
-        public bool SimpanOrder(int idAnggota, int idPelanggan, List<OrderDetails> keranjangBelanja)
+        public bool SimpanOrder(int idAnggota, DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjangBelanja)
         {
             using var conn = DataBaseHelper.GetConnection();
 
@@ -73,8 +73,9 @@ namespace ProjekPBO_PSQL.Models
             {
                 conn.Open();
 
-                using var cmdOrder = new NpgsqlCommand("SELECT buat_order(@idAnggota, @idPelanggan);", conn);
+                using var cmdOrder = new NpgsqlCommand("SELECT buat_order(@idAnggota, @Tanggal, @idPelanggan);", conn);
                 cmdOrder.Parameters.AddWithValue("@idAnggota", idAnggota);
+                cmdOrder.Parameters.AddWithValue("@Tanggal", Tanggal);
                 cmdOrder.Parameters.AddWithValue("@idPelanggan", idPelanggan);
                 int idOrderBaru = Convert.ToInt32(cmdOrder.ExecuteScalar());
                 foreach (OrderDetails OrderD in keranjangBelanja)
