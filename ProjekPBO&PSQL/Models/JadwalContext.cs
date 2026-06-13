@@ -64,9 +64,10 @@ namespace ProjekPBO_PSQL.Models
                         decimal hargaProduk = reader.IsDBNull(14) ? 0 : Convert.ToDecimal(reader.GetValue(14));
                         int idTanaman = reader.IsDBNull(19) ? 0 : reader.GetInt32(19);
                         int idOrderDetails = reader.IsDBNull(20) ? 0 : reader.GetInt32(20);
+                        string namaTanaman = reader.IsDBNull(15) ? "-" : reader.GetString(15);
                         if (!jadwalHasil.getOrderData().getlistOrderdetails().Any(od => od.getIDOrderDetails() == idOrderDetails && idOrderDetails != 0))
                         {
-                            OrderDetails detailProduk = new OrderDetails(idOrderDetails, hargaProduk, jmlProduk, idOrder, idTanaman);
+                            OrderDetails detailProduk = new OrderDetails(idOrderDetails, hargaProduk, jmlProduk, idOrder, idTanaman, namaTanaman);
                             jadwalHasil.getOrderData().getlistOrderdetails().Add(detailProduk);
                         }
                     }
