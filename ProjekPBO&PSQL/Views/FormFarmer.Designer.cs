@@ -404,7 +404,7 @@
             // 
             pictureBox1.BackColor = Color.Teal;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Image = Properties.Resources.Jer;
+            //pictureBox1.Image = Properties.Resources.Jer;
             pictureBox1.Location = new Point(12, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(86, 82);

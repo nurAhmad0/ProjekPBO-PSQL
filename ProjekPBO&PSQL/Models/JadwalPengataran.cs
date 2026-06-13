@@ -11,23 +11,20 @@ namespace ProjekPBO_PSQL.Models
         private string NamaPelanggan;
         private string NO_TELP;
         private string DetailAlamat;
-        private int OrderID;
-        private DateTime TanggalOrder;
-        private decimal JumlahProduk;
-        private decimal Harga;
-        private string namaTanaman;
+        private Order OrderData;
 
-        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string NamaPelanggan, string NO_TELP, string DetailAlamat, int OrderID, DateTime TanggalOrder, decimal JumlahProduk, decimal Harga, string namaTanaman, int idPelanggan, decimal totalUpah) : base (idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, status, totalUpah)
+        public JadwalPengantaran(int idJadwal, DateTime tanggal, string keteranganKegiatan, int banyakAnggota, string status, string NamaPelanggan, string NO_TELP, string DetailAlamat, int idPelanggan, decimal totalUpah, Order orderData) : base(idJadwal, tanggal, keteranganKegiatan, "Pengantaran", banyakAnggota, status, totalUpah)
         {
             this.NamaPelanggan = NamaPelanggan;
             this.NO_TELP = NO_TELP;
             this.DetailAlamat = DetailAlamat;
-            this.OrderID = OrderID;
-            this.TanggalOrder = TanggalOrder;
-            this.JumlahProduk = JumlahProduk;
-            this.Harga = Harga;
-            this.namaTanaman = namaTanaman;
             this.IDPelanggan = idPelanggan;
+            this.OrderData = orderData;
+        }
+
+        public Order getOrderData()
+        {
+            return this.OrderData;
         }
 
         public string getNamaPelanggan()
@@ -43,31 +40,6 @@ namespace ProjekPBO_PSQL.Models
         public string getDetailAlamat()
         {
             return this.DetailAlamat;
-        }
-
-        public int getOderID()
-        {
-            return this.OrderID;
-        }
-
-        public DateTime getTanggalOrder()
-        {
-            return this.TanggalOrder;
-        }
-
-        public decimal getJumlahProduk()
-        {
-            return this.JumlahProduk;
-        }
-
-        public decimal getHarga()
-        {
-            return this.Harga;
-        }
-
-        public string getNamaTanaman()
-        {
-            return this.namaTanaman;
         }
 
         public int getIDPelanggan()

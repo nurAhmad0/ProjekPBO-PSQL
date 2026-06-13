@@ -105,8 +105,8 @@ namespace ProjekPBO_PSQL.Views
 
         private void btnTambahLaporan_Click(object sender, EventArgs e)
         {
-            FormLaporanFarmer formLaporan = new FormLaporanFarmer();
-            formLaporan.ShowDialog();
+            //FormLaporanFarmer formLaporan = new FormLaporanFarmer();
+            //formLaporan.ShowDialog();
         }
 
         private void dgvJadwal_CellContentClick(object sender, DataGridViewCellEventArgs e)

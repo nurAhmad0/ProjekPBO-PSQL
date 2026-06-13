@@ -316,13 +316,65 @@ namespace ProjekPBO_PSQL.Views
         }
         private void btnEditJadwal_Click(object sender, EventArgs e)
         {
+            //PindahPanel(panelJadwal, "Jadwal");
+            //try
+            //{
+            //    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+            //    dgvJadwal.DataSource = dtJadwal;
+            //    dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //    if (dgvJadwal.Columns.Contains("id_jadwal"))
+            //    {
+            //        dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+            //        dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+            //        dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
+            //        dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+            //        dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
+            //        dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+            //        dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
+            //        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             if (dgvJadwal.CurrentRow == null)
             {
-                MessageBox.Show("Silakan pilih salah satu baris jadwal terlebih dahulu!", "Peringatan");
+                MessageBox.Show("Silakan pilih salah satu baris jadwal terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            FormEditJadwal popUpEdit = new FormEditJadwal();
+            try
+            {
+                int idTerpilih = Convert.ToInt32(dgvJadwal.CurrentRow.Cells["ID Jadwal"].Value);
+                string tipeJadwal = Convert.ToString(dgvJadwal.CurrentRow.Cells["Tipe Jadwal"].Value)!;
+                if (tipeJadwal == "Farmer")
+                {
+                    JadwalFarmer JadwalTerpilih = ControllersJadwal.GetAllJadwalFarmer(idTerpilih)!;
+                    if (JadwalTerpilih == null)
+                    {
+                        MessageBox.Show("Data jadwal farmer tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    PindahPanel(panelDetailJadwalFarmer, "DetailJadwalFarmer");
+                }
+                else if (tipeJadwal == "Pengantar")
+                {
+                    JadwalPengantaran JadwalTerpilih = ControllersJadwal.GetAllJadwalPengantaran(idTerpilih)!;
+                    if (JadwalTerpilih == null)
+                    {
+                        MessageBox.Show("Data jadwal pangantaran tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    PindahPanel(panelDetailJadwalPengantar, "DetailJadwalPengantar");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan saat mengambil data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
         private void btnTambahPelanggan_Click(object sender, EventArgs e)
@@ -580,7 +632,7 @@ namespace ProjekPBO_PSQL.Views
                     dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
                     dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
                     dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
-                    dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                    dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jadwal";
                     dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
                     dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
                     dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
@@ -704,6 +756,45 @@ namespace ProjekPBO_PSQL.Views
                     MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btFarmer_Click(object sender, EventArgs e)
+        {
+            FormTambahJadwalPengantaran TambahJadwal = new FormTambahJadwalPengantaran();
+            TambahJadwal.txtTipeJadwal.Text = "Pengantar";
+            this.Hide();
+            DialogResult hasil = TambahJadwal.ShowDialog();
+            this.Show();
+            if (hasil == DialogResult.OK)
+            {
+                PindahPanel(panelJadwal, "Jadwal");
+                try
+                {
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    dgvJadwal.DataSource = dtJadwal;
+                    dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    if (dgvJadwal.Columns.Contains("id_jadwal"))
+                    {
+                        dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                        dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                        dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
+                        dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                        dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
+                        dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                        dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void label35_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

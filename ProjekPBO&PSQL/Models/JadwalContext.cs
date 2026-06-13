@@ -11,35 +11,24 @@ namespace ProjekPBO_PSQL.Models
 {
     class JadwalContext
     {
-        public List<JadwalPengantaran> GetALLJadwalPengataran(int idJadwal)
+        public JadwalPengantaran? GetALLJadwalPengataran(int idJadwal)
         {
-            List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
+            JadwalPengantaran? jadwalHasil = null;
 
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar,  waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, nomor_nota, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan, total_upah, upah_diterima FROM view_jadwal_pengantar where id_jadwal = @id;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_pengantar, nama_pengantar, waktu_join, nama_pelanggan, no_telp_pelanggan, alamat_tujuan, id_order, tanggal_order, jumlah_produk, harga_produk, nama_tanaman, id_pelanggan, total_upah, upah_diterima, id_tanaman, id_order_details FROM view_jadwal_pengantar where id_jadwal = @id;", conn);
                 query1.Parameters.AddWithValue("id", idJadwal);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    int idJadwalCur = reader.GetInt32(0);
-
-                    JadwalPengantaran? jadwalEksis = null;
-                    foreach (JadwalPengantaran j in DataJadwalPengantaran)
+                    if (jadwalHasil == null)
                     {
-                        if (j.getIdJadwal() == idJadwalCur)
-                        {
-                            jadwalEksis = j;
-                            break;
-                        }
-                    }
-
-                    if (jadwalEksis == null)
-                    {
+                        int idJadwalCur = reader.GetInt32(0);
                         DateTime tanggal = reader.IsDBNull(1) ? DateTime.Now : reader.GetDateTime(1);
                         string keterangan = reader.IsDBNull(2) ? "-" : reader.GetString(2);
                         int banyakAnggota = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
@@ -49,13 +38,12 @@ namespace ProjekPBO_PSQL.Models
                         string alamatTujuan = reader.IsDBNull(10) ? "Detail Alamat Tidak Ada" : reader.GetString(10);
                         int idOrder = reader.IsDBNull(11) ? 0 : reader.GetInt32(11);
                         DateTime tglOrder = reader.IsDBNull(12) ? DateTime.Now : reader.GetDateTime(12);
-                        int jmlProduk = reader.IsDBNull(13) ? 0 : Convert.ToInt32(reader.GetValue(13));
-                        int hargaProduk = reader.IsDBNull(14) ? 0 : Convert.ToInt32(reader.GetValue(14));
-                        string namaTanaman = reader.IsDBNull(15) ? "-" : reader.GetString(15);
                         int idPelanggan = reader.IsDBNull(16) ? 0 : reader.GetInt32(16);
                         decimal totalUpah = reader.IsDBNull(17) ? 0 : reader.GetDecimal(17);
 
-                        jadwalEksis = new JadwalPengantaran(
+                        Order orderBaru = new Order(idOrder, tglOrder, 0, idPelanggan);
+
+                        jadwalHasil = new JadwalPengantaran(
                             idJadwalCur,
                             tanggal,
                             keterangan,
@@ -64,15 +52,23 @@ namespace ProjekPBO_PSQL.Models
                             namaPelanggan,
                             noTelpPelanggan,
                             alamatTujuan,
-                            idOrder,
-                            tglOrder,
-                            jmlProduk,
-                            hargaProduk,
-                            namaTanaman,
                             idPelanggan,
-                            totalUpah
+                            totalUpah,
+                            orderBaru
                         );
-                        DataJadwalPengantaran.Add(jadwalEksis);
+                    }
+                    if (!reader.IsDBNull(11))
+                    {
+                        int idOrder = reader.GetInt32(11);
+                        decimal jmlProduk = reader.IsDBNull(13) ? 0 : Convert.ToDecimal(reader.GetValue(13));
+                        decimal hargaProduk = reader.IsDBNull(14) ? 0 : Convert.ToDecimal(reader.GetValue(14));
+                        int idTanaman = reader.IsDBNull(19) ? 0 : reader.GetInt32(19);
+                        int idOrderDetails = reader.IsDBNull(20) ? 0 : reader.GetInt32(20);
+                        if (!jadwalHasil.getOrderData().getlistOrderdetails().Any(od => od.getIDOrderDetails() == idOrderDetails && idOrderDetails != 0))
+                        {
+                            OrderDetails detailProduk = new OrderDetails(idOrderDetails, hargaProduk, jmlProduk, idOrder, idTanaman);
+                            jadwalHasil.getOrderData().getlistOrderdetails().Add(detailProduk);
+                        }
                     }
                     if (!reader.IsDBNull(5))
                     {
@@ -81,9 +77,9 @@ namespace ProjekPBO_PSQL.Models
                         DateTime waktuMulaiJoin = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7);
                         decimal upahDiterima = reader.IsDBNull(18) ? 0 : reader.GetDecimal(18);
                         DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPengantar, namaPengantar, waktuMulaiJoin, upahDiterima);
-                        if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPengantar))
+                        if (!jadwalHasil.getDaftarAnggota().Any(a => a.getIdAnggota() == idPengantar))
                         {
-                            jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
+                            jadwalHasil.getDaftarAnggota().Add(anggotaBaru);
                         }
                     }
                 }
@@ -97,38 +93,28 @@ namespace ProjekPBO_PSQL.Models
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return DataJadwalPengantaran;
+            return jadwalHasil;
         }
 
-        public List<JadwalFarmer> GetALLJadwalFarmer(int idJadwal)
+        public JadwalFarmer? GetALLJadwalFarmer(int idJadwal)
         {
-            List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
+            JadwalFarmer? jadwalHasil = null;
 
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer,  waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan, total_upah, upah_diterima FROM view_jadwal_farmer where id_jadwal = @id;", conn);
+                    "SELECT id_jadwal, tanggal, keterangan_kegiatan, banyaknya_anggota, status_global, id_farmer, nama_farmer, waktu_join, nama_lahan, nama_tanaman, tanggal_ditanam, jumlah_tanaman, id_lahan, total_upah, upah_diterima FROM view_jadwal_farmer where id_jadwal = @id;", conn);
                 query1.Parameters.AddWithValue("id", idJadwal);
                 using var reader = query1.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    int idJadwalCur = reader.GetInt32(0);
-
-                    JadwalFarmer? jadwalEksis = null;
-                    foreach (JadwalFarmer j in DataJadwalFarmer)
+                    // Karena ini berdasarkan ID unik, kita hanya perlu menginstansiasi objek JadwalFarmer sekali saja di baris pertama loop
+                    if (jadwalHasil == null)
                     {
-                        if (j.getIdJadwal() == idJadwalCur)
-                        {
-                            jadwalEksis = j;
-                            break;
-                        }
-                    }
-
-                    if (jadwalEksis == null)
-                    {
+                        int idJadwalCur = reader.GetInt32(0);
                         DateTime tanggal = reader.IsDBNull(1) ? DateTime.Now : reader.GetDateTime(1);
                         string keterangan = reader.IsDBNull(2) ? "-" : reader.GetString(2);
                         int banyakAnggota = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
@@ -140,7 +126,7 @@ namespace ProjekPBO_PSQL.Models
                         int idLahan = reader.IsDBNull(12) ? 0 : reader.GetInt32(12);
                         decimal totalUpah = reader.IsDBNull(13) ? 0 : reader.GetDecimal(13);
 
-                        jadwalEksis = new JadwalFarmer(
+                        jadwalHasil = new JadwalFarmer(
                             idJadwalCur,
                             tanggal,
                             keterangan,
@@ -153,19 +139,21 @@ namespace ProjekPBO_PSQL.Models
                             idLahan,
                             totalUpah
                         );
-
-                        DataJadwalFarmer.Add(jadwalEksis);
                     }
+
+                    // Loop ke bawahnya bertugas untuk mengumpulkan daftar anggota petani jika data barisnya lebih dari satu (relasi join banyak anggota)
                     if (!reader.IsDBNull(5))
                     {
                         int idPetani = reader.GetInt32(5);
                         string namaPetani = reader.GetString(6);
                         DateTime waktuMulaiJoin = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7);
                         decimal upahDiterima = reader.IsDBNull(14) ? 0 : reader.GetDecimal(14);
+
                         DetailAnggotaJadwal anggotaBaru = new DetailAnggotaJadwal(idPetani, namaPetani, waktuMulaiJoin, upahDiterima);
-                        if (!jadwalEksis.getDaftarAnggota().Any(a => a.getIdAnggota() == idPetani))
+
+                        if (!jadwalHasil.getDaftarAnggota().Any(a => a.getIdAnggota() == idPetani))
                         {
-                            jadwalEksis.getDaftarAnggota().Add(anggotaBaru);
+                            jadwalHasil.getDaftarAnggota().Add(anggotaBaru);
                         }
                     }
                 }
@@ -179,7 +167,7 @@ namespace ProjekPBO_PSQL.Models
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            return DataJadwalFarmer;
+            return jadwalHasil;
         }
 
         public DataTable getjadwalFarmer()

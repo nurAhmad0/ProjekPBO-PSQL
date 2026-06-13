@@ -38,14 +38,13 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalFarmer> GetAllJadwalFarmer(int id) //memasukkan id dari farmer
+        public JadwalFarmer? GetAllJadwalFarmer(int id) //memasukkan id dari farmer
         {
-            List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
             if (id <= 0)
             {
                 
                 MessageBox.Show("ID Jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return DataJadwalFarmer;
+                return null;
             }
             
             return Context.GetALLJadwalFarmer(id);
@@ -60,14 +59,13 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalPengantaran> GetAllJadwalPengantaran(int id) //buat detail
+        public JadwalPengantaran? GetAllJadwalPengantaran(int id) //buat detail
         {
-            List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
             if (id <= 0)
             {
 
                 MessageBox.Show("ID jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return DataJadwalPengantaran;
+                return null;
             }
 
             return Context.GetALLJadwalPengataran(id);

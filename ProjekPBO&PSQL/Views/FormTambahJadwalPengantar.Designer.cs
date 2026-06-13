@@ -48,14 +48,17 @@
             txtJumlahDibeli = new TextBox();
             label5 = new Label();
             panel2 = new Panel();
+            lbTotalKeranjang = new Label();
+            lbTotal = new Label();
+            btTambahKeranjang = new Button();
             btHapus = new Button();
             btBuatJadwal = new Button();
             label8 = new Label();
-            dataGridView1 = new DataGridView();
+            dataKeranjangBelanja = new DataGridView();
             button1 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataKeranjangBelanja).BeginInit();
             SuspendLayout();
             // 
             // dtpTanggal
@@ -104,7 +107,7 @@
             // labe
             // 
             labe.AutoSize = true;
-            labe.Location = new Point(264, 24);
+            labe.Location = new Point(193, 24);
             labe.Name = "labe";
             labe.Size = new Size(68, 20);
             labe.TabIndex = 8;
@@ -149,6 +152,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(957, 509);
             panel1.TabIndex = 2;
+            panel1.Paint += panel1_Paint;
             // 
             // cbPengantar
             // 
@@ -214,14 +218,14 @@
             // cbTanaman
             // 
             cbTanaman.FormattingEnabled = true;
-            cbTanaman.Location = new Point(153, 69);
+            cbTanaman.Location = new Point(109, 70);
             cbTanaman.Name = "cbTanaman";
             cbTanaman.Size = new Size(297, 28);
             cbTanaman.TabIndex = 31;
             // 
             // txtJumlahDibeli
             // 
-            txtJumlahDibeli.Location = new Point(529, 69);
+            txtJumlahDibeli.Location = new Point(448, 70);
             txtJumlahDibeli.Name = "txtJumlahDibeli";
             txtJumlahDibeli.Size = new Size(310, 27);
             txtJumlahDibeli.TabIndex = 29;
@@ -229,7 +233,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(624, 24);
+            label5.Location = new Point(540, 24);
             label5.Name = "label5";
             label5.Size = new Size(99, 20);
             label5.TabIndex = 28;
@@ -238,10 +242,13 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(255, 255, 192);
+            panel2.Controls.Add(lbTotalKeranjang);
+            panel2.Controls.Add(lbTotal);
+            panel2.Controls.Add(btTambahKeranjang);
             panel2.Controls.Add(btHapus);
             panel2.Controls.Add(btBuatJadwal);
             panel2.Controls.Add(label8);
-            panel2.Controls.Add(dataGridView1);
+            panel2.Controls.Add(dataKeranjangBelanja);
             panel2.Controls.Add(label5);
             panel2.Controls.Add(txtJumlahDibeli);
             panel2.Controls.Add(labe);
@@ -252,6 +259,34 @@
             panel2.Size = new Size(960, 500);
             panel2.TabIndex = 3;
             // 
+            // lbTotalKeranjang
+            // 
+            lbTotalKeranjang.AutoSize = true;
+            lbTotalKeranjang.Location = new Point(776, 408);
+            lbTotalKeranjang.Name = "lbTotalKeranjang";
+            lbTotalKeranjang.Size = new Size(40, 20);
+            lbTotalKeranjang.TabIndex = 38;
+            lbTotalKeranjang.Text = "total";
+            // 
+            // lbTotal
+            // 
+            lbTotal.AutoSize = true;
+            lbTotal.Location = new Point(699, 408);
+            lbTotal.Name = "lbTotal";
+            lbTotal.Size = new Size(71, 20);
+            lbTotal.TabIndex = 37;
+            lbTotal.Text = "Total : Rp";
+            // 
+            // btTambahKeranjang
+            // 
+            btTambahKeranjang.Location = new Point(773, 68);
+            btTambahKeranjang.Name = "btTambahKeranjang";
+            btTambahKeranjang.Size = new Size(173, 29);
+            btTambahKeranjang.TabIndex = 36;
+            btTambahKeranjang.Text = "Tambah Ke Karanjang";
+            btTambahKeranjang.UseVisualStyleBackColor = true;
+            btTambahKeranjang.Click += btTambahKeranjang_Click;
+            // 
             // btHapus
             // 
             btHapus.Location = new Point(109, 399);
@@ -260,6 +295,7 @@
             btHapus.TabIndex = 35;
             btHapus.Text = "Hapus Produk";
             btHapus.UseVisualStyleBackColor = true;
+            btHapus.Click += btHapus_Click;
             // 
             // btBuatJadwal
             // 
@@ -269,6 +305,7 @@
             btBuatJadwal.TabIndex = 34;
             btBuatJadwal.Text = "Buat Jadwal";
             btBuatJadwal.UseVisualStyleBackColor = true;
+            btBuatJadwal.Click += btBuatJadwal_Click;
             // 
             // label8
             // 
@@ -279,14 +316,14 @@
             label8.TabIndex = 33;
             label8.Text = "Keranjang";
             // 
-            // dataGridView1
+            // dataKeranjangBelanja
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(109, 184);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(757, 209);
-            dataGridView1.TabIndex = 32;
+            dataKeranjangBelanja.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataKeranjangBelanja.Location = new Point(109, 184);
+            dataKeranjangBelanja.Name = "dataKeranjangBelanja";
+            dataKeranjangBelanja.RowHeadersWidth = 51;
+            dataKeranjangBelanja.Size = new Size(757, 209);
+            dataKeranjangBelanja.TabIndex = 32;
             // 
             // button1
             // 
@@ -296,6 +333,7 @@
             button1.TabIndex = 1;
             button1.Text = "BATAL";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // FormTambahJadwalPengantaran
             // 
@@ -311,7 +349,7 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataKeranjangBelanja).EndInit();
             ResumeLayout(false);
         }
 
@@ -338,8 +376,11 @@
         private Panel panel2;
         private Button btBuatJadwal;
         private Label label8;
-        private DataGridView dataGridView1;
+        private DataGridView dataKeranjangBelanja;
         private Button button1;
         private Button btHapus;
+        private Label lbTotalKeranjang;
+        private Label lbTotal;
+        private Button btTambahKeranjang;
     }
 }
