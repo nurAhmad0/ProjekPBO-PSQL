@@ -12,7 +12,7 @@ namespace ProjekPBO_PSQL.Models
         public List<Order> GetALLdataOrder()
         {
             List<Order> DataOrder = new List<Order>();
-            string Query1 = @"SELECT o.id_order, o.tanggal_order, o.id_anggota, o.id_pelanggan, od.id_order_details, od.harga, od.jumlah_produk, od.id_order, od.id_tanaman FROM ""order"" o JOIN order_details od using (id_order)";
+            string Query1 = @"SELECT o.id_order, o.tanggal_order, o.id_anggota, o.id_pelanggan, od.id_order_details, od.harga, od.jumlah_produk, od.id_order, od.id_tanaman, t.nama_tanaman FROM ""order"" o JOIN order_details od using (id_order) join Tanaman t using (id_tanaman)";
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
@@ -48,7 +48,8 @@ namespace ProjekPBO_PSQL.Models
                         decimal jumlah = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6);
                         int idOrderSaja = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
                         int idTanaman = reader.IsDBNull(8) ? 0 : reader.GetInt32(8);
-                        OrderDetails detailBaru = new OrderDetails(idDetail, harga, jumlah, idOrderCur, idTanaman);
+                        string namaTanaman = reader.IsDBNull(9) ? "-" : reader.GetString(9);
+                        OrderDetails detailBaru = new OrderDetails(idDetail, harga, jumlah, idOrderCur, idTanaman, namaTanaman);
                         orderEksis.getlistOrderdetails().Add(detailBaru);
                     }
                 }

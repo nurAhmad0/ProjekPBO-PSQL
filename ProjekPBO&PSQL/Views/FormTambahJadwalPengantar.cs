@@ -235,7 +235,8 @@ namespace ProjekPBO_PSQL.Views
                     int idTanaman = Convert.ToInt32(row.Cells["colId"].Value);
                     decimal harga = Convert.ToDecimal(row.Cells["colHarga"].Value);
                     decimal jumlah = Convert.ToDecimal(row.Cells["colJumlah"].Value);
-                    OrderDetails detail = new OrderDetails(0, harga, jumlah, 0, idTanaman);
+                    string namaTanaman = Convert.ToString(row.Cells["colNama"].Value)!;
+                    OrderDetails detail = new OrderDetails(0, harga, jumlah, 0, idTanaman, namaTanaman);
                     daftarBelanja.Add(detail);
                 }
             }
@@ -254,7 +255,7 @@ namespace ProjekPBO_PSQL.Views
                 {
                     orderData.getlistOrderdetails().Add(od);
                 }
-                JadwalPengantaran jadwalbaru = new JadwalPengantaran(0,Convert.ToDateTime(dtpTanggal.Text), txtKeterangan.Text, 1, "Pengantar", pelangganTerpilih.getNamePelanggan(), pelangganTerpilih.getNO_TELP(), pelangganTerpilih.getDetailAlamat(), idPelanggan, Convert.ToDecimal(txtTotalUpah.Text.Trim()), orderData);
+                JadwalPengantaran jadwalbaru = new JadwalPengantaran(0,Convert.ToDateTime(dtpTanggal.Text), txtKeterangan.Text, 1, "Belum Dikerjakan", pelangganTerpilih.getNamePelanggan(), pelangganTerpilih.getNO_TELP(), pelangganTerpilih.getDetailAlamat(), idPelanggan, Convert.ToDecimal(txtTotalUpah.Text.Trim()), orderData);
                 jadwalController.tambahJadwal(jadwalbaru);
                 dataKeranjangBelanja.Rows.Clear();
                 txtKeterangan.Clear();
