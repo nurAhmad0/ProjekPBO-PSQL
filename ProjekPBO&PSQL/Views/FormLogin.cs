@@ -41,7 +41,6 @@ namespace ProjekPBO_PSQL
 
             int idAnggota = hasilLogin.Item1;
             int idrole = hasilLogin.Item2;
-            MessageBox.Show($"Isi idAnggota asli dari DB adalah: {idAnggota}\nIsi idrole asli dari DB adalah: {idrole}", "Isi Variabel");
 
             if (idAnggota > 0)
             {

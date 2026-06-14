@@ -30,7 +30,6 @@
         {
             panel1 = new Panel();
             txtAlamat = new TextBox();
-            btnHapus = new Button();
             label3 = new Label();
             txtIdPelanggan = new TextBox();
             txtEmail = new TextBox();
@@ -49,7 +48,6 @@
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
             panel1.Controls.Add(txtAlamat);
-            panel1.Controls.Add(btnHapus);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(txtIdPelanggan);
             panel1.Controls.Add(txtEmail);
@@ -73,16 +71,6 @@
             txtAlamat.Name = "txtAlamat";
             txtAlamat.Size = new Size(310, 27);
             txtAlamat.TabIndex = 26;
-            // 
-            // btnHapus
-            // 
-            btnHapus.BackColor = Color.FromArgb(255, 128, 128);
-            btnHapus.Location = new Point(812, 469);
-            btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(126, 29);
-            btnHapus.TabIndex = 34;
-            btnHapus.Text = "HAPUS BARIS";
-            btnHapus.UseVisualStyleBackColor = false;
             // 
             // label3
             // 
@@ -195,7 +183,6 @@
         #endregion
         private Panel panel1;
         private Button btnBatal;
-        private Button btnHapus;
         private TextBox textBox7;
         private Label label10;
         private Button btnUpdate;

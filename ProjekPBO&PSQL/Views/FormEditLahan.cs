@@ -30,32 +30,22 @@ namespace ProjekPBO_PSQL.Views
                 txtNamaLahan.Focus();
                 return;
             }
-            if (!Validator.ApakahHanyaHurufDanSpasi(txtNamaLahan.Text))
+            if (!Validator.ApakahHurufAngkaDanSpasi(txtNamaLahan.Text))
             {
                 MessageBox.Show("Nama lahan hanya boleh berisi huruf dan spasi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNamaLahan.Focus();
                 return;
             }
-            bool? cekNamaLahan = lahanController.CekNamaLahanDiDataBase(txtNamaLahan.Text);
-            if (cekNamaLahan == true)
-            {
-                MessageBox.Show("Nama lahan sudah digunakan! Silakan gunakan nama lahan yang lain.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNamaLahan.Focus();
-                return;
-            }
-            else if (cekNamaLahan == null)
-            {
-                return;
-            }
+
             if (Validator.ApakahKosong(txtLuasLahan.Text))
             {
                 MessageBox.Show("Luas lahan wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtLuasLahan.Focus();
                 return;
             }
-            if (!Validator.ApakahAngka(txtLuasLahan.Text))
+            if (!Decimal.TryParse(txtLuasLahan.Text, out _))
             {
-                MessageBox.Show("Luas lahan harus berupa angka penuh (integer)!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Luas lahan harus berupa angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtLuasLahan.Focus();
                 return;
             }
@@ -74,7 +64,7 @@ namespace ProjekPBO_PSQL.Views
             try
             {
                 string namaLahan = txtNamaLahan.Text.Trim();
-                int luasLahan = Convert.ToInt32(txtLuasLahan.Text.Trim());
+                Decimal luasLahan = Convert.ToDecimal(txtLuasLahan.Text.Trim());
                 string statusLahan = cbStatusLahan.Text;
                 int idLahan = Convert.ToInt32(txtIdLahan.Text);
                 Lahan lahanBaru = new Lahan(idLahan, namaLahan, luasLahan, statusLahan);
@@ -83,6 +73,8 @@ namespace ProjekPBO_PSQL.Views
                 if (apakahSukses)
                 {
                     MessageBox.Show("Data lahan baru berhasil diUpdate ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
@@ -93,6 +85,11 @@ namespace ProjekPBO_PSQL.Views
             {
                 MessageBox.Show("Terjadi kesalahan sistem saat memproses data: " + ex.Message, "Kesalahan Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

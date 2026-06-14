@@ -76,12 +76,12 @@ namespace ProjekPBO_PSQL.Models
 
                 using var cmdOrder = new NpgsqlCommand("SELECT buat_order(@idAnggota, @Tanggal, @idPelanggan);", conn);
                 cmdOrder.Parameters.AddWithValue("@idAnggota", idAnggota);
-                cmdOrder.Parameters.AddWithValue("@Tanggal", Tanggal);
+                cmdOrder.Parameters.Add("@Tanggal", NpgsqlTypes.NpgsqlDbType.Date).Value = Tanggal.Date;
                 cmdOrder.Parameters.AddWithValue("@idPelanggan", idPelanggan);
                 int idOrderBaru = Convert.ToInt32(cmdOrder.ExecuteScalar());
                 foreach (OrderDetails OrderD in keranjangBelanja)
                 {
-                    using var cmdOrderD = new NpgsqlCommand("CALL tambah_item_order(@idOrder, @idTanaman, @jumlah, @harga);", conn);
+                    using var cmdOrderD = new NpgsqlCommand("CALL tambah_order_details((@idOrder, @idTanaman, @jumlah, @harga);", conn);
                     cmdOrderD.Parameters.AddWithValue("@idOrder", idOrderBaru); 
                     cmdOrderD.Parameters.AddWithValue("@idTanaman", OrderD.getIDTanaman());
                     cmdOrderD.Parameters.AddWithValue("@jumlah", OrderD.getJumlahOrder());

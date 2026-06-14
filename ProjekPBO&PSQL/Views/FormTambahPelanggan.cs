@@ -101,16 +101,18 @@ namespace ProjekPBO_PSQL.Views
                 bool apakahSukses = pelangganController.TambahPelanggan(pelanggan);
                 if (apakahSukses)
                 {
-                    MessageBox.Show("Data tanaman berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Data pelanggan berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     txtAlamat.Clear();
                     txtEmail.Clear();
                     txtNoTelp.Clear();
                     txtNama.Clear();
+                    DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Gagal menyimpan data tanaman ke database.", "Eror Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Gagal menyimpan data pelanggan ke database.", "Eror Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }

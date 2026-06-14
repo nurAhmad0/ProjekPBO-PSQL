@@ -96,7 +96,7 @@ namespace ProjekPBO_PSQL.Views
             PindahPanel(panelJadwal, "Jadwal");
             try
             {
-                DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                 dgvJadwal.DataSource = dtJadwal;
                 dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -136,12 +136,40 @@ namespace ProjekPBO_PSQL.Views
         private void btnLaporan_Click(object sender, EventArgs e)
         {
             PindahPanel(panelLainnya, "Lainnya");
+            menuAktif = "Laporan";
+            List<Laporan> listAsli = ControllersLaporan.getAllLaporan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                tanggal_jadwal = o.getTanggalJadwal(),
+                Waktu_lapor = o.getWaktuLapor(),
+                id_laporan = o.getIdlaporan(),
+                isi_laporan = o.getIsiLaporan(),
+                id_anggota = o.getIdAnggota(),
+                nama_anggota = o.getNamaAnggota(),
+                id_jadwal = o.getidJadwal(),
+                keterangan_kegiatan = o.getKeteranganKegiatan()
+            }).ToList();
+            dgvLainnya.DataSource = dataUntukGrid;
+            dgvLainnya.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btnTambahKaryawan_Click(object sender, EventArgs e)
         {
             FormTambahKaryawan popUpTambah = new FormTambahKaryawan();
-            popUpTambah.ShowDialog();
+            this.Close();
+            DialogResult hasil = popUpTambah.ShowDialog();
+            if (hasil == DialogResult.OK)
+            {
+                List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
+                var dataUntukGrid = listAsli.Select(o => new
+                {
+                    ID = o.getIDOrang(),
+                    Nama = o.getName(),
+                    Role = o.getNamaRole()
+                }).ToList();
+                dgvKaryawan.DataSource = dataUntukGrid;
+                dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
         }
         private void btnEditKaryawan_Click(object sender, EventArgs e)
         {
@@ -683,8 +711,8 @@ namespace ProjekPBO_PSQL.Views
                 id_jadwal = o.getidJadwal(),
                 keterangan_kegiatan = o.getKeteranganKegiatan()
             }).ToList();
-            dgvLahan.DataSource = dataUntukGrid;
-            dgvLahan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvLainnya.DataSource = dataUntukGrid;
+            dgvLainnya.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btPenarikan_Click(object sender, EventArgs e)
@@ -751,7 +779,9 @@ namespace ProjekPBO_PSQL.Views
         {
             FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Menanam"));
             TambahJadwal.txtKeterangan.Text = "Tanam Tanaman dilahan";
+            TambahJadwal.txtKeterangan.ReadOnly = true;
             TambahJadwal.txtTipeJadwal.Text = "Farmer";
+            TambahJadwal.txtTipeJadwal.ReadOnly = true;
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();
@@ -1101,7 +1131,7 @@ namespace ProjekPBO_PSQL.Views
             {
                 if (menuAktif == "Laporan")
                 {
-                    PindahPanel(panelPenarikan, "Detail Laporan");
+                    panelDetailLaporan.Visible = true;
                     txtTanggalJadwalLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["tanggal_jadwal"].Value!.ToString();
                     txtWaktuLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["waktu_lapor"].Value!.ToString();
                     txtIdLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["id_laporan"].Value!.ToString();
@@ -1122,12 +1152,12 @@ namespace ProjekPBO_PSQL.Views
                 }
                 else if (menuAktif == "Penarikan")
                 {
-                    string idPenarikan = dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString()!;
-                    int idRiwayat = Convert.ToInt32(dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString()!);
-                    string metode = dgvLainnya.Rows[e.RowIndex].Cells["metode_penarikan"].Value!.ToString()!;
-                    string status = dgvLainnya.Rows[e.RowIndex].Cells["status_pencairan"].Value!.ToString()!;
-                    string namaAnggota = dgvLainnya.Rows[e.RowIndex].Cells["nama_anggota"].Value!.ToString()!;
-                    string nominal = dgvLainnya.Rows[e.RowIndex].Cells["nominal"].Value!.ToString()!;
+                    string idPenarikan = dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString()?.Trim() ?? "";
+                    int idRiwayat = Convert.ToInt32(dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString());
+                    string metode = dgvLainnya.Rows[e.RowIndex].Cells["metode_penarikan"].Value!.ToString()?.Trim() ?? "";
+                    string status = dgvLainnya.Rows[e.RowIndex].Cells["status_pencairan"].Value!.ToString()?.Trim() ?? "";
+                    string namaAnggota = dgvLainnya.Rows[e.RowIndex].Cells["nama_anggota"].Value!.ToString()?.Trim() ?? "";
+                    string nominal = dgvLainnya.Rows[e.RowIndex].Cells["nominal"].Value!.ToString()?.Trim() ?? "";
 
 
                     if (metode == "Cash" && status != "Selesai")
@@ -1174,11 +1204,12 @@ namespace ProjekPBO_PSQL.Views
 
         private void btKembaliLaporan_Click(object sender, EventArgs e)
         {
-            PindahPanel(panelLainnya, "Lainnya");
+            panelDetailLaporan.Visible = false;
         }
 
         private void btTarikSaldo_Click(object sender, EventArgs e)
         {
+            panelPenarikan.Visible = true;
             txtAtasNamaPenarikan.Enabled = false;
             txtNoRek.Enabled = false;
         }
@@ -1235,6 +1266,22 @@ namespace ProjekPBO_PSQL.Views
                 {
                     txtNoRek.Clear();
                     txtNominalPenarikan.Clear();
+                    panelPenarikan.Visible=false;
+                    menuAktif = "Laporan";
+                    List<Laporan> listAsli = ControllersLaporan.getAllLaporan();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        tanggal_jadwal = o.getTanggalJadwal(),
+                        Waktu_lapor = o.getWaktuLapor(),
+                        id_laporan = o.getIdlaporan(),
+                        isi_laporan = o.getIsiLaporan(),
+                        id_anggota = o.getIdAnggota(),
+                        nama_anggota = o.getNamaAnggota(),
+                        id_jadwal = o.getidJadwal(),
+                        keterangan_kegiatan = o.getKeteranganKegiatan()
+                    }).ToList();
+                    dgvLainnya.DataSource = dataUntukGrid;
+                    dgvLainnya.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
             }
             else

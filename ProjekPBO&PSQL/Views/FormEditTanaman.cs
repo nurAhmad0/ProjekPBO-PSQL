@@ -36,25 +36,13 @@ namespace ProjekPBO_PSQL.Views
                 txtNamaTanaman.Focus();
                 return;
             }
-            if (!Validator.ApakahHanyaHurufDanSpasi(txtNamaTanaman.Text))
+            if (!Validator.ApakahHurufAngkaDanSpasi(txtNamaTanaman.Text))
             {
                 MessageBox.Show("Nama tanaman hanya boleh berisi huruf dan spasi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNamaTanaman.Focus();
                 return;
             }
 
-            bool? cekNama = tanamanController.ApakahAdaNamaTanaman(txtNamaTanaman.Text.Trim());
-            if (cekNama == true)
-            {
-                MessageBox.Show("Nama tanaman sudah ada! Silakan gunakan nama tanaman yang lain.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNamaTanaman.Focus();
-                return;
-            }
-            else if (cekNama == null)
-            {
-                MessageBox.Show("Gagal melakukan pengecekan nama tanaman karena masalah koneksi database.", "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             if (Validator.ApakahKosong(txtHargaTanaman.Text))
             {
@@ -62,9 +50,9 @@ namespace ProjekPBO_PSQL.Views
                 txtHargaTanaman.Focus();
                 return;
             }
-            if (!Validator.ApakahAngka(txtHargaTanaman.Text))
+            if (!long.TryParse(txtHargaTanaman.Text, out _))
             {
-                MessageBox.Show("Harga tanaman harus berupa angka penuh!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Harga tanaman harus berupa angka", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtHargaTanaman.Focus();
                 return;
             }
@@ -111,6 +99,8 @@ namespace ProjekPBO_PSQL.Views
                     txtNamaTanaman.Clear();
                     txtHargaTanaman.Clear();
                     txtDurasiPanen.Clear();
+                    DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {

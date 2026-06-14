@@ -30,7 +30,7 @@ namespace ProjekPBO_PSQL.Views
                 txtNamaLahan.Focus();
                 return;
             }
-            if (!Validator.ApakahHanyaHurufDanSpasi(txtNamaLahan.Text))
+            if (!Validator.ApakahHurufAngkaDanSpasi(txtNamaLahan.Text))
             {
                 MessageBox.Show("Nama lahan hanya boleh berisi huruf dan spasi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNamaLahan.Focus();
@@ -53,9 +53,9 @@ namespace ProjekPBO_PSQL.Views
                 txtLuasLahan.Focus();
                 return;
             }
-            if (!Validator.ApakahAngka(txtLuasLahan.Text))
+            if (!Decimal.TryParse(txtLuasLahan.Text, out _))
             {
-                MessageBox.Show("Luas lahan harus berupa angka penuh (integer)!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Luas lahan harus berupa angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtLuasLahan.Focus();
                 return;
             }
@@ -86,6 +86,8 @@ namespace ProjekPBO_PSQL.Views
                     txtLuasLahan.Clear();
                     cbStatusLahan.SelectedIndex = -1;
                     txtNamaLahan.Focus();
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {

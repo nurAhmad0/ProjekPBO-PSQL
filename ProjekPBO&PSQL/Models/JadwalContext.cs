@@ -178,7 +178,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Farmer'", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Farmer' order by tanggal desc", conn);
                 
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -207,7 +207,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Pengantar'", conn);
+                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Pengantar' order by tanggal desc", conn);
                 
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -384,7 +384,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, status_global, id_lahan, id_pelanggan) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @Status, @IdLahan, @IdPelanggan)", conn);
+                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, status_global, id_lahan, id_pelanggan) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @Status::status, @IdLahan, @IdPelanggan)", conn);
                 query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
                 query1.Parameters.AddWithValue("keterangan", jadwal.getKeteranganKegiatan());
                 query1.Parameters.AddWithValue("TipeJadwal", jadwal.getTipeJadwal());

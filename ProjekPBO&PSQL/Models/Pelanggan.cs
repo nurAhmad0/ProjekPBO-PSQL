@@ -69,7 +69,7 @@ namespace ProjekPBO_PSQL.Models
             }
         }    
 
-        public string namaPelanggan => this.namaPelanggan;
+        public string namaPelanggan => this.NamePelanggan;
         public int idPelanggan => this.IdPelanggan;
     }
 }

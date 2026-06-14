@@ -87,7 +87,7 @@
             // cbStatusKerja
             // 
             cbStatusKerja.FormattingEnabled = true;
-            cbStatusKerja.Items.AddRange(new object[] { "Belum Dikerjakan", "Dalam Pengerjaan", "Sudah Dikerjakan", "Gagal", "Kendala" });
+            cbStatusKerja.Items.AddRange(new object[] { "Aktif", "Tidak Aktif" });
             cbStatusKerja.Location = new Point(192, 306);
             cbStatusKerja.Name = "cbStatusKerja";
             cbStatusKerja.Size = new Size(310, 28);
@@ -130,6 +130,7 @@
             btnTambah.TabIndex = 10;
             btnTambah.Text = "TAMBAH";
             btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
             // label9
             // 

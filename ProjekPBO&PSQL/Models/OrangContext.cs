@@ -272,7 +272,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("UPDATE Anggota_Perusahaan SET saldo = @saldo WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("UPDATE Anggota_Perusahaan SET saldo = @saldo WHERE id_Anggota=@id", conn);
                 query1.Parameters.AddWithValue("id", id);
                 query1.Parameters.AddWithValue("saldo", nominal);
                 int DampakBaris = query1.ExecuteNonQuery();

@@ -50,17 +50,6 @@ namespace ProjekPBO_PSQL.Views
                 txtNoTelp.Focus();
                 return;
             }
-            bool? cekNoTelp = pelangganController.apakahAdaNoTelp(txtNoTelp.Text.Trim());
-            if (cekNoTelp == true)
-            {
-                MessageBox.Show("Nomor telepon sudah terdaftar! Gunakan nomor lain.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNoTelp.Focus();
-                return;
-            }
-            else if (cekNoTelp == null)
-            {
-                return;
-            }
             if (Validator.ApakahKosong(txtEmail.Text))
             {
                 MessageBox.Show("Email wajib diisi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -71,17 +60,6 @@ namespace ProjekPBO_PSQL.Views
             {
                 MessageBox.Show("Format email tidak valid! (Contoh: nama@gmail.com)", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtEmail.Focus();
-                return;
-            }
-            bool? cekEmail = pelangganController.apakahAdaEmail(txtEmail.Text.Trim());
-            if (cekEmail == true)
-            {
-                MessageBox.Show("Email sudah terdaftar! Gunakan email lain.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtEmail.Focus();
-                return;
-            }
-            else if (cekEmail == null)
-            {
                 return;
             }
             if (Validator.ApakahKosong(txtAlamat.Text))
@@ -102,16 +80,18 @@ namespace ProjekPBO_PSQL.Views
                 bool apakahSukses = pelangganController.updatePelanggan(pelanggan);
                 if (apakahSukses)
                 {
-                    MessageBox.Show("Data tanaman berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Data Pelanggan berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     txtAlamat.Clear();
                     txtEmail.Clear();
                     txtNoTelp.Clear();
                     txtNama.Clear();
+                    DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Gagal menyimpan data tanaman ke database.", "Eror Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Gagal menyimpan data Pelanggan ke database.", "Eror Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }

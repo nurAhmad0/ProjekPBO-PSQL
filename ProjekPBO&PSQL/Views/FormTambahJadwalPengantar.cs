@@ -22,6 +22,8 @@ namespace ProjekPBO_PSQL.Views
         {
             InitializeComponent();
             IsiComboBoxLahanDanTanaman();
+            panel1.Visible = true;
+            panel2.Visible = false;
             txtTipeJadwal.ReadOnly = true;
         }
         private void btnBatal_Click(object sender, EventArgs e)
@@ -47,7 +49,7 @@ namespace ProjekPBO_PSQL.Views
                 List<Tanaman> daftarTanaman = tanamanController.GetAllTanaman();
                 List<Pengantar> daftarPengantar = orangController.GetAllOrangPengantar();
 
-                List<Pengantar> daftarPelaggan = daftarPengantar.FindAll(l => l.getStatus() == "Aktif");
+                List<Pengantar> daftarPengantarAktif = daftarPengantar.FindAll(l => l.getStatus() == "Aktif");
 
                 cbPelanggan.DataSource = daftarPelanggan;
                 cbPelanggan.DisplayMember = "namaPelanggan";
@@ -57,7 +59,7 @@ namespace ProjekPBO_PSQL.Views
                 cbTanaman.DisplayMember = "nama_tanaman";
                 cbTanaman.ValueMember = "id_tanaman";
 
-                cbPengantar.DataSource = daftarPengantar;
+                cbPengantar.DataSource = daftarPengantarAktif;
                 cbPengantar.DisplayMember = "namaPengantar";
                 cbPengantar.ValueMember = "idPengantar";
 
@@ -119,6 +121,7 @@ namespace ProjekPBO_PSQL.Views
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Visible = true;
+            panel2.Visible = false;
         }
 
         private void btTambahKeranjang_Click(object sender, EventArgs e)
@@ -169,7 +172,7 @@ namespace ProjekPBO_PSQL.Views
             {
                 if (row.Cells["colId"].Value != null && Convert.ToInt32(row.Cells["colId"].Value) == idTanaman)
                 {
-                    decimal jumlahLama = Convert.ToInt32(row.Cells["colJumlah"].Value);
+                    decimal jumlahLama = Convert.ToDecimal(row.Cells["colJumlah"].Value);
                     decimal jumlahBaru = jumlahLama + BanyakTanamanDibeli;
                     row.Cells["colJumlah"].Value = jumlahBaru;
                     row.Cells["colTotal"].Value = Convert.ToDecimal(jumlahBaru) * hargaTanaman;
@@ -266,6 +269,8 @@ namespace ProjekPBO_PSQL.Views
                 cbTanaman.SelectedIndex = -1;
                 cbPelanggan.SelectedIndex = -1;
                 cbPengantar.SelectedIndex = -1;
+                DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }

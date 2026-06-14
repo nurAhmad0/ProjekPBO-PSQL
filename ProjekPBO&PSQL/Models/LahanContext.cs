@@ -9,6 +9,49 @@ namespace ProjekPBO_PSQL.Models
 {
     class LahanContext
     {
+        public List<Lahan> GetLahanTersedia()
+        {
+            List<Lahan> daftarLahanTersedia = new List<Lahan>();
+            using var conn = DataBaseHelper.GetConnection();
+
+            // Query mencari lahan aktif yang TIDAK memiliki status 'Masih Ditanam' atau 'Pending'
+            string query = @"
+                SELECT id_lahan, nama_lahan, luas_lahan, status_lahan 
+                FROM Lahan 
+                WHERE status_lahan = 'Aktif' 
+                AND id_lahan NOT IN (
+                SELECT id_lahan 
+                FROM Penanaman_Lahan 
+                WHERE status_penanaman IN ('Masih Ditanam', 'Pending')
+                );";
+
+            try
+            {
+                conn.Open();
+                using var cmd = new NpgsqlCommand(query, conn);
+                using var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // Sesuaikan properti ini dengan constructor/properti class Lahan milikmu
+                    Lahan lahan = new Lahan(
+                        Convert.ToInt32(reader["id_lahan"]),
+                        reader["nama_lahan"].ToString()!,
+                        Convert.ToDecimal(reader["luas_lahan"]),
+                        reader["status_lahan"].ToString()!
+                    );
+                    daftarLahanTersedia.Add(lahan);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal mengambil data lahan tersedia: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return daftarLahanTersedia;
+        }
+
+
         public List<Lahan> GETALLLahan()
         {
             List<Lahan> DataLahan = new List<Lahan>();
@@ -49,7 +92,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 var query1 = new NpgsqlCommand(
-                    "update Lahan set nama_lahan=@NamaLahan, luas_lahan=@LuasLahan, status_lahan=@statusLahan where id_lahan = @idLahan", conn);
+                    "update Lahan set nama_lahan=@NamaLahan, luas_lahan=@LuasLahan, status_lahan=@statusLahan::status_lahan where id_lahan = @idLahan", conn);
                 query1.Parameters.AddWithValue("NamaLahan", lahan.getNamaLahan());
                 query1.Parameters.AddWithValue("LuasLahan", lahan.getLuasLahan());
                 query1.Parameters.AddWithValue("statusLahan", lahan.getStatusLahan());
@@ -79,7 +122,7 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                    "INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES (@NamaLahan, @LuasLahan, @Status)", conn);
+                    "INSERT INTO Lahan (nama_lahan, luas_lahan, status_lahan) VALUES (@NamaLahan, @LuasLahan, @Status::status_lahan)", conn);
                 query1.Parameters.AddWithValue("LuasLahan", lahan.getLuasLahan());
                 query1.Parameters.AddWithValue("NamaLahan", lahan.getNamaLahan());
                 query1.Parameters.AddWithValue("Status", lahan.getStatusLahan());

@@ -24,7 +24,8 @@ namespace ProjekPBO_PSQL.Views
             IsiComboBoxLahanDanTanaman();
             if (infoJadwal.template == "Panen")
             {
-                txtKeterangan.ReadOnly = false;
+                txtKeterangan.ReadOnly = true;
+                txtTipeJadwal.ReadOnly = true;
                 cbTanaman.Enabled = false;
             }
             if (infoJadwal.template == "Lainnya")
@@ -33,7 +34,8 @@ namespace ProjekPBO_PSQL.Views
             }
             if (infoJadwal.template == "Menanam")
             {
-                txtKeterangan.ReadOnly = false;
+                txtKeterangan.ReadOnly = true;
+
             }
         }
         private void btnBatal_Click(object sender, EventArgs e)
@@ -55,10 +57,9 @@ namespace ProjekPBO_PSQL.Views
         {
             try
             {
-                List<Lahan> daftarLahan = lahanController.GetAllLahan();
-                List<Lahan> lahanAktif = daftarLahan.FindAll(l => l.getStatusLahan() == "Aktif");
+                List<Lahan> lahanTersedia = lahanController.getLahanTersedia();
 
-                cbLahan.DataSource = lahanAktif;
+                cbLahan.DataSource = lahanTersedia;
                 cbLahan.DisplayMember = "DisplayLahan"; 
                 cbLahan.ValueMember = "id_Lahan";     
                 List<Tanaman> daftarTanaman = tanamanController.GetAllTanaman();
@@ -174,6 +175,8 @@ namespace ProjekPBO_PSQL.Views
                     txtTotalUpah.Clear();
                     cbLahan.SelectedIndex = -1;
                     cbTanaman.SelectedIndex = -1;
+                    DialogResult = DialogResult.OK;
+                    this.Close();
                 }
             }
             catch (Exception ex)
