@@ -61,7 +61,48 @@
             btnLahan = new Button();
             btnKaryawan = new Button();
             panelMiddle = new Panel();
+            panelLainnya = new Panel();
+            panelPenarikan = new Panel();
+            btKonfirmasiPenarikan = new Button();
+            txtNoRek = new TextBox();
+            label47 = new Label();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            label46 = new Label();
+            label45 = new Label();
+            label39 = new Label();
+            txtAtasNamaPenarikan = new TextBox();
+            txtNominalPenarikan = new TextBox();
+            panelDetailLaporan = new Panel();
+            btKembaliLaporan = new Button();
+            txtIsiJadwalLaporan = new TextBox();
+            txtIdJadwalLaporan = new TextBox();
+            txtNamaAnggotaLaporan = new TextBox();
+            txtIdAnggotaLaporan = new TextBox();
+            txtIsiLaporan = new TextBox();
+            txtIdLaporan = new TextBox();
+            txtWaktuLaporan = new TextBox();
+            txtTanggalJadwalLaporan = new TextBox();
+            label44 = new Label();
+            label43 = new Label();
+            label42 = new Label();
+            label41 = new Label();
+            label40 = new Label();
+            labe = new Label();
+            label36 = new Label();
+            label17 = new Label();
+            btTarikSaldo = new Button();
+            btPenarikan = new Button();
+            btLaporan = new Button();
+            label6 = new Label();
+            dgvLainnya = new DataGridView();
+            panelJadwal = new Panel();
+            label4 = new Label();
+            btnTambahJadwal = new Button();
+            btnDetailJadwal = new Button();
+            dgvJadwal = new DataGridView();
             panelDetailJadwalFarmer = new Panel();
+            btSimpanEditFarmer = new Button();
             dataGAnggotaJadwalFarmer = new DataGridView();
             btHapusJadwalFarmer = new Button();
             btEditJadwalFarmer = new Button();
@@ -87,12 +128,8 @@
             lbIdJadwalFarmer = new Label();
             IDJadwal = new Label();
             btKembaliJadwalFarmer = new Button();
-            panelJadwal = new Panel();
-            label4 = new Label();
-            btnTambahJadwal = new Button();
-            btnDetailJadwal = new Button();
-            dgvJadwal = new DataGridView();
             panelDetailJadwalPengantar = new Panel();
+            btSimpanEditPengantar = new Button();
             txtDetailAlamatPengantar = new TextBox();
             txtTanggalOrderPengantar = new TextBox();
             txtNamaPelanggan = new TextBox();
@@ -131,11 +168,6 @@
             btPengantar = new Button();
             btFarmer = new Button();
             lbBack = new Button();
-            panelLainnya = new Panel();
-            btPenarikan = new Button();
-            btLaporan = new Button();
-            label6 = new Label();
-            dgvLainnya = new DataGridView();
             panelLahan = new Panel();
             label2 = new Label();
             btnTambahLahan = new Button();
@@ -183,16 +215,18 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelBottom.SuspendLayout();
             panelMiddle.SuspendLayout();
-            panelDetailJadwalFarmer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).BeginInit();
+            panelLainnya.SuspendLayout();
+            panelPenarikan.SuspendLayout();
+            panelDetailLaporan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLainnya).BeginInit();
             panelJadwal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).BeginInit();
+            panelDetailJadwalFarmer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).BeginInit();
             panelDetailJadwalPengantar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGKeranjangBelanja).BeginInit();
             panelPilihanJadwalFarmer.SuspendLayout();
             panelPilihanJadwal.SuspendLayout();
-            panelLainnya.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLainnya).BeginInit();
             panelLahan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLahan).BeginInit();
             panelPelanggan.SuspendLayout();
@@ -340,12 +374,12 @@
             // 
             // panelMiddle
             // 
-            panelMiddle.Controls.Add(panelDetailJadwalPengantar);
-            panelMiddle.Controls.Add(panelDetailJadwalFarmer);
+            panelMiddle.Controls.Add(panelLainnya);
             panelMiddle.Controls.Add(panelJadwal);
+            panelMiddle.Controls.Add(panelDetailJadwalFarmer);
+            panelMiddle.Controls.Add(panelDetailJadwalPengantar);
             panelMiddle.Controls.Add(panelPilihanJadwalFarmer);
             panelMiddle.Controls.Add(panelPilihanJadwal);
-            panelMiddle.Controls.Add(panelLainnya);
             panelMiddle.Controls.Add(panelLahan);
             panelMiddle.Controls.Add(panelPelanggan);
             panelMiddle.Controls.Add(panelTanaman);
@@ -357,8 +391,396 @@
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 2;
             // 
+            // panelLainnya
+            // 
+            panelLainnya.Controls.Add(panelPenarikan);
+            panelLainnya.Controls.Add(panelDetailLaporan);
+            panelLainnya.Controls.Add(btTarikSaldo);
+            panelLainnya.Controls.Add(btPenarikan);
+            panelLainnya.Controls.Add(btLaporan);
+            panelLainnya.Controls.Add(label6);
+            panelLainnya.Controls.Add(dgvLainnya);
+            panelLainnya.Dock = DockStyle.Fill;
+            panelLainnya.Location = new Point(0, 0);
+            panelLainnya.Name = "panelLainnya";
+            panelLainnya.Size = new Size(1037, 380);
+            panelLainnya.TabIndex = 8;
+            panelLainnya.Visible = false;
+            // 
+            // panelPenarikan
+            // 
+            panelPenarikan.Controls.Add(btKonfirmasiPenarikan);
+            panelPenarikan.Controls.Add(txtNoRek);
+            panelPenarikan.Controls.Add(label47);
+            panelPenarikan.Controls.Add(radioButton2);
+            panelPenarikan.Controls.Add(radioButton1);
+            panelPenarikan.Controls.Add(label46);
+            panelPenarikan.Controls.Add(label45);
+            panelPenarikan.Controls.Add(label39);
+            panelPenarikan.Controls.Add(txtAtasNamaPenarikan);
+            panelPenarikan.Controls.Add(txtNominalPenarikan);
+            panelPenarikan.Location = new Point(0, 46);
+            panelPenarikan.Name = "panelPenarikan";
+            panelPenarikan.Size = new Size(1034, 342);
+            panelPenarikan.TabIndex = 8;
+            // 
+            // btKonfirmasiPenarikan
+            // 
+            btKonfirmasiPenarikan.Location = new Point(849, 280);
+            btKonfirmasiPenarikan.Name = "btKonfirmasiPenarikan";
+            btKonfirmasiPenarikan.Size = new Size(146, 38);
+            btKonfirmasiPenarikan.TabIndex = 17;
+            btKonfirmasiPenarikan.Text = "Konfirmasi";
+            btKonfirmasiPenarikan.UseVisualStyleBackColor = true;
+            btKonfirmasiPenarikan.Click += btKonfirmasiPenarikan_Click;
+            // 
+            // txtNoRek
+            // 
+            txtNoRek.Location = new Point(685, 162);
+            txtNoRek.Name = "txtNoRek";
+            txtNoRek.Size = new Size(243, 27);
+            txtNoRek.TabIndex = 9;
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(528, 165);
+            label47.Name = "label47";
+            label47.Size = new Size(121, 20);
+            label47.TabIndex = 8;
+            label47.Text = "Nomor Rekening";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(104, 214);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(82, 24);
+            radioButton2.TabIndex = 7;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Transfer";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(104, 178);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(61, 24);
+            radioButton1.TabIndex = 6;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Cash";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(40, 162);
+            label46.Name = "label46";
+            label46.Size = new Size(61, 20);
+            label46.TabIndex = 5;
+            label46.Text = "Metode";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new Point(35, 80);
+            label45.Name = "label45";
+            label45.Size = new Size(66, 20);
+            label45.TabIndex = 4;
+            label45.Text = "Nominal";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(573, 73);
+            label39.Name = "label39";
+            label39.Size = new Size(79, 20);
+            label39.TabIndex = 3;
+            label39.Text = "Atas nama";
+            // 
+            // txtAtasNamaPenarikan
+            // 
+            txtAtasNamaPenarikan.Location = new Point(685, 69);
+            txtAtasNamaPenarikan.Name = "txtAtasNamaPenarikan";
+            txtAtasNamaPenarikan.Size = new Size(243, 27);
+            txtAtasNamaPenarikan.TabIndex = 2;
+            // 
+            // txtNominalPenarikan
+            // 
+            txtNominalPenarikan.Location = new Point(127, 80);
+            txtNominalPenarikan.Name = "txtNominalPenarikan";
+            txtNominalPenarikan.Size = new Size(125, 27);
+            txtNominalPenarikan.TabIndex = 1;
+            // 
+            // panelDetailLaporan
+            // 
+            panelDetailLaporan.Controls.Add(btKembaliLaporan);
+            panelDetailLaporan.Controls.Add(txtIsiJadwalLaporan);
+            panelDetailLaporan.Controls.Add(txtIdJadwalLaporan);
+            panelDetailLaporan.Controls.Add(txtNamaAnggotaLaporan);
+            panelDetailLaporan.Controls.Add(txtIdAnggotaLaporan);
+            panelDetailLaporan.Controls.Add(txtIsiLaporan);
+            panelDetailLaporan.Controls.Add(txtIdLaporan);
+            panelDetailLaporan.Controls.Add(txtWaktuLaporan);
+            panelDetailLaporan.Controls.Add(txtTanggalJadwalLaporan);
+            panelDetailLaporan.Controls.Add(label44);
+            panelDetailLaporan.Controls.Add(label43);
+            panelDetailLaporan.Controls.Add(label42);
+            panelDetailLaporan.Controls.Add(label41);
+            panelDetailLaporan.Controls.Add(label40);
+            panelDetailLaporan.Controls.Add(labe);
+            panelDetailLaporan.Controls.Add(label36);
+            panelDetailLaporan.Controls.Add(label17);
+            panelDetailLaporan.Location = new Point(0, 49);
+            panelDetailLaporan.Name = "panelDetailLaporan";
+            panelDetailLaporan.Size = new Size(1039, 333);
+            panelDetailLaporan.TabIndex = 16;
+            // 
+            // btKembaliLaporan
+            // 
+            btKembaliLaporan.Location = new Point(22, 268);
+            btKembaliLaporan.Name = "btKembaliLaporan";
+            btKembaliLaporan.Size = new Size(117, 38);
+            btKembaliLaporan.TabIndex = 9;
+            btKembaliLaporan.Text = "Back";
+            btKembaliLaporan.UseVisualStyleBackColor = true;
+            btKembaliLaporan.Click += btKembaliLaporan_Click;
+            // 
+            // txtIsiJadwalLaporan
+            // 
+            txtIsiJadwalLaporan.Location = new Point(668, 148);
+            txtIsiJadwalLaporan.Name = "txtIsiJadwalLaporan";
+            txtIsiJadwalLaporan.Size = new Size(250, 27);
+            txtIsiJadwalLaporan.TabIndex = 15;
+            // 
+            // txtIdJadwalLaporan
+            // 
+            txtIdJadwalLaporan.Location = new Point(668, 104);
+            txtIdJadwalLaporan.Name = "txtIdJadwalLaporan";
+            txtIdJadwalLaporan.Size = new Size(250, 27);
+            txtIdJadwalLaporan.TabIndex = 14;
+            // 
+            // txtNamaAnggotaLaporan
+            // 
+            txtNamaAnggotaLaporan.Location = new Point(668, 63);
+            txtNamaAnggotaLaporan.Name = "txtNamaAnggotaLaporan";
+            txtNamaAnggotaLaporan.Size = new Size(250, 27);
+            txtNamaAnggotaLaporan.TabIndex = 13;
+            // 
+            // txtIdAnggotaLaporan
+            // 
+            txtIdAnggotaLaporan.Location = new Point(668, 30);
+            txtIdAnggotaLaporan.Name = "txtIdAnggotaLaporan";
+            txtIdAnggotaLaporan.Size = new Size(250, 27);
+            txtIdAnggotaLaporan.TabIndex = 12;
+            // 
+            // txtIsiLaporan
+            // 
+            txtIsiLaporan.Location = new Point(161, 150);
+            txtIsiLaporan.Name = "txtIsiLaporan";
+            txtIsiLaporan.Size = new Size(229, 27);
+            txtIsiLaporan.TabIndex = 11;
+            // 
+            // txtIdLaporan
+            // 
+            txtIdLaporan.Location = new Point(163, 110);
+            txtIdLaporan.Name = "txtIdLaporan";
+            txtIdLaporan.Size = new Size(227, 27);
+            txtIdLaporan.TabIndex = 10;
+            // 
+            // txtWaktuLaporan
+            // 
+            txtWaktuLaporan.Location = new Point(162, 60);
+            txtWaktuLaporan.Name = "txtWaktuLaporan";
+            txtWaktuLaporan.Size = new Size(228, 27);
+            txtWaktuLaporan.TabIndex = 9;
+            // 
+            // txtTanggalJadwalLaporan
+            // 
+            txtTanggalJadwalLaporan.Location = new Point(161, 25);
+            txtTanggalJadwalLaporan.Name = "txtTanggalJadwalLaporan";
+            txtTanggalJadwalLaporan.Size = new Size(229, 27);
+            txtTanggalJadwalLaporan.TabIndex = 8;
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Location = new Point(22, 24);
+            label44.Name = "label44";
+            label44.Size = new Size(117, 20);
+            label44.TabIndex = 7;
+            label44.Text = "Tanggal Jadwal :";
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.Location = new Point(40, 66);
+            label43.Name = "label43";
+            label43.Size = new Size(99, 20);
+            label43.TabIndex = 6;
+            label43.Text = "Waktu Lapor :";
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Location = new Point(540, 27);
+            label42.Name = "label42";
+            label42.Size = new Size(91, 20);
+            label42.TabIndex = 5;
+            label42.Text = "Id Anggota :";
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Location = new Point(553, 104);
+            label41.Name = "label41";
+            label41.Size = new Size(78, 20);
+            label41.TabIndex = 4;
+            label41.Text = "Id Jadwal :";
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Location = new Point(552, 148);
+            label40.Name = "label40";
+            label40.Size = new Size(79, 20);
+            label40.TabIndex = 3;
+            label40.Text = "Isi Jadwal :";
+            // 
+            // labe
+            // 
+            labe.AutoSize = true;
+            labe.Location = new Point(521, 63);
+            labe.Name = "labe";
+            labe.Size = new Size(110, 20);
+            labe.TabIndex = 2;
+            labe.Text = "Nama Pelapor :";
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new Point(46, 153);
+            label36.Name = "label36";
+            label36.Size = new Size(88, 20);
+            label36.TabIndex = 1;
+            label36.Text = "Isi Laporan :";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(52, 113);
+            label17.Name = "label17";
+            label17.Size = new Size(87, 20);
+            label17.TabIndex = 0;
+            label17.Text = "Id Laporan :";
+            // 
+            // btTarikSaldo
+            // 
+            btTarikSaldo.Location = new Point(509, 8);
+            btTarikSaldo.Name = "btTarikSaldo";
+            btTarikSaldo.Size = new Size(151, 38);
+            btTarikSaldo.TabIndex = 9;
+            btTarikSaldo.Text = "Penarikan Saldo";
+            btTarikSaldo.UseVisualStyleBackColor = true;
+            btTarikSaldo.Click += btTarikSaldo_Click;
+            // 
+            // btPenarikan
+            // 
+            btPenarikan.Location = new Point(327, 6);
+            btPenarikan.Name = "btPenarikan";
+            btPenarikan.Size = new Size(151, 38);
+            btPenarikan.TabIndex = 7;
+            btPenarikan.Text = "RiwayatPenarikan";
+            btPenarikan.UseVisualStyleBackColor = true;
+            btPenarikan.Click += btPenarikan_Click;
+            // 
+            // btLaporan
+            // 
+            btLaporan.Location = new Point(168, 6);
+            btLaporan.Name = "btLaporan";
+            btLaporan.Size = new Size(117, 38);
+            btLaporan.TabIndex = 6;
+            btLaporan.Text = "LAPORAN";
+            btLaporan.UseVisualStyleBackColor = true;
+            btLaporan.Click += btLaporan_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(12, 11);
+            label6.Name = "label6";
+            label6.Size = new Size(54, 20);
+            label6.TabIndex = 3;
+            label6.Text = "TABEL ";
+            // 
+            // dgvLainnya
+            // 
+            dgvLainnya.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLainnya.Location = new Point(3, 49);
+            dgvLainnya.Name = "dgvLainnya";
+            dgvLainnya.RowHeadersWidth = 51;
+            dgvLainnya.Size = new Size(1031, 330);
+            dgvLainnya.TabIndex = 0;
+            dgvLainnya.CellContentClick += dgvLaporan_CellContentClick;
+            dgvLainnya.CellDoubleClick += dgvLainnya_CellDoubleClick;
+            // 
+            // panelJadwal
+            // 
+            panelJadwal.Controls.Add(label4);
+            panelJadwal.Controls.Add(btnTambahJadwal);
+            panelJadwal.Controls.Add(btnDetailJadwal);
+            panelJadwal.Controls.Add(dgvJadwal);
+            panelJadwal.Dock = DockStyle.Fill;
+            panelJadwal.Location = new Point(0, 0);
+            panelJadwal.Name = "panelJadwal";
+            panelJadwal.Size = new Size(1037, 380);
+            panelJadwal.TabIndex = 6;
+            panelJadwal.Visible = false;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(12, 15);
+            label4.Name = "label4";
+            label4.Size = new Size(110, 20);
+            label4.TabIndex = 3;
+            label4.Text = "TABEL JADWAL";
+            // 
+            // btnTambahJadwal
+            // 
+            btnTambahJadwal.Location = new Point(167, 6);
+            btnTambahJadwal.Name = "btnTambahJadwal";
+            btnTambahJadwal.Size = new Size(94, 38);
+            btnTambahJadwal.TabIndex = 2;
+            btnTambahJadwal.Text = "ADD";
+            btnTambahJadwal.UseVisualStyleBackColor = true;
+            btnTambahJadwal.Click += btnTambahJadwal_Click;
+            // 
+            // btnDetailJadwal
+            // 
+            btnDetailJadwal.Location = new Point(277, 6);
+            btnDetailJadwal.Name = "btnDetailJadwal";
+            btnDetailJadwal.Size = new Size(94, 38);
+            btnDetailJadwal.TabIndex = 1;
+            btnDetailJadwal.Text = "Detail";
+            btnDetailJadwal.UseVisualStyleBackColor = true;
+            btnDetailJadwal.Click += btnEditJadwal_Click;
+            // 
+            // dgvJadwal
+            // 
+            dgvJadwal.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvJadwal.Location = new Point(3, 53);
+            dgvJadwal.Name = "dgvJadwal";
+            dgvJadwal.RowHeadersWidth = 51;
+            dgvJadwal.Size = new Size(1031, 330);
+            dgvJadwal.TabIndex = 0;
+            // 
             // panelDetailJadwalFarmer
             // 
+            panelDetailJadwalFarmer.Controls.Add(btSimpanEditFarmer);
             panelDetailJadwalFarmer.Controls.Add(dataGAnggotaJadwalFarmer);
             panelDetailJadwalFarmer.Controls.Add(btHapusJadwalFarmer);
             panelDetailJadwalFarmer.Controls.Add(btEditJadwalFarmer);
@@ -389,6 +811,18 @@
             panelDetailJadwalFarmer.Size = new Size(1038, 380);
             panelDetailJadwalFarmer.TabIndex = 38;
             // 
+            // btSimpanEditFarmer
+            // 
+            btSimpanEditFarmer.Enabled = false;
+            btSimpanEditFarmer.Location = new Point(12, 326);
+            btSimpanEditFarmer.Name = "btSimpanEditFarmer";
+            btSimpanEditFarmer.Size = new Size(94, 38);
+            btSimpanEditFarmer.TabIndex = 39;
+            btSimpanEditFarmer.Text = "Simpan Edit";
+            btSimpanEditFarmer.UseVisualStyleBackColor = true;
+            btSimpanEditFarmer.Visible = false;
+            btSimpanEditFarmer.Click += btSimpanEditFarmer_Click;
+            // 
             // dataGAnggotaJadwalFarmer
             // 
             dataGAnggotaJadwalFarmer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -407,6 +841,7 @@
             btHapusJadwalFarmer.TabIndex = 37;
             btHapusJadwalFarmer.Text = "HAPUS";
             btHapusJadwalFarmer.UseVisualStyleBackColor = true;
+            btHapusJadwalFarmer.Click += btHapusJadwalFarmer_Click;
             // 
             // btEditJadwalFarmer
             // 
@@ -416,6 +851,7 @@
             btEditJadwalFarmer.TabIndex = 36;
             btEditJadwalFarmer.Text = "EDIT";
             btEditJadwalFarmer.UseVisualStyleBackColor = true;
+            btEditJadwalFarmer.Click += btEditJadwalFarmer_Click;
             // 
             // txtTotalUpah
             // 
@@ -597,60 +1033,11 @@
             btKembaliJadwalFarmer.TabIndex = 8;
             btKembaliJadwalFarmer.Text = "BACK";
             btKembaliJadwalFarmer.UseVisualStyleBackColor = true;
-            // 
-            // panelJadwal
-            // 
-            panelJadwal.Controls.Add(label4);
-            panelJadwal.Controls.Add(btnTambahJadwal);
-            panelJadwal.Controls.Add(btnDetailJadwal);
-            panelJadwal.Controls.Add(dgvJadwal);
-            panelJadwal.Dock = DockStyle.Fill;
-            panelJadwal.Location = new Point(0, 0);
-            panelJadwal.Name = "panelJadwal";
-            panelJadwal.Size = new Size(1037, 380);
-            panelJadwal.TabIndex = 6;
-            panelJadwal.Visible = false;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(12, 15);
-            label4.Name = "label4";
-            label4.Size = new Size(110, 20);
-            label4.TabIndex = 3;
-            label4.Text = "TABEL JADWAL";
-            // 
-            // btnTambahJadwal
-            // 
-            btnTambahJadwal.Location = new Point(167, 6);
-            btnTambahJadwal.Name = "btnTambahJadwal";
-            btnTambahJadwal.Size = new Size(94, 38);
-            btnTambahJadwal.TabIndex = 2;
-            btnTambahJadwal.Text = "ADD";
-            btnTambahJadwal.UseVisualStyleBackColor = true;
-            btnTambahJadwal.Click += btnTambahJadwal_Click;
-            // 
-            // btnDetailJadwal
-            // 
-            btnDetailJadwal.Location = new Point(277, 6);
-            btnDetailJadwal.Name = "btnDetailJadwal";
-            btnDetailJadwal.Size = new Size(94, 38);
-            btnDetailJadwal.TabIndex = 1;
-            btnDetailJadwal.Text = "Detail";
-            btnDetailJadwal.UseVisualStyleBackColor = true;
-            btnDetailJadwal.Click += btnEditJadwal_Click;
-            // 
-            // dgvJadwal
-            // 
-            dgvJadwal.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvJadwal.Location = new Point(3, 53);
-            dgvJadwal.Name = "dgvJadwal";
-            dgvJadwal.RowHeadersWidth = 51;
-            dgvJadwal.Size = new Size(1031, 330);
-            dgvJadwal.TabIndex = 0;
+            btKembaliJadwalFarmer.Click += btKembaliJadwalFarmer_Click;
             // 
             // panelDetailJadwalPengantar
             // 
+            panelDetailJadwalPengantar.Controls.Add(btSimpanEditPengantar);
             panelDetailJadwalPengantar.Controls.Add(txtDetailAlamatPengantar);
             panelDetailJadwalPengantar.Controls.Add(txtTanggalOrderPengantar);
             panelDetailJadwalPengantar.Controls.Add(txtNamaPelanggan);
@@ -682,6 +1069,18 @@
             panelDetailJadwalPengantar.Name = "panelDetailJadwalPengantar";
             panelDetailJadwalPengantar.Size = new Size(1036, 379);
             panelDetailJadwalPengantar.TabIndex = 4;
+            // 
+            // btSimpanEditPengantar
+            // 
+            btSimpanEditPengantar.Enabled = false;
+            btSimpanEditPengantar.Location = new Point(10, 345);
+            btSimpanEditPengantar.Name = "btSimpanEditPengantar";
+            btSimpanEditPengantar.Size = new Size(151, 29);
+            btSimpanEditPengantar.TabIndex = 38;
+            btSimpanEditPengantar.Text = "Simpan Edit";
+            btSimpanEditPengantar.UseVisualStyleBackColor = true;
+            btSimpanEditPengantar.Visible = false;
+            btSimpanEditPengantar.Click += btSimpanEditPengantar_Click;
             // 
             // txtDetailAlamatPengantar
             // 
@@ -761,6 +1160,7 @@
             btJadwalPengantarHapus.TabIndex = 27;
             btJadwalPengantarHapus.Text = "HAPUS";
             btJadwalPengantarHapus.UseVisualStyleBackColor = true;
+            btJadwalPengantarHapus.Click += btJadwalPengantarHapus_Click;
             // 
             // btEditJadwalPengantar
             // 
@@ -770,6 +1170,7 @@
             btEditJadwalPengantar.TabIndex = 26;
             btEditJadwalPengantar.Text = "EDIT";
             btEditJadwalPengantar.UseVisualStyleBackColor = true;
+            btEditJadwalPengantar.Click += btEditJadwalPengantar_Click;
             // 
             // dataGKeranjangBelanja
             // 
@@ -905,6 +1306,7 @@
             button5.TabIndex = 9;
             button5.Text = "BACK";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // panelPilihanJadwalFarmer
             // 
@@ -1020,58 +1422,6 @@
             lbBack.Text = "BACK";
             lbBack.UseVisualStyleBackColor = true;
             lbBack.Click += lbBack_Click;
-            // 
-            // panelLainnya
-            // 
-            panelLainnya.Controls.Add(btPenarikan);
-            panelLainnya.Controls.Add(btLaporan);
-            panelLainnya.Controls.Add(label6);
-            panelLainnya.Controls.Add(dgvLainnya);
-            panelLainnya.Dock = DockStyle.Fill;
-            panelLainnya.Location = new Point(0, 0);
-            panelLainnya.Name = "panelLainnya";
-            panelLainnya.Size = new Size(1037, 380);
-            panelLainnya.TabIndex = 8;
-            panelLainnya.Visible = false;
-            // 
-            // btPenarikan
-            // 
-            btPenarikan.Location = new Point(327, 6);
-            btPenarikan.Name = "btPenarikan";
-            btPenarikan.Size = new Size(151, 38);
-            btPenarikan.TabIndex = 7;
-            btPenarikan.Text = "RiwayatPenarikan";
-            btPenarikan.UseVisualStyleBackColor = true;
-            btPenarikan.Click += btPenarikan_Click;
-            // 
-            // btLaporan
-            // 
-            btLaporan.Location = new Point(168, 6);
-            btLaporan.Name = "btLaporan";
-            btLaporan.Size = new Size(117, 38);
-            btLaporan.TabIndex = 6;
-            btLaporan.Text = "LAPORAN";
-            btLaporan.UseVisualStyleBackColor = true;
-            btLaporan.Click += btLaporan_Click;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(12, 11);
-            label6.Name = "label6";
-            label6.Size = new Size(54, 20);
-            label6.TabIndex = 3;
-            label6.Text = "TABEL ";
-            // 
-            // dgvLainnya
-            // 
-            dgvLainnya.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLainnya.Location = new Point(2, 46);
-            dgvLainnya.Name = "dgvLainnya";
-            dgvLainnya.RowHeadersWidth = 51;
-            dgvLainnya.Size = new Size(1031, 330);
-            dgvLainnya.TabIndex = 0;
-            dgvLainnya.CellContentClick += dgvLaporan_CellContentClick;
             // 
             // panelLahan
             // 
@@ -1525,12 +1875,19 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelBottom.ResumeLayout(false);
             panelMiddle.ResumeLayout(false);
-            panelDetailJadwalFarmer.ResumeLayout(false);
-            panelDetailJadwalFarmer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).EndInit();
+            panelLainnya.ResumeLayout(false);
+            panelLainnya.PerformLayout();
+            panelPenarikan.ResumeLayout(false);
+            panelPenarikan.PerformLayout();
+            panelDetailLaporan.ResumeLayout(false);
+            panelDetailLaporan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLainnya).EndInit();
             panelJadwal.ResumeLayout(false);
             panelJadwal.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).EndInit();
+            panelDetailJadwalFarmer.ResumeLayout(false);
+            panelDetailJadwalFarmer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).EndInit();
             panelDetailJadwalPengantar.ResumeLayout(false);
             panelDetailJadwalPengantar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGKeranjangBelanja).EndInit();
@@ -1538,9 +1895,6 @@
             panelPilihanJadwalFarmer.PerformLayout();
             panelPilihanJadwal.ResumeLayout(false);
             panelPilihanJadwal.PerformLayout();
-            panelLainnya.ResumeLayout(false);
-            panelLainnya.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLainnya).EndInit();
             panelLahan.ResumeLayout(false);
             panelLahan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLahan).EndInit();
@@ -1691,5 +2045,37 @@
         private TextBox txtStatusJadwalPengantar;
         private TextBox txtIDJadwalPengantar;
         private DataGridView dataGAnggotaJadwalFarmer;
+        private Button btSimpanEditPengantar;
+        private Button btSimpanEditFarmer;
+        private Panel panelPenarikan;
+        private Label labe;
+        private Label label36;
+        private Label label17;
+        private Label label44;
+        private Label label43;
+        private Label label42;
+        private Label label41;
+        private Label label40;
+        private TextBox txtIsiJadwalLaporan;
+        private TextBox txtIdJadwalLaporan;
+        private TextBox txtNamaAnggotaLaporan;
+        private TextBox txtIdAnggotaLaporan;
+        private TextBox txtIsiLaporan;
+        private TextBox txtIdLaporan;
+        private TextBox txtWaktuLaporan;
+        private TextBox txtTanggalJadwalLaporan;
+        private Button btKembaliLaporan;
+        private Button btTarikSaldo;
+        private Panel panelDetailLaporan;
+        private Label label46;
+        private Label label45;
+        private Label label39;
+        private TextBox txtAtasNamaPenarikan;
+        private TextBox txtNominalPenarikan;
+        private TextBox txtNoRek;
+        private Label label47;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private Button btKonfirmasiPenarikan;
     }
 }

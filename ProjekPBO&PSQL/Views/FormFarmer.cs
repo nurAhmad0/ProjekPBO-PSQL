@@ -132,8 +132,8 @@ namespace ProjekPBO_PSQL.Views
             try
             {
                 int idTerpilih = Convert.ToInt32(dgvJadwal.CurrentRow.Cells["ID Jadwal"].Value);
-                List<JadwalFarmer> JadwalTerpilih = controllersJadwal.GetAllJadwalFarmer(idTerpilih)!;
-                if (JadwalTerpilih == null || JadwalTerpilih.Count == 0)
+                JadwalFarmer JadwalTerpilih = controllersJadwal.GetAllJadwalFarmer(idTerpilih)!;
+                if (JadwalTerpilih == null)
                 {
                     MessageBox.Show("Data Jadwal tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

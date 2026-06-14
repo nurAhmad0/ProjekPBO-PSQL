@@ -499,13 +499,14 @@ namespace ProjekPBO_PSQL.Models
                 else
                 {
                     using var query1 = new NpgsqlCommand(
-                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal::tipe_jadwal, banyaknya_anggota=@banyakAnggota, status_global=@status::status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
+                        "update jadwal set tanggal=@Tanggal, keterangan_kegiatan=@keteranganKegiatan, text_tipe_jadwal=@tipeJadwal::tipe_jadwal, banyaknya_anggota=@banyakAnggota, total_upah=@totalUpah, status_global=@status::status, id_lahan=@idLahan, id_pelanggan=@idPelanggan where id_jadwal=@id_jadwal", conn);
                     query1.Parameters.AddWithValue("id_jadwal", jadwal.getIdJadwal());
                     query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
                     query1.Parameters.AddWithValue("keteranganKegiatan", jadwal.getKeteranganKegiatan());
                     query1.Parameters.AddWithValue("tipeJadwal", jadwal.getTipeJadwal());
                     query1.Parameters.AddWithValue("banyakAnggota", jadwal.getBanyakAnggota());
                     query1.Parameters.AddWithValue("status", jadwal.getStatus());
+                    query1.Parameters.AddWithValue("totalUpah", jadwal.getTotalUpah());
                     if (jadwal is JadwalFarmer farmer)
                     {
                         query1.Parameters.AddWithValue("idLahan", farmer.getIDLahan());

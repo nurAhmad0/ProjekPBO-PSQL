@@ -1,12 +1,13 @@
-﻿using System;
+﻿using ProjekPBO_PSQL.Controllers;
+using ProjekPBO_PSQL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using ProjekPBO_PSQL.Models;
-using ProjekPBO_PSQL.Controllers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProjekPBO_PSQL.Views
 {
@@ -18,8 +19,10 @@ namespace ProjekPBO_PSQL.Views
         LahanController ControllersLahan = new LahanController();
         RiwayatPenarikanController ControllersPenarikan = new RiwayatPenarikanController();
         JadwalController ControllersJadwal = new JadwalController();
+        LaporanController ControllersLaporan = new LaporanController();
 
-        Orang owner;
+        private string menuAktif = "";
+        private Orang owner;
         public FormOwner(int id)
         {
             InitializeComponent();
@@ -357,7 +360,7 @@ namespace ProjekPBO_PSQL.Views
                         return;
                     }
 
-                    
+
                     txtTanamanJadwalFarmer.ReadOnly = true;
                     txtTotalUpah.ReadOnly = true;
                     txtStatusJadwalFarmer.ReadOnly = true;
@@ -667,11 +670,26 @@ namespace ProjekPBO_PSQL.Views
 
         private void btLaporan_Click(object sender, EventArgs e)
         {
-
+            menuAktif = "Laporan";
+            List<Laporan> listAsli = ControllersLaporan.getAllLaporan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                tanggal_jadwal = o.getTanggalJadwal(),
+                Waktu_lapor = o.getWaktuLapor(),
+                id_laporan = o.getIdlaporan(),
+                isi_laporan = o.getIsiLaporan(),
+                id_anggota = o.getIdAnggota(),
+                nama_anggota = o.getNamaAnggota(),
+                id_jadwal = o.getidJadwal(),
+                keterangan_kegiatan = o.getKeteranganKegiatan()
+            }).ToList();
+            dgvLahan.DataSource = dataUntukGrid;
+            dgvLahan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btPenarikan_Click(object sender, EventArgs e)
         {
+            menuAktif = "Penarikan";
             try
             {
                 DataTable dtPenarikan = ControllersPenarikan.TampilSemuaPenarikan();
@@ -874,6 +892,355 @@ namespace ProjekPBO_PSQL.Views
         private void dataGAnggotaJadwalFarmer_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelJadwal, "Jadwal");
+        }
+
+        private void btEditJadwalPengantar_Click(object sender, EventArgs e)
+        {
+            btSimpanEditPengantar.Visible = true;
+            btSimpanEditPengantar.Enabled = true;
+            txtTotalUpahPengantar.ReadOnly = false;
+            txtKeteranganJadwalPengantar.ReadOnly = false;
+
+        }
+
+        private void btSimpanEditPengantar_Click(object sender, EventArgs e)
+        {
+            int idJadwal = Convert.ToInt32(txtIDJadwalPengantar.Text);
+
+            if (Validator.ApakahKosong(txtKeteranganJadwalPengantar.Text))
+            {
+                MessageBox.Show("Keterangan kegiatan pengantaran tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Validator.ApakahKosong(txtTotalUpahPengantar.Text))
+            {
+                MessageBox.Show("total upah tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!Validator.ApakahAngka(txtTotalUpahPengantar.Text))
+            {
+                MessageBox.Show("Total upah harus angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal totalUpahPengantar = Convert.ToDecimal(txtTotalUpahPengantar.Text);
+
+            if (totalUpahPengantar < 0)
+            {
+                MessageBox.Show("Total upah tidak boleh negatif!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            JadwalPengantaran JadwalUpdate = new JadwalPengantaran(idJadwal, Convert.ToDateTime(lbTanggalJadwalPengantaran.Text), txtKeteranganJadwalPengantar.Text, 1, txtStatusJadwalPengantar.Text, "", "", "", Convert.ToInt32(txtIdPelangganPengantar.Text), totalUpahPengantar, null!);
+
+            bool hasil = ControllersJadwal.UpdateJadwal(JadwalUpdate);
+
+            if (hasil)
+            {
+                MessageBox.Show("Jadwal pengantaran berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btSimpanEditPengantar.Visible = false;
+                btSimpanEditPengantar.Enabled = false;
+                txtTotalUpahPengantar.ReadOnly = true;
+                txtKeteranganJadwalPengantar.ReadOnly = true;
+                PindahPanel(panelJadwal, "Jadwal");
+            }
+            else
+            {
+                MessageBox.Show("Gagal menyimpan perubahan ke database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btJadwalPengantarHapus_Click(object sender, EventArgs e)
+        {
+            int idJadwal = Convert.ToInt32(txtIDJadwalPengantar.Text);
+            bool hasil = ControllersJadwal.DelateJadwal(idJadwal);
+
+            if (hasil)
+            {
+                MessageBox.Show("Jadwal pengantaran berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PindahPanel(panelJadwal, "Jadwal");
+                try
+                {
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    dgvJadwal.DataSource = dtJadwal;
+                    dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    if (dgvJadwal.Columns.Contains("id_jadwal"))
+                    {
+                        dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                        dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                        dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
+                        dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                        dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
+                        dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                        dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Gagal menyimpan perubahan ke database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btKembaliJadwalFarmer_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelJadwal, "Jadwal");
+        }
+
+        private void btHapusJadwalFarmer_Click(object sender, EventArgs e)
+        {
+            int idJadwal = Convert.ToInt32(lbIdJadwalFarmer.Text);
+            bool hasil = ControllersJadwal.DelateJadwal(idJadwal);
+
+            if (hasil)
+            {
+                MessageBox.Show("Jadwal farmer berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PindahPanel(panelJadwal, "Jadwal");
+                try
+                {
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    dgvJadwal.DataSource = dtJadwal;
+                    dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    if (dgvJadwal.Columns.Contains("id_jadwal"))
+                    {
+                        dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                        dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                        dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
+                        dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                        dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
+                        dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                        dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Gagal menyimpan perubahan ke database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btEditJadwalFarmer_Click(object sender, EventArgs e)
+        {
+            btSimpanEditFarmer.Visible = true;
+            btSimpanEditFarmer.Enabled = true;
+            txtTotalUpah.ReadOnly = false;
+            txtKeteranganJadwalFarmer.ReadOnly = false;
+        }
+
+        private void btSimpanEditFarmer_Click(object sender, EventArgs e)
+        {
+            int idJadwal = Convert.ToInt32(txtIDJadwalPengantar.Text);
+
+            if (Validator.ApakahKosong(txtKeteranganJadwalPengantar.Text))
+            {
+                MessageBox.Show("Keterangan kegiatan farmer tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Validator.ApakahKosong(txtTotalUpah.Text))
+            {
+                MessageBox.Show("total upah tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!Validator.ApakahAngka(txtTotalUpah.Text))
+            {
+                MessageBox.Show("Total upah harus angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal totalUpahFarmer = Convert.ToDecimal(txtTotalUpah.Text);
+
+            if (totalUpahFarmer < 0)
+            {
+                MessageBox.Show("Total upah tidak boleh negatif!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JadwalFarmer JadwalUpdate = new JadwalFarmer(idJadwal, Convert.ToDateTime(lbTanggalJadwalFarmer.Text), txtKeteranganJadwalFarmer.Text, Convert.ToInt32(txtBanyakAnggotaJadwalFarmer.Text), txtStatusJadwalFarmer.Text, "", "", DateTime.Now, Convert.ToInt32(txtJumlahDItanamJadwalFarmer.Text), Convert.ToInt32(txtIdLahanJadwalFarmer.Text), totalUpahFarmer);
+
+            bool hasil = ControllersJadwal.UpdateJadwal(JadwalUpdate);
+
+            if (hasil)
+            {
+                MessageBox.Show("Jadwal farmer berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btSimpanEditFarmer.Visible = false;
+                btSimpanEditFarmer.Enabled = false;
+                txtTotalUpah.ReadOnly = true;
+                txtKeteranganJadwalFarmer.ReadOnly = true;
+                PindahPanel(panelJadwal, "Jadwal");
+            }
+            else
+            {
+                MessageBox.Show("Gagal menyimpan perubahan ke database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvLainnya_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (menuAktif == "Laporan")
+                {
+                    PindahPanel(panelPenarikan, "Detail Laporan");
+                    txtTanggalJadwalLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["tanggal_jadwal"].Value!.ToString();
+                    txtWaktuLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["waktu_lapor"].Value!.ToString();
+                    txtIdLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["id_laporan"].Value!.ToString();
+                    txtIsiLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["isi_laporan"].Value!.ToString();
+                    txtIdAnggotaLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["id_anggota"].Value!.ToString();
+                    txtNamaAnggotaLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["nama_anggota"].Value!.ToString();
+                    txtIdJadwalLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["id_jadwal"].Value!.ToString();
+                    txtIsiJadwalLaporan.Text = dgvLainnya.Rows[e.RowIndex].Cells["keterangan_kegiatan"].Value!.ToString();
+
+                    txtTanggalJadwalLaporan.ReadOnly = true;
+                    txtIdLaporan.ReadOnly = true;
+                    txtIdAnggotaLaporan.ReadOnly = true;
+                    txtIsiJadwalLaporan.ReadOnly = true;
+                    txtWaktuLaporan.ReadOnly = true;
+                    txtIsiLaporan.ReadOnly = true;
+                    txtNamaAnggotaLaporan.ReadOnly = true;
+                    txtIdJadwalLaporan.ReadOnly = true;
+                }
+                else if (menuAktif == "Penarikan")
+                {
+                    string idPenarikan = dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString()!;
+                    int idRiwayat = Convert.ToInt32(dgvLainnya.Rows[e.RowIndex].Cells["id_riwayat_penarikan"].Value!.ToString()!);
+                    string metode = dgvLainnya.Rows[e.RowIndex].Cells["metode_penarikan"].Value!.ToString()!;
+                    string status = dgvLainnya.Rows[e.RowIndex].Cells["status_pencairan"].Value!.ToString()!;
+                    string namaAnggota = dgvLainnya.Rows[e.RowIndex].Cells["nama_anggota"].Value!.ToString()!;
+                    string nominal = dgvLainnya.Rows[e.RowIndex].Cells["nominal"].Value!.ToString()!;
+
+
+                    if (metode == "Cash" && status != "Selesai")
+                    {
+                        DialogResult dialogResult = MessageBox.Show($"Apakah Anda yakin ingin mengubah status penarikan dengan ID {idPenarikan} atas nama {namaAnggota} sebesar Rp. {nominal} menjadi 'Selesai'?\n\n" + "(Pastikan uang tunai fisik sudah diserahkan langsung kepada karyawan yang bersangkutan)", "Konfirmasi Penyerahan Uang Tunai", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            bool sukses = ControllersPenarikan.KonfirmasiPencairan(idRiwayat);
+
+                            if (sukses)
+                            {
+                                MessageBox.Show("Status penarikan berhasil diubah menjadi Selesai!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                try
+                                {
+                                    DataTable dtPenarikan = ControllersPenarikan.TampilSemuaPenarikan();
+                                    dgvLainnya.DataSource = dtPenarikan;
+                                    dgvLainnya.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                                    if (dgvLainnya.Columns.Contains("id_riwayat_penarikan"))
+                                    {
+                                        dgvLainnya.Columns["id_riwayat_penarikan"]!.HeaderText = "ID Penarikan";
+                                        dgvLainnya.Columns["tanggal_penarikan"]!.HeaderText = "Tanggal";
+                                        dgvLainnya.Columns["metode_penarikan"]!.HeaderText = "Metode";
+                                        dgvLainnya.Columns["nominal"]!.HeaderText = "Nominal (Rp)";
+                                        dgvLainnya.Columns["status_pencairan"]!.HeaderText = "Status";
+                                        dgvLainnya.Columns["nama_anggota"]!.HeaderText = "Nama Anggota";
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Gagal menyegarkan tabel: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Gagal memperbarui status pencairan di database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void btKembaliLaporan_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelLainnya, "Lainnya");
+        }
+
+        private void btTarikSaldo_Click(object sender, EventArgs e)
+        {
+            txtAtasNamaPenarikan.Enabled = false;
+            txtNoRek.Enabled = false;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                txtAtasNamaPenarikan.Enabled = true;
+                txtNoRek.Enabled = false;
+                txtNoRek.Clear();
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                txtNoRek.Enabled = true;
+                txtAtasNamaPenarikan.Enabled = false;
+                txtAtasNamaPenarikan.Clear();
+            }
+        }
+
+        private void btKonfirmasiPenarikan_Click(object sender, EventArgs e)
+        {
+            if (Validator.ApakahKosong(txtNominalPenarikan.Text) || !Validator.ApakahAngka(txtNominalPenarikan.Text))
+            {
+                MessageBox.Show("Masukkan nominal penarikan berupa angka yang valid!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            decimal jumlahTarik = Convert.ToDecimal(txtNominalPenarikan.Text);
+
+            if (radioButton1.Checked)
+            {
+
+                MetodePenarikanCash aksiCash = new MetodePenarikanCash();
+                string namaPengambil = txtAtasNamaPenarikan.Text;
+
+                bool berhasil = aksiCash.MenarikUang(jumlahTarik, owner, namaPengambil);
+                if (berhasil)
+                {
+                    txtAtasNamaPenarikan.Clear();
+                    txtNominalPenarikan.Clear();
+                }
+            }
+            else if (radioButton2.Checked)
+            {
+                MetodePenarikanTransfer aksiTransfer = new MetodePenarikanTransfer();
+                string nomorRekening = txtNoRek.Text;
+
+                bool berhasil = aksiTransfer.MenarikUang(jumlahTarik, owner, nomorRekening);
+                if (berhasil)
+                {
+                    txtNoRek.Clear();
+                    txtNominalPenarikan.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Silakan pilih metode penarikan terlebih dahulu (Cash / Transfer)!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
