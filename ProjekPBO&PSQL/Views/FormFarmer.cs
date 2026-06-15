@@ -485,7 +485,7 @@ namespace ProjekPBO_PSQL.Views
         {
             if (dgvLaporan.CurrentRow == null)
             {
-                MessageBox.Show("Silakan pilih laporan yang ingin dihapus dari tabel terlebih dahulu!","Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Silakan pilih laporan yang ingin dihapus dari tabel terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             int idLaporanTerpilih = Convert.ToInt32(dgvLaporan.CurrentRow.Cells["IDLaporan"].Value);
@@ -520,6 +520,26 @@ namespace ProjekPBO_PSQL.Views
                     dgvLaporan.Columns["WaktuLapor"]!.DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
                     dgvLaporan.Columns["TanggalJadwal"]!.DefaultCellStyle.Format = "dd/MM/yyyy";
                 }
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                txtAtasNamaPenarikan.Enabled = true;
+                txtNoRek.Enabled = false;
+                txtNoRek.Clear();
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                txtNoRek.Enabled = true;
+                txtAtasNamaPenarikan.Enabled = false;
+                txtAtasNamaPenarikan.Clear();
             }
         }
     }

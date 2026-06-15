@@ -156,8 +156,9 @@ namespace ProjekPBO_PSQL.Views
         private void btnTambahKaryawan_Click(object sender, EventArgs e)
         {
             FormTambahKaryawan popUpTambah = new FormTambahKaryawan();
-            this.Close();
+            this.Hide();
             DialogResult hasil = popUpTambah.ShowDialog();
+            this.Close();
             if (hasil == DialogResult.OK)
             {
                 List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
@@ -709,6 +710,7 @@ namespace ProjekPBO_PSQL.Views
 
         private void btLaporan_Click(object sender, EventArgs e)
         {
+            panelPenarikan.Visible = false;
             menuAktif = "Laporan";
             List<Laporan> listAsli = ControllersLaporan.getAllLaporan();
             var dataUntukGrid = listAsli.Select(o => new
@@ -728,6 +730,7 @@ namespace ProjekPBO_PSQL.Views
 
         private void btPenarikan_Click(object sender, EventArgs e)
         {
+            panelPenarikan.Visible = false;
             menuAktif = "Penarikan";
             try
             {
@@ -937,6 +940,8 @@ namespace ProjekPBO_PSQL.Views
 
         private void button5_Click(object sender, EventArgs e)
         {
+            btSimpanEditPengantar.Visible = false;
+            btSimpanEditPengantar.Enabled = false;
             PindahPanel(panelJadwal, "Jadwal");
         }
 
@@ -965,7 +970,7 @@ namespace ProjekPBO_PSQL.Views
                 return;
             }
 
-            if (!Validator.ApakahAngka(txtTotalUpahPengantar.Text))
+            if (!Decimal.TryParse(txtTotalUpahPengantar.Text, out _))
             {
                 MessageBox.Show("Total upah harus angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -1022,8 +1027,10 @@ namespace ProjekPBO_PSQL.Views
                         dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
                         dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
                         dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
-                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0"; 
                     }
+                    btSimpanEditPengantar.Visible = false;
+                    btSimpanEditPengantar.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -1040,6 +1047,8 @@ namespace ProjekPBO_PSQL.Views
         private void btKembaliJadwalFarmer_Click(object sender, EventArgs e)
         {
             PindahPanel(panelJadwal, "Jadwal");
+            btSimpanEditFarmer.Visible = false;
+            btSimpanEditFarmer.Enabled = false;
         }
 
         private void btHapusJadwalFarmer_Click(object sender, EventArgs e)
@@ -1067,6 +1076,8 @@ namespace ProjekPBO_PSQL.Views
                         dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
                         dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
                     }
+                    btSimpanEditFarmer.Visible = false;
+                    btSimpanEditFarmer.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -1104,7 +1115,7 @@ namespace ProjekPBO_PSQL.Views
                 return;
             }
 
-            if (!Validator.ApakahAngka(txtTotalUpah.Text))
+            if (!Decimal.TryParse(txtTotalUpahPengantar.Text, out _))
             {
                 MessageBox.Show("Total upah harus angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

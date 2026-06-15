@@ -21,7 +21,6 @@ namespace ProjekPBO_PSQL.Controllers
                 MessageBox.Show("Nama gudang Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-
             if (gudang.getStock() < 0)
             {
                 MessageBox.Show("Stock Tidak Boleh Negatif", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -74,9 +73,7 @@ namespace ProjekPBO_PSQL.Controllers
                 MessageBox.Show("Nama Tidak Boleh Kosong", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
-
             return context.ApakahAdaNamaGudang(nama);
         }
-
     }
 }

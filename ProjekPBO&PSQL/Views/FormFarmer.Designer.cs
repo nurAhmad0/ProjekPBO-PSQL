@@ -29,6 +29,17 @@
         private void InitializeComponent()
         {
             panelMiddle = new Panel();
+            panelPenarikan = new Panel();
+            btKonfirmasiPenarikan = new Button();
+            txtNoRek = new TextBox();
+            label47 = new Label();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            label46 = new Label();
+            label45 = new Label();
+            label39 = new Label();
+            txtAtasNamaPenarikan = new TextBox();
+            txtNominalPenarikan = new TextBox();
             panelLaporan = new Panel();
             dgvLaporan = new DataGridView();
             label6 = new Label();
@@ -45,17 +56,6 @@
             label3 = new Label();
             label1 = new Label();
             btKembali = new Button();
-            panelPenarikan = new Panel();
-            btKonfirmasiPenarikan = new Button();
-            txtNoRek = new TextBox();
-            label47 = new Label();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
-            label46 = new Label();
-            label45 = new Label();
-            label39 = new Label();
-            txtAtasNamaPenarikan = new TextBox();
-            txtNominalPenarikan = new TextBox();
             panelJadwlDiterima = new Panel();
             dataGridJadwalDiterima = new DataGridView();
             button1 = new Button();
@@ -75,12 +75,12 @@
             lbSaldo = new Label();
             lblTanggal = new Label();
             panelMiddle.SuspendLayout();
+            panelPenarikan.SuspendLayout();
             panelLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).BeginInit();
             panelJadwal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).BeginInit();
             panelBuatLaporan.SuspendLayout();
-            panelPenarikan.SuspendLayout();
             panelJadwlDiterima.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridJadwalDiterima).BeginInit();
             panelHistoriPenarikan.SuspendLayout();
@@ -92,10 +92,10 @@
             // 
             // panelMiddle
             // 
+            panelMiddle.Controls.Add(panelPenarikan);
             panelMiddle.Controls.Add(panelLaporan);
             panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelBuatLaporan);
-            panelMiddle.Controls.Add(panelPenarikan);
             panelMiddle.Controls.Add(panelJadwlDiterima);
             panelMiddle.Controls.Add(panelHistoriPenarikan);
             panelMiddle.Dock = DockStyle.Fill;
@@ -103,6 +103,114 @@
             panelMiddle.Name = "panelMiddle";
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 5;
+            // 
+            // panelPenarikan
+            // 
+            panelPenarikan.Controls.Add(btKonfirmasiPenarikan);
+            panelPenarikan.Controls.Add(txtNoRek);
+            panelPenarikan.Controls.Add(label47);
+            panelPenarikan.Controls.Add(radioButton2);
+            panelPenarikan.Controls.Add(radioButton1);
+            panelPenarikan.Controls.Add(label46);
+            panelPenarikan.Controls.Add(label45);
+            panelPenarikan.Controls.Add(label39);
+            panelPenarikan.Controls.Add(txtAtasNamaPenarikan);
+            panelPenarikan.Controls.Add(txtNominalPenarikan);
+            panelPenarikan.Location = new Point(0, 0);
+            panelPenarikan.Name = "panelPenarikan";
+            panelPenarikan.Size = new Size(1034, 380);
+            panelPenarikan.TabIndex = 11;
+            // 
+            // btKonfirmasiPenarikan
+            // 
+            btKonfirmasiPenarikan.Location = new Point(849, 280);
+            btKonfirmasiPenarikan.Name = "btKonfirmasiPenarikan";
+            btKonfirmasiPenarikan.Size = new Size(146, 38);
+            btKonfirmasiPenarikan.TabIndex = 17;
+            btKonfirmasiPenarikan.Text = "Konfirmasi";
+            btKonfirmasiPenarikan.UseVisualStyleBackColor = true;
+            btKonfirmasiPenarikan.Click += btKonfirmasiPenarikan_Click;
+            // 
+            // txtNoRek
+            // 
+            txtNoRek.Location = new Point(685, 162);
+            txtNoRek.Name = "txtNoRek";
+            txtNoRek.Size = new Size(243, 27);
+            txtNoRek.TabIndex = 9;
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(528, 165);
+            label47.Name = "label47";
+            label47.Size = new Size(121, 20);
+            label47.TabIndex = 8;
+            label47.Text = "Nomor Rekening";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(104, 214);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(82, 24);
+            radioButton2.TabIndex = 7;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Transfer";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(104, 178);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(61, 24);
+            radioButton1.TabIndex = 6;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Cash";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(40, 162);
+            label46.Name = "label46";
+            label46.Size = new Size(61, 20);
+            label46.TabIndex = 5;
+            label46.Text = "Metode";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new Point(35, 80);
+            label45.Name = "label45";
+            label45.Size = new Size(66, 20);
+            label45.TabIndex = 4;
+            label45.Text = "Nominal";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(573, 73);
+            label39.Name = "label39";
+            label39.Size = new Size(79, 20);
+            label39.TabIndex = 3;
+            label39.Text = "Atas nama";
+            // 
+            // txtAtasNamaPenarikan
+            // 
+            txtAtasNamaPenarikan.Location = new Point(685, 69);
+            txtAtasNamaPenarikan.Name = "txtAtasNamaPenarikan";
+            txtAtasNamaPenarikan.Size = new Size(243, 27);
+            txtAtasNamaPenarikan.TabIndex = 2;
+            // 
+            // txtNominalPenarikan
+            // 
+            txtNominalPenarikan.Location = new Point(127, 80);
+            txtNominalPenarikan.Name = "txtNominalPenarikan";
+            txtNominalPenarikan.Size = new Size(125, 27);
+            txtNominalPenarikan.TabIndex = 1;
             // 
             // panelLaporan
             // 
@@ -264,112 +372,6 @@
             btKembali.Text = "Back";
             btKembali.UseVisualStyleBackColor = true;
             btKembali.Click += btKembali_Click;
-            // 
-            // panelPenarikan
-            // 
-            panelPenarikan.Controls.Add(btKonfirmasiPenarikan);
-            panelPenarikan.Controls.Add(txtNoRek);
-            panelPenarikan.Controls.Add(label47);
-            panelPenarikan.Controls.Add(radioButton2);
-            panelPenarikan.Controls.Add(radioButton1);
-            panelPenarikan.Controls.Add(label46);
-            panelPenarikan.Controls.Add(label45);
-            panelPenarikan.Controls.Add(label39);
-            panelPenarikan.Controls.Add(txtAtasNamaPenarikan);
-            panelPenarikan.Controls.Add(txtNominalPenarikan);
-            panelPenarikan.Location = new Point(0, 0);
-            panelPenarikan.Name = "panelPenarikan";
-            panelPenarikan.Size = new Size(1034, 380);
-            panelPenarikan.TabIndex = 11;
-            // 
-            // btKonfirmasiPenarikan
-            // 
-            btKonfirmasiPenarikan.Location = new Point(849, 280);
-            btKonfirmasiPenarikan.Name = "btKonfirmasiPenarikan";
-            btKonfirmasiPenarikan.Size = new Size(146, 38);
-            btKonfirmasiPenarikan.TabIndex = 17;
-            btKonfirmasiPenarikan.Text = "Konfirmasi";
-            btKonfirmasiPenarikan.UseVisualStyleBackColor = true;
-            btKonfirmasiPenarikan.Click += btKonfirmasiPenarikan_Click;
-            // 
-            // txtNoRek
-            // 
-            txtNoRek.Location = new Point(685, 162);
-            txtNoRek.Name = "txtNoRek";
-            txtNoRek.Size = new Size(243, 27);
-            txtNoRek.TabIndex = 9;
-            // 
-            // label47
-            // 
-            label47.AutoSize = true;
-            label47.Location = new Point(528, 165);
-            label47.Name = "label47";
-            label47.Size = new Size(121, 20);
-            label47.TabIndex = 8;
-            label47.Text = "Nomor Rekening";
-            // 
-            // radioButton2
-            // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(104, 214);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(82, 24);
-            radioButton2.TabIndex = 7;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Transfer";
-            radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(104, 178);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(61, 24);
-            radioButton1.TabIndex = 6;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Cash";
-            radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // label46
-            // 
-            label46.AutoSize = true;
-            label46.Location = new Point(40, 162);
-            label46.Name = "label46";
-            label46.Size = new Size(61, 20);
-            label46.TabIndex = 5;
-            label46.Text = "Metode";
-            // 
-            // label45
-            // 
-            label45.AutoSize = true;
-            label45.Location = new Point(35, 80);
-            label45.Name = "label45";
-            label45.Size = new Size(66, 20);
-            label45.TabIndex = 4;
-            label45.Text = "Nominal";
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.Location = new Point(573, 73);
-            label39.Name = "label39";
-            label39.Size = new Size(79, 20);
-            label39.TabIndex = 3;
-            label39.Text = "Atas nama";
-            // 
-            // txtAtasNamaPenarikan
-            // 
-            txtAtasNamaPenarikan.Location = new Point(685, 69);
-            txtAtasNamaPenarikan.Name = "txtAtasNamaPenarikan";
-            txtAtasNamaPenarikan.Size = new Size(243, 27);
-            txtAtasNamaPenarikan.TabIndex = 2;
-            // 
-            // txtNominalPenarikan
-            // 
-            txtNominalPenarikan.Location = new Point(127, 80);
-            txtNominalPenarikan.Name = "txtNominalPenarikan";
-            txtNominalPenarikan.Size = new Size(125, 27);
-            txtNominalPenarikan.TabIndex = 1;
             // 
             // panelJadwlDiterima
             // 
@@ -574,6 +576,8 @@
             Text = "Form1";
             Load += FormFarmer_Load;
             panelMiddle.ResumeLayout(false);
+            panelPenarikan.ResumeLayout(false);
+            panelPenarikan.PerformLayout();
             panelLaporan.ResumeLayout(false);
             panelLaporan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).EndInit();
@@ -582,8 +586,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).EndInit();
             panelBuatLaporan.ResumeLayout(false);
             panelBuatLaporan.PerformLayout();
-            panelPenarikan.ResumeLayout(false);
-            panelPenarikan.PerformLayout();
             panelJadwlDiterima.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridJadwalDiterima).EndInit();
             panelHistoriPenarikan.ResumeLayout(false);
