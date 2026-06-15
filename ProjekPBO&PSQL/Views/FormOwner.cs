@@ -104,7 +104,7 @@ namespace ProjekPBO_PSQL.Views
                     dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
                     dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
                     dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
-                    dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                    dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jadwal";
                     dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
                     dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
                     dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
@@ -377,8 +377,8 @@ namespace ProjekPBO_PSQL.Views
 
             try
             {
-                int idTerpilih = Convert.ToInt32(dgvJadwal.CurrentRow.Cells["ID Jadwal"].Value);
-                string tipeJadwal = Convert.ToString(dgvJadwal.CurrentRow.Cells["Tipe Jadwal"].Value)!;
+                int idTerpilih = Convert.ToInt32(dgvJadwal.CurrentRow.Cells["id_jadwal"].Value);
+                string tipeJadwal = Convert.ToString(dgvJadwal.CurrentRow.Cells["text_tipe_jadwal"].Value)!;
                 if (tipeJadwal == "Farmer")
                 {
                     JadwalFarmer JadwalTerpilih = ControllersJadwal.GetAllJadwalFarmer(idTerpilih)!;
@@ -411,9 +411,13 @@ namespace ProjekPBO_PSQL.Views
                     List<DetailAnggotaJadwal> listDetailAnggota = JadwalTerpilih.getDaftarAnggota();
 
                     dataGAnggotaJadwalFarmer.Rows.Clear();
+                    dataGAnggotaJadwalFarmer.Columns.Clear();
+
+                    dataGAnggotaJadwalFarmer.Columns.Add("colIdAnggota", "ID Anggota");
+                    dataGAnggotaJadwalFarmer.Columns.Add("colNamaAnggota", "Nama Anggota");
                     foreach (DetailAnggotaJadwal anggota in listDetailAnggota)
                     {
-                        int rowIndex = dataGAnggotaJadwalFarmer.Rows.Add(anggota.getIdAnggota(), anggota.getNamaAnggota(), anggota.getWaktuJoin(), anggota.getUpahDiterima());
+                        int rowIndex = dataGAnggotaJadwalFarmer.Rows.Add(anggota.getIdAnggota(), anggota.getNamaAnggota());
 
                         if (dataGAnggotaJadwalFarmer.Columns.Contains("colIdAnggota"))
                         {
@@ -456,20 +460,27 @@ namespace ProjekPBO_PSQL.Views
                     txtDetailAlamatPengantar.Text = JadwalTerpilih.getDetailAlamat();
 
                     dataGKeranjangBelanja.Rows.Clear();
+                    dataGKeranjangBelanja.Columns.Clear();
                     Order orderTerpilih = JadwalTerpilih.getOrderData();
 
+                    dataGKeranjangBelanja.Columns.Add("colNamaTanaman", "Nama Tanaman");
+                    dataGKeranjangBelanja.Columns.Add("colHarga", "Harga (Rp)");
+                    dataGKeranjangBelanja.Columns.Add("colJumlah", "Jumlah Keluar");
+
+                    if (dataGKeranjangBelanja.Columns.Contains("colHarga"))
+                    {
+                        dataGKeranjangBelanja.Columns["colHarga"]!.DefaultCellStyle.Format = "N0";
+                    }
+
                     List<OrderDetails> keranjangBelanja = orderTerpilih.getlistOrderdetails();
+
                     foreach (OrderDetails orderD in keranjangBelanja)
                     {
-                        int rowIndex = dataGKeranjangBelanja.Rows.Add(orderD.getNamaTanaman(), orderD.getHarga(), orderD.getJumlahOrder());
-                        if (dataGKeranjangBelanja.Columns.Contains("colIdDetail"))
-                        {
-                            dataGKeranjangBelanja.Columns["colNamaTanaman"]!.HeaderText = "Nama Tanaman";
-                            dataGKeranjangBelanja.Columns["colHarga"]!.HeaderText = "Harga (Rp)";
-                            dataGKeranjangBelanja.Columns["colHarga"]!.DefaultCellStyle.Format = "N0";
-                            dataGKeranjangBelanja.Columns["colJumlah"]!.HeaderText = "Jumlah Keluar";
-                            dataGKeranjangBelanja.Columns["colJumlah"]!.DefaultCellStyle.Format = "N0";
-                        }
+                        dataGKeranjangBelanja.Rows.Add(
+                            orderD.getNamaTanaman(),
+                            orderD.getHarga(),
+                            orderD.getJumlahOrder()
+                        );
                     }
 
                     PindahPanel(panelDetailJadwalPengantar, "DetailJadwalPengantar");
@@ -1266,7 +1277,7 @@ namespace ProjekPBO_PSQL.Views
                 {
                     txtNoRek.Clear();
                     txtNominalPenarikan.Clear();
-                    panelPenarikan.Visible=false;
+                    panelPenarikan.Visible = false;
                     menuAktif = "Laporan";
                     List<Laporan> listAsli = ControllersLaporan.getAllLaporan();
                     var dataUntukGrid = listAsli.Select(o => new
@@ -1287,6 +1298,42 @@ namespace ProjekPBO_PSQL.Views
             else
             {
                 MessageBox.Show("Silakan pilih metode penarikan terlebih dahulu (Cash / Transfer)!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void txtCariTanaman_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string kataKunci = txtCariTanaman.Text.Trim();
+                if (string.IsNullOrEmpty(kataKunci))
+                {
+                    List<Tanaman> listAsli = ControllersTanaman.GetAllTanaman();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIdTanaman(),
+                        Nama = o.getNamaTanaman(),
+                        Harga = o.getHargaTanaman(),
+                        Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
+                    }).ToList();
+                    dgvTanaman.DataSource = dataUntukGrid;
+                    return;
+                }
+                List<Tanaman> hasilCari = ControllersTanaman.Cari(kataKunci);
+                var dataHasilCariGrid = hasilCari.Select(o => new
+                {
+                    ID = o.getIdTanaman(),
+                    Nama = o.getNamaTanaman(),
+                    Harga = o.getHargaTanaman(),
+                    Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
+                }).ToList();
+
+                // Masukkan hasil filter ke dalam DataGridView
+                dgvTanaman.DataSource = dataHasilCariGrid;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
