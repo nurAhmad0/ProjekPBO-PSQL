@@ -1395,5 +1395,105 @@ namespace ProjekPBO_PSQL.Views
                 MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string kataKunci = txtCariPelanggan.Text.Trim();
+                if (Validator.ApakahKosong(kataKunci))
+                {
+                    List<Pelanggan> listAsli = ControllersPelanggan.GetAllPelanggan();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIdPelanggan(),
+                        Nama = o.getNamePelanggan(),
+                        Email = o.getEmail(),
+                        Nomor_Telp = o.getNO_TELP(),
+                        Alamat = o.getDetailAlamat()
+                    }).ToList();
+                    dgvPelanggan.DataSource = dataUntukGrid;
+                    dgvPelanggan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    return;
+                }
+                List<Pelanggan> hasilCari = new List<Pelanggan>();
+                if (Validator.ApakahAngka(kataKunci))
+                {
+                    int idPelanggan = Convert.ToInt32(kataKunci);
+                    Pelanggan? pelangganTunggal = ControllersPelanggan.Cari(idPelanggan);
+                    if (pelangganTunggal != null)
+                    {
+                        hasilCari.Add(pelangganTunggal);
+                    }
+                }
+                else
+                {
+                    hasilCari = ControllersPelanggan.Cari(kataKunci);
+                }
+                var dataHasilCariGrid = hasilCari.Select(o => new
+                {
+                    ID = o.getIdPelanggan(),
+                    Nama = o.getNamePelanggan(),
+                    Email = o.getEmail(),
+                    Nomor_Telp = o.getNO_TELP(),
+                    Alamat = o.getDetailAlamat()
+                }).ToList();
+
+                dgvPelanggan.DataSource = dataHasilCariGrid;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtCariLahan_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string kataKunci = txtCariLahan.Text.Trim();
+                if (Validator.ApakahKosong(kataKunci))
+                {
+                    List<Lahan> listAsli = ControllersLahan.GetAllLahan();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIdLahan(),
+                        Nama = o.getNamaLahan(),
+                        Harga = o.getLuasLahan(),
+                        Estimasi_Kadaluarsa = o.getStatusLahan()
+                    }).ToList();
+                    dgvLahan.DataSource = dataUntukGrid;
+                    dgvLahan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    return;
+                }
+                List<Lahan> hasilCari = new List<Lahan>();
+                if (Validator.ApakahAngka(kataKunci))
+                {
+                    int idLahan = Convert.ToInt32(kataKunci);
+                    Lahan? LahanTunggal = ControllersLahan.Cari(idLahan);
+                    if (LahanTunggal != null)
+                    {
+                        hasilCari.Add(LahanTunggal);
+                    }
+                }
+                else
+                {
+                    hasilCari = ControllersLahan.Cari(kataKunci);
+                }
+                var dataHasilCariGrid = hasilCari.Select(o => new
+                {
+                    ID = o.getIdLahan(),
+                    Nama = o.getNamaLahan(),
+                    Harga = o.getLuasLahan(),
+                    Estimasi_Kadaluarsa = o.getStatusLahan()
+                }).ToList();
+
+                dgvLahan.DataSource = dataHasilCariGrid;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

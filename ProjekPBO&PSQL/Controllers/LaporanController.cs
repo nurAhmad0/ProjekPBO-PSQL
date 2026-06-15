@@ -27,5 +27,22 @@ namespace ProjekPBO_PSQL.Controllers
             
             return Context.ADDLaporan(laporan);
         }
+
+        public bool DeleteLaporan(int id)
+        {
+            bool isSucces = false;
+            try
+            {
+
+                isSucces = Context.DelateLaporan(id);
+            }
+            catch
+            {
+                MessageBox.Show("gagal Hapus Laporan", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                isSucces = false;
+            }
+
+            return isSucces;
+        }
     }
 }

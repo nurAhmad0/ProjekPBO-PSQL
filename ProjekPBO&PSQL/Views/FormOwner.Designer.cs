@@ -67,6 +67,24 @@
             btnLahan = new Button();
             btnKaryawan = new Button();
             panelMiddle = new Panel();
+            panelLahan = new Panel();
+            txtCariLahan = new TextBox();
+            label2 = new Label();
+            btnTambahLahan = new Button();
+            btnEditLahan = new Button();
+            dgvLahan = new DataGridView();
+            panelPelanggan = new Panel();
+            txtCariPelanggan = new TextBox();
+            label5 = new Label();
+            btnTambahPelanggan = new Button();
+            btnEditPelanggan = new Button();
+            dgvPelanggan = new DataGridView();
+            panelKaryawan = new Panel();
+            txtCariKaryawan = new TextBox();
+            label1 = new Label();
+            btnTambahKaryawan = new Button();
+            btnEditKaryawan = new Button();
+            dgvKaryawan = new DataGridView();
             panelTanaman = new Panel();
             txtCariTanaman = new TextBox();
             btTanmanaBelumLaku = new Button();
@@ -182,21 +200,6 @@
             btLaporan = new Button();
             label6 = new Label();
             dgvLainnya = new DataGridView();
-            panelPelanggan = new Panel();
-            label5 = new Label();
-            btnTambahPelanggan = new Button();
-            btnEditPelanggan = new Button();
-            dgvPelanggan = new DataGridView();
-            panelLahan = new Panel();
-            label2 = new Label();
-            btnTambahLahan = new Button();
-            btnEditLahan = new Button();
-            dgvLahan = new DataGridView();
-            panelKaryawan = new Panel();
-            label1 = new Label();
-            btnTambahKaryawan = new Button();
-            btnEditKaryawan = new Button();
-            dgvKaryawan = new DataGridView();
             panelDetailKaryawan = new Panel();
             btEdit = new Button();
             btBack = new Button();
@@ -218,11 +221,16 @@
             lbEmail = new Label();
             lbNOTELP = new Label();
             lbNama = new Label();
-            txtCariKaryawan = new TextBox();
             panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelBottom.SuspendLayout();
             panelMiddle.SuspendLayout();
+            panelLahan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLahan).BeginInit();
+            panelPelanggan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPelanggan).BeginInit();
+            panelKaryawan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).BeginInit();
             panelTanaman.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTanaman).BeginInit();
             panelDetailJadwalPengantar.SuspendLayout();
@@ -237,12 +245,6 @@
             panelPenarikan.SuspendLayout();
             panelDetailLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLainnya).BeginInit();
-            panelPelanggan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvPelanggan).BeginInit();
-            panelLahan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLahan).BeginInit();
-            panelKaryawan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).BeginInit();
             panelDetailKaryawan.SuspendLayout();
             SuspendLayout();
             // 
@@ -382,6 +384,9 @@
             // 
             // panelMiddle
             // 
+            panelMiddle.Controls.Add(panelLainnya);
+            panelMiddle.Controls.Add(panelLahan);
+            panelMiddle.Controls.Add(panelPelanggan);
             panelMiddle.Controls.Add(panelKaryawan);
             panelMiddle.Controls.Add(panelTanaman);
             panelMiddle.Controls.Add(panelDetailJadwalPengantar);
@@ -389,15 +394,191 @@
             panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelPilihanJadwalFarmer);
             panelMiddle.Controls.Add(panelPilihanJadwal);
-            panelMiddle.Controls.Add(panelLainnya);
-            panelMiddle.Controls.Add(panelPelanggan);
-            panelMiddle.Controls.Add(panelLahan);
             panelMiddle.Controls.Add(panelDetailKaryawan);
             panelMiddle.Dock = DockStyle.Fill;
             panelMiddle.Location = new Point(0, 107);
             panelMiddle.Name = "panelMiddle";
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 2;
+            // 
+            // panelLahan
+            // 
+            panelLahan.Controls.Add(txtCariLahan);
+            panelLahan.Controls.Add(label2);
+            panelLahan.Controls.Add(btnTambahLahan);
+            panelLahan.Controls.Add(btnEditLahan);
+            panelLahan.Controls.Add(dgvLahan);
+            panelLahan.Dock = DockStyle.Fill;
+            panelLahan.Location = new Point(0, 0);
+            panelLahan.Name = "panelLahan";
+            panelLahan.Size = new Size(1037, 380);
+            panelLahan.TabIndex = 4;
+            panelLahan.Visible = false;
+            // 
+            // txtCariLahan
+            // 
+            txtCariLahan.Location = new Point(900, 11);
+            txtCariLahan.Name = "txtCariLahan";
+            txtCariLahan.Size = new Size(125, 27);
+            txtCariLahan.TabIndex = 4;
+            txtCariLahan.TextChanged += txtCariLahan_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(13, 15);
+            label2.Name = "label2";
+            label2.Size = new Size(103, 20);
+            label2.TabIndex = 3;
+            label2.Text = "TABEL LAHAN";
+            // 
+            // btnTambahLahan
+            // 
+            btnTambahLahan.Location = new Point(168, 6);
+            btnTambahLahan.Name = "btnTambahLahan";
+            btnTambahLahan.Size = new Size(94, 38);
+            btnTambahLahan.TabIndex = 2;
+            btnTambahLahan.Text = "ADD";
+            btnTambahLahan.UseVisualStyleBackColor = true;
+            btnTambahLahan.Click += btnTambahLahan_Click;
+            // 
+            // btnEditLahan
+            // 
+            btnEditLahan.Location = new Point(278, 6);
+            btnEditLahan.Name = "btnEditLahan";
+            btnEditLahan.Size = new Size(94, 38);
+            btnEditLahan.TabIndex = 1;
+            btnEditLahan.Text = "EDIT";
+            btnEditLahan.UseVisualStyleBackColor = true;
+            btnEditLahan.Click += btnEditLahan_Click;
+            // 
+            // dgvLahan
+            // 
+            dgvLahan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLahan.Location = new Point(3, 50);
+            dgvLahan.Name = "dgvLahan";
+            dgvLahan.RowHeadersWidth = 51;
+            dgvLahan.Size = new Size(1031, 330);
+            dgvLahan.TabIndex = 0;
+            // 
+            // panelPelanggan
+            // 
+            panelPelanggan.Controls.Add(txtCariPelanggan);
+            panelPelanggan.Controls.Add(label5);
+            panelPelanggan.Controls.Add(btnTambahPelanggan);
+            panelPelanggan.Controls.Add(btnEditPelanggan);
+            panelPelanggan.Controls.Add(dgvPelanggan);
+            panelPelanggan.Dock = DockStyle.Fill;
+            panelPelanggan.Location = new Point(0, 0);
+            panelPelanggan.Name = "panelPelanggan";
+            panelPelanggan.Size = new Size(1037, 380);
+            panelPelanggan.TabIndex = 7;
+            panelPelanggan.Visible = false;
+            // 
+            // txtCariPelanggan
+            // 
+            txtCariPelanggan.Location = new Point(900, 11);
+            txtCariPelanggan.Name = "txtCariPelanggan";
+            txtCariPelanggan.Size = new Size(125, 27);
+            txtCariPelanggan.TabIndex = 8;
+            txtCariPelanggan.TextChanged += textBox1_TextChanged_1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(13, 15);
+            label5.Name = "label5";
+            label5.Size = new Size(139, 20);
+            label5.TabIndex = 3;
+            label5.Text = "TABEL PELANGGAN";
+            // 
+            // btnTambahPelanggan
+            // 
+            btnTambahPelanggan.Location = new Point(168, 6);
+            btnTambahPelanggan.Name = "btnTambahPelanggan";
+            btnTambahPelanggan.Size = new Size(94, 38);
+            btnTambahPelanggan.TabIndex = 2;
+            btnTambahPelanggan.Text = "ADD";
+            btnTambahPelanggan.UseVisualStyleBackColor = true;
+            btnTambahPelanggan.Click += btnTambahPelanggan_Click;
+            // 
+            // btnEditPelanggan
+            // 
+            btnEditPelanggan.Location = new Point(278, 6);
+            btnEditPelanggan.Name = "btnEditPelanggan";
+            btnEditPelanggan.Size = new Size(94, 38);
+            btnEditPelanggan.TabIndex = 1;
+            btnEditPelanggan.Text = "EDIT";
+            btnEditPelanggan.UseVisualStyleBackColor = true;
+            btnEditPelanggan.Click += btnEditPelanggan_Click;
+            // 
+            // dgvPelanggan
+            // 
+            dgvPelanggan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPelanggan.Location = new Point(3, 50);
+            dgvPelanggan.Name = "dgvPelanggan";
+            dgvPelanggan.RowHeadersWidth = 51;
+            dgvPelanggan.Size = new Size(1031, 330);
+            dgvPelanggan.TabIndex = 0;
+            // 
+            // panelKaryawan
+            // 
+            panelKaryawan.Controls.Add(txtCariKaryawan);
+            panelKaryawan.Controls.Add(label1);
+            panelKaryawan.Controls.Add(btnTambahKaryawan);
+            panelKaryawan.Controls.Add(btnEditKaryawan);
+            panelKaryawan.Controls.Add(dgvKaryawan);
+            panelKaryawan.Dock = DockStyle.Fill;
+            panelKaryawan.Location = new Point(0, 0);
+            panelKaryawan.Name = "panelKaryawan";
+            panelKaryawan.Size = new Size(1037, 380);
+            panelKaryawan.TabIndex = 0;
+            // 
+            // txtCariKaryawan
+            // 
+            txtCariKaryawan.Location = new Point(900, 10);
+            txtCariKaryawan.Name = "txtCariKaryawan";
+            txtCariKaryawan.Size = new Size(125, 27);
+            txtCariKaryawan.TabIndex = 7;
+            txtCariKaryawan.TextChanged += textBox1_TextChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(13, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(132, 20);
+            label1.TabIndex = 3;
+            label1.Text = "TABEL KARYAWAN";
+            // 
+            // btnTambahKaryawan
+            // 
+            btnTambahKaryawan.Location = new Point(168, 6);
+            btnTambahKaryawan.Name = "btnTambahKaryawan";
+            btnTambahKaryawan.Size = new Size(94, 38);
+            btnTambahKaryawan.TabIndex = 2;
+            btnTambahKaryawan.Text = "ADD";
+            btnTambahKaryawan.UseVisualStyleBackColor = true;
+            btnTambahKaryawan.Click += btnTambahKaryawan_Click;
+            // 
+            // btnEditKaryawan
+            // 
+            btnEditKaryawan.Location = new Point(278, 6);
+            btnEditKaryawan.Name = "btnEditKaryawan";
+            btnEditKaryawan.Size = new Size(94, 38);
+            btnEditKaryawan.TabIndex = 1;
+            btnEditKaryawan.Text = "DETAIL";
+            btnEditKaryawan.UseVisualStyleBackColor = true;
+            btnEditKaryawan.Click += btnEditKaryawan_Click;
+            // 
+            // dgvKaryawan
+            // 
+            dgvKaryawan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvKaryawan.Location = new Point(3, 50);
+            dgvKaryawan.Name = "dgvKaryawan";
+            dgvKaryawan.RowHeadersWidth = 51;
+            dgvKaryawan.Size = new Size(1031, 330);
+            dgvKaryawan.TabIndex = 0;
             // 
             // panelTanaman
             // 
@@ -1513,159 +1694,6 @@
             dgvLainnya.CellContentClick += dgvLaporan_CellContentClick;
             dgvLainnya.CellDoubleClick += dgvLainnya_CellDoubleClick;
             // 
-            // panelPelanggan
-            // 
-            panelPelanggan.Controls.Add(label5);
-            panelPelanggan.Controls.Add(btnTambahPelanggan);
-            panelPelanggan.Controls.Add(btnEditPelanggan);
-            panelPelanggan.Controls.Add(dgvPelanggan);
-            panelPelanggan.Dock = DockStyle.Fill;
-            panelPelanggan.Location = new Point(0, 0);
-            panelPelanggan.Name = "panelPelanggan";
-            panelPelanggan.Size = new Size(1037, 380);
-            panelPelanggan.TabIndex = 7;
-            panelPelanggan.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(13, 15);
-            label5.Name = "label5";
-            label5.Size = new Size(139, 20);
-            label5.TabIndex = 3;
-            label5.Text = "TABEL PELANGGAN";
-            // 
-            // btnTambahPelanggan
-            // 
-            btnTambahPelanggan.Location = new Point(168, 6);
-            btnTambahPelanggan.Name = "btnTambahPelanggan";
-            btnTambahPelanggan.Size = new Size(94, 38);
-            btnTambahPelanggan.TabIndex = 2;
-            btnTambahPelanggan.Text = "ADD";
-            btnTambahPelanggan.UseVisualStyleBackColor = true;
-            btnTambahPelanggan.Click += btnTambahPelanggan_Click;
-            // 
-            // btnEditPelanggan
-            // 
-            btnEditPelanggan.Location = new Point(278, 6);
-            btnEditPelanggan.Name = "btnEditPelanggan";
-            btnEditPelanggan.Size = new Size(94, 38);
-            btnEditPelanggan.TabIndex = 1;
-            btnEditPelanggan.Text = "EDIT";
-            btnEditPelanggan.UseVisualStyleBackColor = true;
-            btnEditPelanggan.Click += btnEditPelanggan_Click;
-            // 
-            // dgvPelanggan
-            // 
-            dgvPelanggan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPelanggan.Location = new Point(3, 50);
-            dgvPelanggan.Name = "dgvPelanggan";
-            dgvPelanggan.RowHeadersWidth = 51;
-            dgvPelanggan.Size = new Size(1031, 330);
-            dgvPelanggan.TabIndex = 0;
-            // 
-            // panelLahan
-            // 
-            panelLahan.Controls.Add(label2);
-            panelLahan.Controls.Add(btnTambahLahan);
-            panelLahan.Controls.Add(btnEditLahan);
-            panelLahan.Controls.Add(dgvLahan);
-            panelLahan.Dock = DockStyle.Fill;
-            panelLahan.Location = new Point(0, 0);
-            panelLahan.Name = "panelLahan";
-            panelLahan.Size = new Size(1037, 380);
-            panelLahan.TabIndex = 4;
-            panelLahan.Visible = false;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(13, 15);
-            label2.Name = "label2";
-            label2.Size = new Size(103, 20);
-            label2.TabIndex = 3;
-            label2.Text = "TABEL LAHAN";
-            // 
-            // btnTambahLahan
-            // 
-            btnTambahLahan.Location = new Point(168, 6);
-            btnTambahLahan.Name = "btnTambahLahan";
-            btnTambahLahan.Size = new Size(94, 38);
-            btnTambahLahan.TabIndex = 2;
-            btnTambahLahan.Text = "ADD";
-            btnTambahLahan.UseVisualStyleBackColor = true;
-            btnTambahLahan.Click += btnTambahLahan_Click;
-            // 
-            // btnEditLahan
-            // 
-            btnEditLahan.Location = new Point(278, 6);
-            btnEditLahan.Name = "btnEditLahan";
-            btnEditLahan.Size = new Size(94, 38);
-            btnEditLahan.TabIndex = 1;
-            btnEditLahan.Text = "EDIT";
-            btnEditLahan.UseVisualStyleBackColor = true;
-            btnEditLahan.Click += btnEditLahan_Click;
-            // 
-            // dgvLahan
-            // 
-            dgvLahan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLahan.Location = new Point(3, 50);
-            dgvLahan.Name = "dgvLahan";
-            dgvLahan.RowHeadersWidth = 51;
-            dgvLahan.Size = new Size(1031, 330);
-            dgvLahan.TabIndex = 0;
-            // 
-            // panelKaryawan
-            // 
-            panelKaryawan.Controls.Add(txtCariKaryawan);
-            panelKaryawan.Controls.Add(label1);
-            panelKaryawan.Controls.Add(btnTambahKaryawan);
-            panelKaryawan.Controls.Add(btnEditKaryawan);
-            panelKaryawan.Controls.Add(dgvKaryawan);
-            panelKaryawan.Dock = DockStyle.Fill;
-            panelKaryawan.Location = new Point(0, 0);
-            panelKaryawan.Name = "panelKaryawan";
-            panelKaryawan.Size = new Size(1037, 380);
-            panelKaryawan.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(13, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(132, 20);
-            label1.TabIndex = 3;
-            label1.Text = "TABEL KARYAWAN";
-            // 
-            // btnTambahKaryawan
-            // 
-            btnTambahKaryawan.Location = new Point(168, 6);
-            btnTambahKaryawan.Name = "btnTambahKaryawan";
-            btnTambahKaryawan.Size = new Size(94, 38);
-            btnTambahKaryawan.TabIndex = 2;
-            btnTambahKaryawan.Text = "ADD";
-            btnTambahKaryawan.UseVisualStyleBackColor = true;
-            btnTambahKaryawan.Click += btnTambahKaryawan_Click;
-            // 
-            // btnEditKaryawan
-            // 
-            btnEditKaryawan.Location = new Point(278, 6);
-            btnEditKaryawan.Name = "btnEditKaryawan";
-            btnEditKaryawan.Size = new Size(94, 38);
-            btnEditKaryawan.TabIndex = 1;
-            btnEditKaryawan.Text = "DETAIL";
-            btnEditKaryawan.UseVisualStyleBackColor = true;
-            btnEditKaryawan.Click += btnEditKaryawan_Click;
-            // 
-            // dgvKaryawan
-            // 
-            dgvKaryawan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKaryawan.Location = new Point(3, 50);
-            dgvKaryawan.Name = "dgvKaryawan";
-            dgvKaryawan.RowHeadersWidth = 51;
-            dgvKaryawan.Size = new Size(1031, 330);
-            dgvKaryawan.TabIndex = 0;
-            // 
             // panelDetailKaryawan
             // 
             panelDetailKaryawan.Controls.Add(btEdit);
@@ -1877,14 +1905,6 @@
             lbNama.TabIndex = 0;
             lbNama.Text = "Nama";
             // 
-            // txtCariKaryawan
-            // 
-            txtCariKaryawan.Location = new Point(900, 10);
-            txtCariKaryawan.Name = "txtCariKaryawan";
-            txtCariKaryawan.Size = new Size(125, 27);
-            txtCariKaryawan.TabIndex = 7;
-            txtCariKaryawan.TextChanged += textBox1_TextChanged;
-            // 
             // FormOwner
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1901,6 +1921,15 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelBottom.ResumeLayout(false);
             panelMiddle.ResumeLayout(false);
+            panelLahan.ResumeLayout(false);
+            panelLahan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLahan).EndInit();
+            panelPelanggan.ResumeLayout(false);
+            panelPelanggan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPelanggan).EndInit();
+            panelKaryawan.ResumeLayout(false);
+            panelKaryawan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).EndInit();
             panelTanaman.ResumeLayout(false);
             panelTanaman.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTanaman).EndInit();
@@ -1924,15 +1953,6 @@
             panelDetailLaporan.ResumeLayout(false);
             panelDetailLaporan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLainnya).EndInit();
-            panelPelanggan.ResumeLayout(false);
-            panelPelanggan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvPelanggan).EndInit();
-            panelLahan.ResumeLayout(false);
-            panelLahan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLahan).EndInit();
-            panelKaryawan.ResumeLayout(false);
-            panelKaryawan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).EndInit();
             panelDetailKaryawan.ResumeLayout(false);
             panelDetailKaryawan.PerformLayout();
             ResumeLayout(false);
@@ -2105,5 +2125,7 @@
         private Button btKonfirmasiPenarikan;
         private TextBox txtCariTanaman;
         private TextBox txtCariKaryawan;
+        private TextBox txtCariPelanggan;
+        private TextBox txtCariLahan;
     }
 }
