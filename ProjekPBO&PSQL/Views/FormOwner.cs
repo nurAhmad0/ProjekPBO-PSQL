@@ -1306,7 +1306,7 @@ namespace ProjekPBO_PSQL.Views
             try
             {
                 string kataKunci = txtCariTanaman.Text.Trim();
-                if (string.IsNullOrEmpty(kataKunci))
+                if (Validator.ApakahKosong(kataKunci))
                 {
                     List<Tanaman> listAsli = ControllersTanaman.GetAllTanaman();
                     var dataUntukGrid = listAsli.Select(o => new
@@ -1319,7 +1319,20 @@ namespace ProjekPBO_PSQL.Views
                     dgvTanaman.DataSource = dataUntukGrid;
                     return;
                 }
-                List<Tanaman> hasilCari = ControllersTanaman.Cari(kataKunci);
+                List<Tanaman> hasilCari = new List<Tanaman>();
+                if (Validator.ApakahAngka(kataKunci))
+                {
+                    int idTanaman = Convert.ToInt32(kataKunci);
+                    Tanaman? tanamanTunggal = ControllersTanaman.Cari(idTanaman);
+                    if (tanamanTunggal != null)
+                    {
+                        hasilCari.Add(tanamanTunggal);
+                    }
+                }
+                else
+                {
+                    hasilCari = ControllersTanaman.Cari(kataKunci);
+                }
                 var dataHasilCariGrid = hasilCari.Select(o => new
                 {
                     ID = o.getIdTanaman(),
@@ -1328,8 +1341,54 @@ namespace ProjekPBO_PSQL.Views
                     Estimasi_Kadaluarsa = o.getEstimasiKadaluarsa()
                 }).ToList();
 
-                // Masukkan hasil filter ke dalam DataGridView
                 dgvTanaman.DataSource = dataHasilCariGrid;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string kataKunci = txtCariKaryawan.Text.Trim();
+                if (Validator.ApakahKosong(kataKunci))
+                {
+                    List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIDOrang(),
+                        Nama = o.getName(),
+                        Role = o.getNamaRole()
+                    }).ToList();
+                    dgvKaryawan.DataSource = dataUntukGrid;
+                    dgvKaryawan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    return;
+                }
+                List<Orang> hasilCari = new List<Orang>();
+                if (Validator.ApakahAngka(kataKunci))
+                {
+                    int idkaryawan = Convert.ToInt32(kataKunci);
+                    Orang? karyawanTunggal = ControllersOrang.Cari(idkaryawan);
+                    if (karyawanTunggal != null)
+                    {
+                        hasilCari.Add(karyawanTunggal);
+                    }
+                }
+                else
+                {
+                    hasilCari = ControllersOrang.Cari(kataKunci);
+                }
+                var dataHasilCariGrid = hasilCari.Select(o => new
+                {
+                    ID = o.getIDOrang(),
+                    Nama = o.getName(),
+                    Role = o.getNamaRole()
+                }).ToList();
+
+                dgvKaryawan.DataSource = dataHasilCariGrid;
             }
             catch (Exception ex)
             {
