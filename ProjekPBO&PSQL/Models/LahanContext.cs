@@ -13,8 +13,6 @@ namespace ProjekPBO_PSQL.Models
         {
             List<Lahan> daftarLahanTersedia = new List<Lahan>();
             using var conn = DataBaseHelper.GetConnection();
-
-            // Query mencari lahan aktif yang TIDAK memiliki status 'Masih Ditanam' atau 'Pending'
             string query = @"
                 SELECT id_lahan, nama_lahan, luas_lahan, status_lahan 
                 FROM Lahan 
@@ -22,7 +20,7 @@ namespace ProjekPBO_PSQL.Models
                 AND id_lahan NOT IN (
                 SELECT id_lahan 
                 FROM Penanaman_Lahan 
-                WHERE status_penanaman IN ('Masih Ditanam', 'Pending')
+                WHERE status_penanaman IN ('Masih Ditanam')
                 );";
 
             try
@@ -33,7 +31,6 @@ namespace ProjekPBO_PSQL.Models
 
                 while (reader.Read())
                 {
-                    // Sesuaikan properti ini dengan constructor/properti class Lahan milikmu
                     Lahan lahan = new Lahan(
                         Convert.ToInt32(reader["id_lahan"]),
                         reader["nama_lahan"].ToString()!,
@@ -49,6 +46,43 @@ namespace ProjekPBO_PSQL.Models
             }
 
             return daftarLahanTersedia;
+        }
+
+
+        public List<Lahan> GetLahanSedangDitanam()
+        {
+            List<Lahan> daftarLahanDitanam = new List<Lahan>();
+            using var conn = DataBaseHelper.GetConnection();
+            string query = @"
+                SELECT DISTINCT l.id_lahan, l.nama_lahan, l.luas_lahan, l.status_lahan 
+                FROM Lahan l
+                INNER JOIN Penanaman_Lahan pl ON l.id_lahan = pl.id_lahan
+                WHERE l.status_lahan = 'Aktif' 
+                AND pl.status_penanaman = 'Masih Ditanam';";
+
+            try
+            {
+                conn.Open();
+                using var cmd = new NpgsqlCommand(query, conn);
+                using var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Lahan lahan = new Lahan(
+                        Convert.ToInt32(reader["id_lahan"]),
+                        reader["nama_lahan"].ToString()!,
+                        Convert.ToDecimal(reader["luas_lahan"]),
+                        reader["status_lahan"].ToString()!
+                    );
+                    daftarLahanDitanam.Add(lahan);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal mengambil data lahan aktif ditanam: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return daftarLahanDitanam;
         }
 
 

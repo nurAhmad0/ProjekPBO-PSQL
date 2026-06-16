@@ -72,19 +72,19 @@ namespace ProjekPBO_PSQL.Controllers
         }
 
 
-        public bool tambahJadwal(Jadwal jadwal)
+        public int tambahJadwal(Jadwal jadwal)
         {
             DateTime TanggalSekarang = DateTime.Today;
             if (jadwal.getTanggal().Date < TanggalSekarang)
             {
                 MessageBox.Show("Tanggal Tidak Boleh Kemarin", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             if (Validator.ApakahKosong(jadwal.getKeteranganKegiatan()))
             {
                 MessageBox.Show("Keterangan jadwal tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             if (Validator.ApakahKosong(jadwal.getTipeJadwal()))

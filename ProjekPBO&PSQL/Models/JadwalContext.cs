@@ -376,15 +376,15 @@ namespace ProjekPBO_PSQL.Models
         //    return isSucces;
         //}
 
-        public bool ADDJadwal(Jadwal jadwal)
+        public int ADDJadwal(Jadwal jadwal)
         {
-            bool isSucces = false;
+            int idBaruGenerated = 0;
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, status_global, id_lahan, id_pelanggan) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @Status::status, @IdLahan, @IdPelanggan)", conn);
+                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, status_global, id_lahan, id_pelanggan) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @Status::status, @IdLahan, @IdPelanggan) RETURNING id_jadwal", conn);
                 query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
                 query1.Parameters.AddWithValue("keterangan", jadwal.getKeteranganKegiatan());
                 query1.Parameters.AddWithValue("TipeJadwal", jadwal.getTipeJadwal());
@@ -405,10 +405,10 @@ namespace ProjekPBO_PSQL.Models
                     query1.Parameters.AddWithValue("IdLahan", DBNull.Value);
                     query1.Parameters.AddWithValue("IdPelanggan", DBNull.Value);
                 }
-                int DampakBaris = query1.ExecuteNonQuery();
-                if (DampakBaris > 0)
+                var result = query1.ExecuteScalar();
+                if (result != null)
                 {
-                    isSucces = true;
+                    idBaruGenerated = Convert.ToInt32(result);
                 }
             }
             catch (NpgsqlException ex)
@@ -419,7 +419,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return isSucces;
+            return idBaruGenerated;
         }
 
         public bool delateJadwal(int id)

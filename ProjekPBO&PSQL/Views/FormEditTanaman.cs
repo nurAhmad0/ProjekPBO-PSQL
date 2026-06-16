@@ -50,7 +50,7 @@ namespace ProjekPBO_PSQL.Views
                 txtHargaTanaman.Focus();
                 return;
             }
-            if (!long.TryParse(txtHargaTanaman.Text, out _))
+            if (!Decimal.TryParse(txtHargaTanaman.Text, out _))
             {
                 MessageBox.Show("Harga tanaman harus berupa angka", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtHargaTanaman.Focus();
@@ -88,7 +88,7 @@ namespace ProjekPBO_PSQL.Views
                 string namaTanaman = txtNamaTanaman.Text.Trim();
                 decimal hargaTanaman = Convert.ToDecimal(txtHargaTanaman.Text.Trim());
                 int durasiPanen = Convert.ToInt32(txtDurasiPanen.Text.Trim());
-                int idTanaman = Convert.ToInt32(txtIdTanaman);
+                int idTanaman = Convert.ToInt32(txtIdTanaman.Text);
                 Tanaman tanamanBaru = new Tanaman(idTanaman, namaTanaman, hargaTanaman, durasiPanen);
                 bool apakahSukses = tanamanController.UpdateTanaman(tanamanBaru);
 

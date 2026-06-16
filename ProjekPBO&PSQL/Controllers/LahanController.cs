@@ -129,5 +129,11 @@ namespace ProjekPBO_PSQL.Controllers
         {
             return Context.GetLahanTersedia();
         }
+
+
+        public List<Lahan> getLahanSedangDitanam()
+        {
+            return Context.GetLahanSedangDitanam();
+        }
     }
 }

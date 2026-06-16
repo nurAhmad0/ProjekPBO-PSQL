@@ -794,10 +794,6 @@ namespace ProjekPBO_PSQL.Views
         private void btTanam_Click(object sender, EventArgs e)
         {
             FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Menanam"));
-            TambahJadwal.txtKeterangan.Text = "Tanam Tanaman dilahan";
-            TambahJadwal.txtKeterangan.ReadOnly = true;
-            TambahJadwal.txtTipeJadwal.Text = "Farmer";
-            TambahJadwal.txtTipeJadwal.ReadOnly = true;
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();
@@ -806,7 +802,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -831,8 +827,6 @@ namespace ProjekPBO_PSQL.Views
         private void btPanen_Click(object sender, EventArgs e)
         {
             FormTambahJadwalFarmer TambahJadwal = new FormTambahJadwalFarmer(("Farmer", "Panen"));
-            TambahJadwal.txtKeterangan.Text = "Memanen Tanaman yang ada di lahan";
-            TambahJadwal.txtTipeJadwal.Text = "Farmer";
             this.Hide();
             DialogResult hasil = TambahJadwal.ShowDialog();
             this.Show();
@@ -841,7 +835,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -874,7 +868,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -908,7 +902,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -1017,7 +1011,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -1064,7 +1058,7 @@ namespace ProjekPBO_PSQL.Views
                 PindahPanel(panelJadwal, "Jadwal");
                 try
                 {
-                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                     dgvJadwal.DataSource = dtJadwal;
                     dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     if (dgvJadwal.Columns.Contains("id_jadwal"))
@@ -1098,14 +1092,17 @@ namespace ProjekPBO_PSQL.Views
             btSimpanEditFarmer.Visible = true;
             btSimpanEditFarmer.Enabled = true;
             txtTotalUpah.ReadOnly = false;
-            txtKeteranganJadwalFarmer.ReadOnly = false;
+            if (!(txtKeteranganJadwalFarmer.Text == "Tanam Tanaman dilahan") & !(txtKeteranganJadwalFarmer.Text == "Memanen Tanaman yang ada di lahan"))
+            {
+                txtKeteranganJadwalFarmer.ReadOnly = false;
+            }
         }
 
         private void btSimpanEditFarmer_Click(object sender, EventArgs e)
         {
-            int idJadwal = Convert.ToInt32(txtIDJadwalPengantar.Text);
+            int idJadwal = Convert.ToInt32(lbIdJadwalFarmer.Text);
 
-            if (Validator.ApakahKosong(txtKeteranganJadwalPengantar.Text))
+            if (Validator.ApakahKosong(txtKeteranganJadwalFarmer.Text))
             {
                 MessageBox.Show("Keterangan kegiatan farmer tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -1117,7 +1114,7 @@ namespace ProjekPBO_PSQL.Views
                 return;
             }
 
-            if (!Decimal.TryParse(txtTotalUpahPengantar.Text, out _))
+            if (!Decimal.TryParse(txtTotalUpah.Text, out _))
             {
                 MessageBox.Show("Total upah harus angka!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -1142,6 +1139,27 @@ namespace ProjekPBO_PSQL.Views
                 txtTotalUpah.ReadOnly = true;
                 txtKeteranganJadwalFarmer.ReadOnly = true;
                 PindahPanel(panelJadwal, "Jadwal");
+                try
+                {
+                    DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
+                    dgvJadwal.DataSource = dtJadwal;
+                    dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    if (dgvJadwal.Columns.Contains("id_jadwal"))
+                    {
+                        dgvJadwal.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                        dgvJadwal.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                        dgvJadwal.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan";
+                        dgvJadwal.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jadwal";
+                        dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
+                        dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                        dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

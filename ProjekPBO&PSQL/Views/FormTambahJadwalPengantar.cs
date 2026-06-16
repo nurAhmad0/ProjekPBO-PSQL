@@ -259,18 +259,37 @@ namespace ProjekPBO_PSQL.Views
                     orderData.getlistOrderdetails().Add(od);
                 }
                 JadwalPengantaran jadwalbaru = new JadwalPengantaran(0,Convert.ToDateTime(dtpTanggal.Text), txtKeterangan.Text, 1, "Belum Dikerjakan", pelangganTerpilih.getNamePelanggan(), pelangganTerpilih.getNO_TELP(), pelangganTerpilih.getDetailAlamat(), idPelanggan, Convert.ToDecimal(txtTotalUpah.Text.Trim()), orderData);
-                jadwalController.tambahJadwal(jadwalbaru);
-                dataKeranjangBelanja.Rows.Clear();
-                txtKeterangan.Clear();
-                txtTipeJadwal.Clear();
-                txtTotalUpah.Clear();
-                txtJumlahDibeli.Clear();
-                lbTotalKeranjang.Text = "0";
-                cbTanaman.SelectedIndex = -1;
-                cbPelanggan.SelectedIndex = -1;
-                cbPengantar.SelectedIndex = -1;
-                DialogResult = DialogResult.OK;
-                this.Close();
+                int idJadwalBaru = jadwalController.tambahJadwal(jadwalbaru);
+                if (idJadwalBaru > 0)
+                {
+                    bool hasil = jadwalController.TambahDetailJadwal(idPengantar, idJadwalBaru);
+                    if (hasil)
+                    {
+                        dataKeranjangBelanja.Rows.Clear();
+                        txtKeterangan.Clear();
+                        txtTipeJadwal.Clear();
+                        txtTotalUpah.Clear();
+                        txtJumlahDibeli.Clear();
+                        lbTotalKeranjang.Text = "0";
+                        cbTanaman.SelectedIndex = -1;
+                        cbPelanggan.SelectedIndex = -1;
+                        cbPengantar.SelectedIndex = -1;
+                        DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Gagal mengaitkan pengantar ke dalam detail jadwal.", "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Gagal membuat jadwal pengantaran ke database.", "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Gagal menyimpan data transaksi pemesanan.", "Error Transaksi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -68,12 +68,19 @@ namespace ProjekPBO_PSQL.Models
 
         public bool SimpanOrder(int idAnggota, DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjangBelanja)
         {
+            if (keranjangBelanja == null || keranjangBelanja.Count == 0)
+            {
+                MessageBox.Show("Keranjang belanja kosong! Tidak ada data untuk disimpan.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             using var conn = DataBaseHelper.GetConnection();
+            NpgsqlTransaction? transaksi = null; 
 
             try
             {
                 conn.Open();
-
+                transaksi = conn.BeginTransaction();
                 using var cmdOrder = new NpgsqlCommand("SELECT buat_order(@idAnggota, @Tanggal, @idPelanggan);", conn);
                 cmdOrder.Parameters.AddWithValue("@idAnggota", idAnggota);
                 cmdOrder.Parameters.Add("@Tanggal", NpgsqlTypes.NpgsqlDbType.Date).Value = Tanggal.Date;
@@ -81,23 +88,27 @@ namespace ProjekPBO_PSQL.Models
                 int idOrderBaru = Convert.ToInt32(cmdOrder.ExecuteScalar());
                 foreach (OrderDetails OrderD in keranjangBelanja)
                 {
-                    using var cmdOrderD = new NpgsqlCommand("CALL tambah_order_details((@idOrder, @idTanaman, @jumlah, @harga);", conn);
-                    cmdOrderD.Parameters.AddWithValue("@idOrder", idOrderBaru); 
+                    using var cmdOrderD = new NpgsqlCommand("CALL tambah_order_details(@idOrder, @idTanaman, @jumlah, @harga);", conn);
+
+                    cmdOrderD.Parameters.AddWithValue("@idOrder", idOrderBaru);
                     cmdOrderD.Parameters.AddWithValue("@idTanaman", OrderD.getIDTanaman());
                     cmdOrderD.Parameters.AddWithValue("@jumlah", OrderD.getJumlahOrder());
                     cmdOrderD.Parameters.AddWithValue("@harga", OrderD.getHarga());
                     cmdOrderD.ExecuteNonQuery();
                 }
+                transaksi.Commit();
                 MessageBox.Show("Transaksi Berhasil Disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             catch (NpgsqlException ex)
             {
+                transaksi?.Rollback();
                 MessageBox.Show("Gagal Memproses Transaksi: " + ex.Message, "Peringatan Database", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             catch (Exception ex)
             {
+                transaksi?.Rollback();
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
