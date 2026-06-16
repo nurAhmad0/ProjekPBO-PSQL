@@ -58,9 +58,11 @@ namespace ProjekPBO_PSQL
                     case 2:
                         MessageBox.Show("Login Berhasil! Selamat Datang Farmer.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         FormFarmer formFarmer = new FormFarmer(idAnggota, idrole);
-                        formFarmer.FormClosed += (s, args) => this.Close(); 
-                        formFarmer.Show();
-                        this.Hide(); 
+                        this.Hide();
+                        formFarmer.ShowDialog();
+                        txtUsername.Clear();
+                        txtPassword.Clear();
+                        this.Show();
                         break;
 
                     case 3:

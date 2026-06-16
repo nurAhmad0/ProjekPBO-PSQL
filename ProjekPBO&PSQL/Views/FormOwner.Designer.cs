@@ -67,33 +67,34 @@
             btnLahan = new Button();
             btnKaryawan = new Button();
             panelMiddle = new Panel();
-            panelDetailJadwalFarmer = new Panel();
-            btSimpanEditFarmer = new Button();
-            dataGAnggotaJadwalFarmer = new DataGridView();
-            btHapusJadwalFarmer = new Button();
-            btEditJadwalFarmer = new Button();
-            txtTotalUpah = new TextBox();
-            txtIdLahanJadwalFarmer = new TextBox();
-            txtNamaLahanJadwalFarmer = new TextBox();
-            txtJumlahDItanamJadwalFarmer = new TextBox();
-            txtStatusJadwalFarmer = new TextBox();
-            txtKeteranganJadwalFarmer = new TextBox();
-            txtBanyakAnggotaJadwalFarmer = new TextBox();
-            txtTanamanJadwalFarmer = new TextBox();
-            label34 = new Label();
-            label32 = new Label();
-            label30 = new Label();
-            label28 = new Label();
-            label26 = new Label();
-            label24 = new Label();
-            label23 = new Label();
-            label22 = new Label();
-            label20 = new Label();
-            lbTanggalJadwalFarmer = new Label();
-            l = new Label();
-            lbIdJadwalFarmer = new Label();
-            IDJadwal = new Label();
-            btKembaliJadwalFarmer = new Button();
+            panelDetailKaryawan = new Panel();
+            label48 = new Label();
+            btEdit = new Button();
+            btBack = new Button();
+            lbPassword = new Label();
+            lbUsername = new Label();
+            lbSaldo = new Label();
+            lbRole = new Label();
+            label12 = new Label();
+            lbTanggalLahir = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            lbStatusKerja = new Label();
+            label16 = new Label();
+            label15 = new Label();
+            label14 = new Label();
+            TanggalLahir = new Label();
+            lbID = new Label();
+            label11 = new Label();
+            lbEmail = new Label();
+            lbNOTELP = new Label();
+            lbNama = new Label();
+            panelKaryawan = new Panel();
+            txtCariKaryawan = new TextBox();
+            label1 = new Label();
+            btnTambahKaryawan = new Button();
+            btnEditKaryawan = new Button();
+            dgvKaryawan = new DataGridView();
             panelDetailJadwalPengantar = new Panel();
             btSimpanEditPengantar = new Button();
             txtDetailAlamatPengantar = new TextBox();
@@ -123,6 +124,33 @@
             lbTanggalJadwalPengantaran = new Label();
             label13 = new Label();
             button5 = new Button();
+            panelDetailJadwalFarmer = new Panel();
+            btSimpanEditFarmer = new Button();
+            dataGAnggotaJadwalFarmer = new DataGridView();
+            btHapusJadwalFarmer = new Button();
+            btEditJadwalFarmer = new Button();
+            txtTotalUpah = new TextBox();
+            txtIdLahanJadwalFarmer = new TextBox();
+            txtNamaLahanJadwalFarmer = new TextBox();
+            txtJumlahDItanamJadwalFarmer = new TextBox();
+            txtStatusJadwalFarmer = new TextBox();
+            txtKeteranganJadwalFarmer = new TextBox();
+            txtBanyakAnggotaJadwalFarmer = new TextBox();
+            txtTanamanJadwalFarmer = new TextBox();
+            label34 = new Label();
+            label32 = new Label();
+            label30 = new Label();
+            label28 = new Label();
+            label26 = new Label();
+            label24 = new Label();
+            label23 = new Label();
+            label22 = new Label();
+            label20 = new Label();
+            lbTanggalJadwalFarmer = new Label();
+            l = new Label();
+            lbIdJadwalFarmer = new Label();
+            IDJadwal = new Label();
+            btKembaliJadwalFarmer = new Button();
             panelPilihanJadwal = new Panel();
             labelPilihanJadwal = new Label();
             btFarmerJadwal = new Button();
@@ -163,12 +191,6 @@
             btLaporan = new Button();
             label6 = new Label();
             dgvLainnya = new DataGridView();
-            panelKaryawan = new Panel();
-            txtCariKaryawan = new TextBox();
-            label1 = new Label();
-            btnTambahKaryawan = new Button();
-            btnEditKaryawan = new Button();
-            dgvKaryawan = new DataGridView();
             panelLahan = new Panel();
             txtCariLahan = new TextBox();
             label2 = new Label();
@@ -200,42 +222,22 @@
             btPanen = new Button();
             btTanam = new Button();
             button2 = new Button();
-            panelDetailKaryawan = new Panel();
-            btEdit = new Button();
-            btBack = new Button();
-            lbPassword = new Label();
-            lbUsername = new Label();
-            lbSaldo = new Label();
-            lbRole = new Label();
-            label12 = new Label();
-            lbTanggalLahir = new Label();
-            label9 = new Label();
-            label8 = new Label();
-            lbStatusKerja = new Label();
-            label16 = new Label();
-            label15 = new Label();
-            label14 = new Label();
-            TanggalLahir = new Label();
-            lbID = new Label();
-            label11 = new Label();
-            lbEmail = new Label();
-            lbNOTELP = new Label();
-            lbNama = new Label();
             panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelBottom.SuspendLayout();
             panelMiddle.SuspendLayout();
-            panelDetailJadwalFarmer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).BeginInit();
+            panelDetailKaryawan.SuspendLayout();
+            panelKaryawan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).BeginInit();
             panelDetailJadwalPengantar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGKeranjangBelanja).BeginInit();
+            panelDetailJadwalFarmer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).BeginInit();
             panelPilihanJadwal.SuspendLayout();
             panelLainnya.SuspendLayout();
             panelPenarikan.SuspendLayout();
             panelDetailLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLainnya).BeginInit();
-            panelKaryawan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).BeginInit();
             panelLahan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLahan).BeginInit();
             panelPelanggan.SuspendLayout();
@@ -245,7 +247,6 @@
             panelJadwal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).BeginInit();
             panelPilihanJadwalFarmer.SuspendLayout();
-            panelDetailKaryawan.SuspendLayout();
             SuspendLayout();
             // 
             // panelTop
@@ -384,279 +385,302 @@
             // 
             // panelMiddle
             // 
-            panelMiddle.Controls.Add(panelDetailJadwalPengantar);
             panelMiddle.Controls.Add(panelDetailJadwalFarmer);
-            panelMiddle.Controls.Add(panelPilihanJadwal);
-            panelMiddle.Controls.Add(panelLainnya);
-            panelMiddle.Controls.Add(panelKaryawan);
-            panelMiddle.Controls.Add(panelLahan);
-            panelMiddle.Controls.Add(panelPelanggan);
-            panelMiddle.Controls.Add(panelTanaman);
-            panelMiddle.Controls.Add(panelJadwal);
+            panelMiddle.Controls.Add(panelDetailJadwalPengantar);
             panelMiddle.Controls.Add(panelPilihanJadwalFarmer);
+            panelMiddle.Controls.Add(panelPilihanJadwal);
+            panelMiddle.Controls.Add(panelJadwal);
+            panelMiddle.Controls.Add(panelTanaman);
+            panelMiddle.Controls.Add(panelLahan);
+            panelMiddle.Controls.Add(panelKaryawan);
             panelMiddle.Controls.Add(panelDetailKaryawan);
+            panelMiddle.Controls.Add(panelLainnya);
+            panelMiddle.Controls.Add(panelPelanggan);
             panelMiddle.Dock = DockStyle.Fill;
             panelMiddle.Location = new Point(0, 107);
             panelMiddle.Name = "panelMiddle";
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 2;
             // 
-            // panelDetailJadwalFarmer
+            // panelDetailKaryawan
             // 
-            panelDetailJadwalFarmer.Controls.Add(btSimpanEditFarmer);
-            panelDetailJadwalFarmer.Controls.Add(dataGAnggotaJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(btHapusJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(btEditJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtTotalUpah);
-            panelDetailJadwalFarmer.Controls.Add(txtIdLahanJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtNamaLahanJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtJumlahDItanamJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtStatusJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtKeteranganJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtBanyakAnggotaJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(txtTanamanJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(label34);
-            panelDetailJadwalFarmer.Controls.Add(label32);
-            panelDetailJadwalFarmer.Controls.Add(label30);
-            panelDetailJadwalFarmer.Controls.Add(label28);
-            panelDetailJadwalFarmer.Controls.Add(label26);
-            panelDetailJadwalFarmer.Controls.Add(label24);
-            panelDetailJadwalFarmer.Controls.Add(label23);
-            panelDetailJadwalFarmer.Controls.Add(label22);
-            panelDetailJadwalFarmer.Controls.Add(label20);
-            panelDetailJadwalFarmer.Controls.Add(lbTanggalJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(l);
-            panelDetailJadwalFarmer.Controls.Add(lbIdJadwalFarmer);
-            panelDetailJadwalFarmer.Controls.Add(IDJadwal);
-            panelDetailJadwalFarmer.Controls.Add(btKembaliJadwalFarmer);
-            panelDetailJadwalFarmer.Location = new Point(0, 0);
-            panelDetailJadwalFarmer.Name = "panelDetailJadwalFarmer";
-            panelDetailJadwalFarmer.Size = new Size(1038, 380);
-            panelDetailJadwalFarmer.TabIndex = 38;
+            panelDetailKaryawan.Controls.Add(label48);
+            panelDetailKaryawan.Controls.Add(btEdit);
+            panelDetailKaryawan.Controls.Add(btBack);
+            panelDetailKaryawan.Controls.Add(lbPassword);
+            panelDetailKaryawan.Controls.Add(lbUsername);
+            panelDetailKaryawan.Controls.Add(lbSaldo);
+            panelDetailKaryawan.Controls.Add(lbRole);
+            panelDetailKaryawan.Controls.Add(label12);
+            panelDetailKaryawan.Controls.Add(lbTanggalLahir);
+            panelDetailKaryawan.Controls.Add(label9);
+            panelDetailKaryawan.Controls.Add(label8);
+            panelDetailKaryawan.Controls.Add(lbStatusKerja);
+            panelDetailKaryawan.Controls.Add(label16);
+            panelDetailKaryawan.Controls.Add(label15);
+            panelDetailKaryawan.Controls.Add(label14);
+            panelDetailKaryawan.Controls.Add(TanggalLahir);
+            panelDetailKaryawan.Controls.Add(lbID);
+            panelDetailKaryawan.Controls.Add(label11);
+            panelDetailKaryawan.Controls.Add(lbEmail);
+            panelDetailKaryawan.Controls.Add(lbNOTELP);
+            panelDetailKaryawan.Controls.Add(lbNama);
+            panelDetailKaryawan.Location = new Point(0, 0);
+            panelDetailKaryawan.Name = "panelDetailKaryawan";
+            panelDetailKaryawan.Size = new Size(1037, 377);
+            panelDetailKaryawan.TabIndex = 4;
+            panelDetailKaryawan.Visible = false;
             // 
-            // btSimpanEditFarmer
+            // label48
             // 
-            btSimpanEditFarmer.Enabled = false;
-            btSimpanEditFarmer.Location = new Point(12, 326);
-            btSimpanEditFarmer.Name = "btSimpanEditFarmer";
-            btSimpanEditFarmer.Size = new Size(94, 38);
-            btSimpanEditFarmer.TabIndex = 39;
-            btSimpanEditFarmer.Text = "Simpan Edit";
-            btSimpanEditFarmer.UseVisualStyleBackColor = true;
-            btSimpanEditFarmer.Visible = false;
-            btSimpanEditFarmer.Click += btSimpanEditFarmer_Click;
+            label48.AutoSize = true;
+            label48.Location = new Point(99, 103);
+            label48.Name = "label48";
+            label48.Size = new Size(90, 20);
+            label48.TabIndex = 20;
+            label48.Text = "Id Karyawan";
             // 
-            // dataGAnggotaJadwalFarmer
+            // btEdit
             // 
-            dataGAnggotaJadwalFarmer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGAnggotaJadwalFarmer.Location = new Point(586, 208);
-            dataGAnggotaJadwalFarmer.Name = "dataGAnggotaJadwalFarmer";
-            dataGAnggotaJadwalFarmer.RowHeadersWidth = 51;
-            dataGAnggotaJadwalFarmer.Size = new Size(410, 156);
-            dataGAnggotaJadwalFarmer.TabIndex = 38;
-            dataGAnggotaJadwalFarmer.CellContentClick += dataGAnggotaJadwalFarmer_CellContentClick;
+            btEdit.Location = new Point(158, 15);
+            btEdit.Name = "btEdit";
+            btEdit.Size = new Size(94, 29);
+            btEdit.TabIndex = 19;
+            btEdit.Text = "Edit";
+            btEdit.UseVisualStyleBackColor = true;
+            btEdit.Click += btEdit_Click;
             // 
-            // btHapusJadwalFarmer
+            // btBack
             // 
-            btHapusJadwalFarmer.Location = new Point(274, 5);
-            btHapusJadwalFarmer.Name = "btHapusJadwalFarmer";
-            btHapusJadwalFarmer.Size = new Size(94, 38);
-            btHapusJadwalFarmer.TabIndex = 37;
-            btHapusJadwalFarmer.Text = "HAPUS";
-            btHapusJadwalFarmer.UseVisualStyleBackColor = true;
-            btHapusJadwalFarmer.Click += btHapusJadwalFarmer_Click;
+            btBack.Location = new Point(22, 15);
+            btBack.Name = "btBack";
+            btBack.Size = new Size(94, 29);
+            btBack.TabIndex = 18;
+            btBack.Text = "Kembali";
+            btBack.UseVisualStyleBackColor = true;
+            btBack.Click += btBack_Click;
             // 
-            // btEditJadwalFarmer
+            // lbPassword
             // 
-            btEditJadwalFarmer.Location = new Point(142, 5);
-            btEditJadwalFarmer.Name = "btEditJadwalFarmer";
-            btEditJadwalFarmer.Size = new Size(94, 38);
-            btEditJadwalFarmer.TabIndex = 36;
-            btEditJadwalFarmer.Text = "EDIT";
-            btEditJadwalFarmer.UseVisualStyleBackColor = true;
-            btEditJadwalFarmer.Click += btEditJadwalFarmer_Click;
+            lbPassword.AutoSize = true;
+            lbPassword.Location = new Point(816, 323);
+            lbPassword.Name = "lbPassword";
+            lbPassword.Size = new Size(70, 20);
+            lbPassword.TabIndex = 17;
+            lbPassword.Text = "Password";
             // 
-            // txtTotalUpah
+            // lbUsername
             // 
-            txtTotalUpah.Location = new Point(179, 121);
-            txtTotalUpah.Name = "txtTotalUpah";
-            txtTotalUpah.Size = new Size(324, 27);
-            txtTotalUpah.TabIndex = 35;
+            lbUsername.AutoSize = true;
+            lbUsername.Location = new Point(816, 264);
+            lbUsername.Name = "lbUsername";
+            lbUsername.Size = new Size(75, 20);
+            lbUsername.TabIndex = 16;
+            lbUsername.Text = "Username";
             // 
-            // txtIdLahanJadwalFarmer
+            // lbSaldo
             // 
-            txtIdLahanJadwalFarmer.Location = new Point(732, 169);
-            txtIdLahanJadwalFarmer.Name = "txtIdLahanJadwalFarmer";
-            txtIdLahanJadwalFarmer.Size = new Size(263, 27);
-            txtIdLahanJadwalFarmer.TabIndex = 34;
+            lbSaldo.AutoSize = true;
+            lbSaldo.Location = new Point(816, 200);
+            lbSaldo.Name = "lbSaldo";
+            lbSaldo.Size = new Size(47, 20);
+            lbSaldo.TabIndex = 15;
+            lbSaldo.Text = "Saldo";
             // 
-            // txtNamaLahanJadwalFarmer
+            // lbRole
             // 
-            txtNamaLahanJadwalFarmer.Location = new Point(732, 123);
-            txtNamaLahanJadwalFarmer.Name = "txtNamaLahanJadwalFarmer";
-            txtNamaLahanJadwalFarmer.Size = new Size(264, 27);
-            txtNamaLahanJadwalFarmer.TabIndex = 33;
+            lbRole.AutoSize = true;
+            lbRole.Location = new Point(816, 149);
+            lbRole.Name = "lbRole";
+            lbRole.Size = new Size(39, 20);
+            lbRole.TabIndex = 14;
+            lbRole.Text = "Role";
             // 
-            // txtJumlahDItanamJadwalFarmer
+            // label12
             // 
-            txtJumlahDItanamJadwalFarmer.Location = new Point(732, 79);
-            txtJumlahDItanamJadwalFarmer.Name = "txtJumlahDItanamJadwalFarmer";
-            txtJumlahDItanamJadwalFarmer.Size = new Size(264, 27);
-            txtJumlahDItanamJadwalFarmer.TabIndex = 32;
+            label12.AutoSize = true;
+            label12.Location = new Point(95, 323);
+            label12.Name = "label12";
+            label12.Size = new Size(94, 20);
+            label12.TabIndex = 13;
+            label12.Text = "Status Kerja :";
             // 
-            // txtStatusJadwalFarmer
+            // lbTanggalLahir
             // 
-            txtStatusJadwalFarmer.Location = new Point(179, 172);
-            txtStatusJadwalFarmer.Name = "txtStatusJadwalFarmer";
-            txtStatusJadwalFarmer.Size = new Size(324, 27);
-            txtStatusJadwalFarmer.TabIndex = 31;
+            lbTanggalLahir.AutoSize = true;
+            lbTanggalLahir.Location = new Point(95, 264);
+            lbTanggalLahir.Name = "lbTanggalLahir";
+            lbTanggalLahir.Size = new Size(104, 20);
+            lbTanggalLahir.TabIndex = 12;
+            lbTanggalLahir.Text = "Tanggal Lahir :";
             // 
-            // txtKeteranganJadwalFarmer
+            // label9
             // 
-            txtKeteranganJadwalFarmer.Location = new Point(179, 237);
-            txtKeteranganJadwalFarmer.Name = "txtKeteranganJadwalFarmer";
-            txtKeteranganJadwalFarmer.Size = new Size(324, 27);
-            txtKeteranganJadwalFarmer.TabIndex = 30;
+            label9.AutoSize = true;
+            label9.Location = new Point(95, 200);
+            label9.Name = "label9";
+            label9.Size = new Size(53, 20);
+            label9.TabIndex = 11;
+            label9.Text = "Email :";
             // 
-            // txtBanyakAnggotaJadwalFarmer
+            // label8
             // 
-            txtBanyakAnggotaJadwalFarmer.Location = new Point(179, 300);
-            txtBanyakAnggotaJadwalFarmer.Name = "txtBanyakAnggotaJadwalFarmer";
-            txtBanyakAnggotaJadwalFarmer.Size = new Size(324, 27);
-            txtBanyakAnggotaJadwalFarmer.TabIndex = 29;
+            label8.AutoSize = true;
+            label8.Location = new Point(95, 149);
+            label8.Name = "label8";
+            label8.Size = new Size(94, 20);
+            label8.TabIndex = 10;
+            label8.Text = "Nomer Telp :";
             // 
-            // txtTanamanJadwalFarmer
+            // lbStatusKerja
             // 
-            txtTanamanJadwalFarmer.Location = new Point(179, 76);
-            txtTanamanJadwalFarmer.Name = "txtTanamanJadwalFarmer";
-            txtTanamanJadwalFarmer.Size = new Size(324, 27);
-            txtTanamanJadwalFarmer.TabIndex = 28;
+            lbStatusKerja.AutoSize = true;
+            lbStatusKerja.Location = new Point(225, 323);
+            lbStatusKerja.Name = "lbStatusKerja";
+            lbStatusKerja.Size = new Size(87, 20);
+            lbStatusKerja.TabIndex = 9;
+            lbStatusKerja.Text = "Status Kerja";
             // 
-            // label34
+            // label16
             // 
-            label34.AutoSize = true;
-            label34.Location = new Point(72, 122);
-            label34.Name = "label34";
-            label34.Size = new Size(88, 20);
-            label34.TabIndex = 27;
-            label34.Text = "Total Upah :";
+            label16.AutoSize = true;
+            label16.Location = new Point(681, 200);
+            label16.Name = "label16";
+            label16.Size = new Size(54, 20);
+            label16.TabIndex = 8;
+            label16.Text = "Saldo :";
             // 
-            // label32
+            // label15
             // 
-            label32.AutoSize = true;
-            label32.Location = new Point(636, 162);
-            label32.Name = "label32";
-            label32.Size = new Size(72, 20);
-            label32.TabIndex = 25;
-            label32.Text = "Id Lahan :";
+            label15.AutoSize = true;
+            label15.Location = new Point(681, 149);
+            label15.Name = "label15";
+            label15.Size = new Size(90, 20);
+            label15.TabIndex = 7;
+            label15.Text = "Nama Role :";
             // 
-            // label30
+            // label14
             // 
-            label30.AutoSize = true;
-            label30.Location = new Point(585, 83);
-            label30.Name = "label30";
-            label30.Size = new Size(123, 20);
-            label30.TabIndex = 23;
-            label30.Text = "Jumlah Ditanam :";
+            label14.AutoSize = true;
+            label14.Location = new Point(681, 264);
+            label14.Name = "label14";
+            label14.Size = new Size(82, 20);
+            label14.TabIndex = 6;
+            label14.Text = "Username :";
             // 
-            // label28
+            // TanggalLahir
             // 
-            label28.AutoSize = true;
-            label28.Location = new Point(41, 76);
-            label28.Name = "label28";
-            label28.Size = new Size(119, 20);
-            label28.TabIndex = 21;
-            label28.Text = "Nama Tanaman :";
+            TanggalLahir.AutoSize = true;
+            TanggalLahir.Location = new Point(225, 264);
+            TanggalLahir.Name = "TanggalLahir";
+            TanggalLahir.Size = new Size(93, 20);
+            TanggalLahir.TabIndex = 5;
+            TanggalLahir.Text = "TanggalLahir";
             // 
-            // label26
+            // lbID
             // 
-            label26.AutoSize = true;
-            label26.Location = new Point(609, 126);
-            label26.Name = "label26";
-            label26.Size = new Size(99, 20);
-            label26.TabIndex = 19;
-            label26.Text = "Nama Lahan :";
+            lbID.AutoSize = true;
+            lbID.Location = new Point(225, 103);
+            lbID.Name = "lbID";
+            lbID.Size = new Size(22, 20);
+            lbID.TabIndex = 4;
+            lbID.Text = "id";
             // 
-            // label24
+            // label11
             // 
-            label24.AutoSize = true;
-            label24.Location = new Point(57, 172);
-            label24.Name = "label24";
-            label24.Size = new Size(103, 20);
-            label24.TabIndex = 17;
-            label24.Text = "status Jadwal :";
+            label11.AutoSize = true;
+            label11.Location = new Point(681, 323);
+            label11.Name = "label11";
+            label11.Size = new Size(77, 20);
+            label11.TabIndex = 3;
+            label11.Text = "Password :";
             // 
-            // label23
+            // lbEmail
             // 
-            label23.AutoSize = true;
-            label23.Location = new Point(218, 237);
-            label23.Name = "label23";
-            label23.Size = new Size(0, 20);
-            label23.TabIndex = 16;
+            lbEmail.AutoSize = true;
+            lbEmail.Location = new Point(225, 200);
+            lbEmail.Name = "lbEmail";
+            lbEmail.Size = new Size(46, 20);
+            lbEmail.TabIndex = 2;
+            lbEmail.Text = "Email";
             // 
-            // label22
+            // lbNOTELP
             // 
-            label22.AutoSize = true;
-            label22.Location = new Point(35, 303);
-            label22.Name = "label22";
-            label22.Size = new Size(125, 20);
-            label22.TabIndex = 15;
-            label22.Text = "Banyak Anggota :";
+            lbNOTELP.AutoSize = true;
+            lbNOTELP.Location = new Point(225, 149);
+            lbNOTELP.Name = "lbNOTELP";
+            lbNOTELP.Size = new Size(54, 20);
+            lbNOTELP.TabIndex = 1;
+            lbNOTELP.Text = "noTelp";
             // 
-            // label20
+            // lbNama
             // 
-            label20.AutoSize = true;
-            label20.Location = new Point(19, 230);
-            label20.Name = "label20";
-            label20.Size = new Size(141, 20);
-            label20.TabIndex = 13;
-            label20.Text = "Keterangan Jadwal :";
+            lbNama.AutoSize = true;
+            lbNama.Font = new Font("Segoe UI Black", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbNama.Location = new Point(429, 80);
+            lbNama.Name = "lbNama";
+            lbNama.Size = new Size(99, 38);
+            lbNama.TabIndex = 0;
+            lbNama.Text = "Nama";
             // 
-            // lbTanggalJadwalFarmer
+            // panelKaryawan
             // 
-            lbTanggalJadwalFarmer.AutoSize = true;
-            lbTanggalJadwalFarmer.Location = new Point(820, 7);
-            lbTanggalJadwalFarmer.Name = "lbTanggalJadwalFarmer";
-            lbTanggalJadwalFarmer.Size = new Size(58, 20);
-            lbTanggalJadwalFarmer.TabIndex = 12;
-            lbTanggalJadwalFarmer.Text = "label19";
+            panelKaryawan.Controls.Add(txtCariKaryawan);
+            panelKaryawan.Controls.Add(label1);
+            panelKaryawan.Controls.Add(btnTambahKaryawan);
+            panelKaryawan.Controls.Add(btnEditKaryawan);
+            panelKaryawan.Controls.Add(dgvKaryawan);
+            panelKaryawan.Dock = DockStyle.Fill;
+            panelKaryawan.Location = new Point(0, 0);
+            panelKaryawan.Name = "panelKaryawan";
+            panelKaryawan.Size = new Size(1037, 380);
+            panelKaryawan.TabIndex = 0;
             // 
-            // l
+            // txtCariKaryawan
             // 
-            l.AutoSize = true;
-            l.Location = new Point(666, 7);
-            l.Name = "l";
-            l.Size = new Size(117, 20);
-            l.TabIndex = 11;
-            l.Text = "Tanggal Jadwal :";
+            txtCariKaryawan.Location = new Point(900, 10);
+            txtCariKaryawan.Name = "txtCariKaryawan";
+            txtCariKaryawan.Size = new Size(125, 27);
+            txtCariKaryawan.TabIndex = 7;
+            txtCariKaryawan.TextChanged += textBox1_TextChanged;
             // 
-            // lbIdJadwalFarmer
+            // label1
             // 
-            lbIdJadwalFarmer.AutoSize = true;
-            lbIdJadwalFarmer.Location = new Point(179, 49);
-            lbIdJadwalFarmer.Name = "lbIdJadwalFarmer";
-            lbIdJadwalFarmer.Size = new Size(58, 20);
-            lbIdJadwalFarmer.TabIndex = 10;
-            lbIdJadwalFarmer.Text = "label17";
+            label1.AutoSize = true;
+            label1.Location = new Point(13, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(132, 20);
+            label1.TabIndex = 3;
+            label1.Text = "TABEL KARYAWAN";
             // 
-            // IDJadwal
+            // btnTambahKaryawan
             // 
-            IDJadwal.AutoSize = true;
-            IDJadwal.Location = new Point(84, 49);
-            IDJadwal.Name = "IDJadwal";
-            IDJadwal.Size = new Size(76, 20);
-            IDJadwal.TabIndex = 9;
-            IDJadwal.Text = "ID Jadwal:";
+            btnTambahKaryawan.Location = new Point(168, 6);
+            btnTambahKaryawan.Name = "btnTambahKaryawan";
+            btnTambahKaryawan.Size = new Size(94, 38);
+            btnTambahKaryawan.TabIndex = 2;
+            btnTambahKaryawan.Text = "ADD";
+            btnTambahKaryawan.UseVisualStyleBackColor = true;
+            btnTambahKaryawan.Click += btnTambahKaryawan_Click;
             // 
-            // btKembaliJadwalFarmer
+            // btnEditKaryawan
             // 
-            btKembaliJadwalFarmer.Location = new Point(10, 2);
-            btKembaliJadwalFarmer.Name = "btKembaliJadwalFarmer";
-            btKembaliJadwalFarmer.Size = new Size(94, 38);
-            btKembaliJadwalFarmer.TabIndex = 8;
-            btKembaliJadwalFarmer.Text = "BACK";
-            btKembaliJadwalFarmer.UseVisualStyleBackColor = true;
-            btKembaliJadwalFarmer.Click += btKembaliJadwalFarmer_Click;
+            btnEditKaryawan.Location = new Point(278, 6);
+            btnEditKaryawan.Name = "btnEditKaryawan";
+            btnEditKaryawan.Size = new Size(94, 38);
+            btnEditKaryawan.TabIndex = 1;
+            btnEditKaryawan.Text = "DETAIL";
+            btnEditKaryawan.UseVisualStyleBackColor = true;
+            btnEditKaryawan.Click += btnEditKaryawan_Click;
+            // 
+            // dgvKaryawan
+            // 
+            dgvKaryawan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvKaryawan.Location = new Point(3, 50);
+            dgvKaryawan.Name = "dgvKaryawan";
+            dgvKaryawan.RowHeadersWidth = 51;
+            dgvKaryawan.Size = new Size(1031, 330);
+            dgvKaryawan.TabIndex = 0;
             // 
             // panelDetailJadwalPengantar
             // 
@@ -930,6 +954,263 @@
             button5.Text = "BACK";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
+            // 
+            // panelDetailJadwalFarmer
+            // 
+            panelDetailJadwalFarmer.Controls.Add(btSimpanEditFarmer);
+            panelDetailJadwalFarmer.Controls.Add(dataGAnggotaJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(btHapusJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(btEditJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtTotalUpah);
+            panelDetailJadwalFarmer.Controls.Add(txtIdLahanJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtNamaLahanJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtJumlahDItanamJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtStatusJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtKeteranganJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtBanyakAnggotaJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(txtTanamanJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(label34);
+            panelDetailJadwalFarmer.Controls.Add(label32);
+            panelDetailJadwalFarmer.Controls.Add(label30);
+            panelDetailJadwalFarmer.Controls.Add(label28);
+            panelDetailJadwalFarmer.Controls.Add(label26);
+            panelDetailJadwalFarmer.Controls.Add(label24);
+            panelDetailJadwalFarmer.Controls.Add(label23);
+            panelDetailJadwalFarmer.Controls.Add(label22);
+            panelDetailJadwalFarmer.Controls.Add(label20);
+            panelDetailJadwalFarmer.Controls.Add(lbTanggalJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(l);
+            panelDetailJadwalFarmer.Controls.Add(lbIdJadwalFarmer);
+            panelDetailJadwalFarmer.Controls.Add(IDJadwal);
+            panelDetailJadwalFarmer.Controls.Add(btKembaliJadwalFarmer);
+            panelDetailJadwalFarmer.Location = new Point(0, 0);
+            panelDetailJadwalFarmer.Name = "panelDetailJadwalFarmer";
+            panelDetailJadwalFarmer.Size = new Size(1038, 380);
+            panelDetailJadwalFarmer.TabIndex = 38;
+            // 
+            // btSimpanEditFarmer
+            // 
+            btSimpanEditFarmer.Enabled = false;
+            btSimpanEditFarmer.Location = new Point(12, 326);
+            btSimpanEditFarmer.Name = "btSimpanEditFarmer";
+            btSimpanEditFarmer.Size = new Size(94, 38);
+            btSimpanEditFarmer.TabIndex = 39;
+            btSimpanEditFarmer.Text = "Simpan Edit";
+            btSimpanEditFarmer.UseVisualStyleBackColor = true;
+            btSimpanEditFarmer.Visible = false;
+            btSimpanEditFarmer.Click += btSimpanEditFarmer_Click;
+            // 
+            // dataGAnggotaJadwalFarmer
+            // 
+            dataGAnggotaJadwalFarmer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGAnggotaJadwalFarmer.Location = new Point(586, 208);
+            dataGAnggotaJadwalFarmer.Name = "dataGAnggotaJadwalFarmer";
+            dataGAnggotaJadwalFarmer.RowHeadersWidth = 51;
+            dataGAnggotaJadwalFarmer.Size = new Size(410, 156);
+            dataGAnggotaJadwalFarmer.TabIndex = 38;
+            dataGAnggotaJadwalFarmer.CellContentClick += dataGAnggotaJadwalFarmer_CellContentClick;
+            // 
+            // btHapusJadwalFarmer
+            // 
+            btHapusJadwalFarmer.Location = new Point(274, 5);
+            btHapusJadwalFarmer.Name = "btHapusJadwalFarmer";
+            btHapusJadwalFarmer.Size = new Size(94, 38);
+            btHapusJadwalFarmer.TabIndex = 37;
+            btHapusJadwalFarmer.Text = "HAPUS";
+            btHapusJadwalFarmer.UseVisualStyleBackColor = true;
+            btHapusJadwalFarmer.Click += btHapusJadwalFarmer_Click;
+            // 
+            // btEditJadwalFarmer
+            // 
+            btEditJadwalFarmer.Location = new Point(142, 5);
+            btEditJadwalFarmer.Name = "btEditJadwalFarmer";
+            btEditJadwalFarmer.Size = new Size(94, 38);
+            btEditJadwalFarmer.TabIndex = 36;
+            btEditJadwalFarmer.Text = "EDIT";
+            btEditJadwalFarmer.UseVisualStyleBackColor = true;
+            btEditJadwalFarmer.Click += btEditJadwalFarmer_Click;
+            // 
+            // txtTotalUpah
+            // 
+            txtTotalUpah.Location = new Point(179, 121);
+            txtTotalUpah.Name = "txtTotalUpah";
+            txtTotalUpah.Size = new Size(324, 27);
+            txtTotalUpah.TabIndex = 35;
+            // 
+            // txtIdLahanJadwalFarmer
+            // 
+            txtIdLahanJadwalFarmer.Location = new Point(732, 169);
+            txtIdLahanJadwalFarmer.Name = "txtIdLahanJadwalFarmer";
+            txtIdLahanJadwalFarmer.Size = new Size(263, 27);
+            txtIdLahanJadwalFarmer.TabIndex = 34;
+            // 
+            // txtNamaLahanJadwalFarmer
+            // 
+            txtNamaLahanJadwalFarmer.Location = new Point(732, 123);
+            txtNamaLahanJadwalFarmer.Name = "txtNamaLahanJadwalFarmer";
+            txtNamaLahanJadwalFarmer.Size = new Size(264, 27);
+            txtNamaLahanJadwalFarmer.TabIndex = 33;
+            // 
+            // txtJumlahDItanamJadwalFarmer
+            // 
+            txtJumlahDItanamJadwalFarmer.Location = new Point(732, 79);
+            txtJumlahDItanamJadwalFarmer.Name = "txtJumlahDItanamJadwalFarmer";
+            txtJumlahDItanamJadwalFarmer.Size = new Size(264, 27);
+            txtJumlahDItanamJadwalFarmer.TabIndex = 32;
+            // 
+            // txtStatusJadwalFarmer
+            // 
+            txtStatusJadwalFarmer.Location = new Point(179, 172);
+            txtStatusJadwalFarmer.Name = "txtStatusJadwalFarmer";
+            txtStatusJadwalFarmer.Size = new Size(324, 27);
+            txtStatusJadwalFarmer.TabIndex = 31;
+            // 
+            // txtKeteranganJadwalFarmer
+            // 
+            txtKeteranganJadwalFarmer.Location = new Point(179, 237);
+            txtKeteranganJadwalFarmer.Name = "txtKeteranganJadwalFarmer";
+            txtKeteranganJadwalFarmer.Size = new Size(324, 27);
+            txtKeteranganJadwalFarmer.TabIndex = 30;
+            // 
+            // txtBanyakAnggotaJadwalFarmer
+            // 
+            txtBanyakAnggotaJadwalFarmer.Location = new Point(179, 300);
+            txtBanyakAnggotaJadwalFarmer.Name = "txtBanyakAnggotaJadwalFarmer";
+            txtBanyakAnggotaJadwalFarmer.Size = new Size(324, 27);
+            txtBanyakAnggotaJadwalFarmer.TabIndex = 29;
+            // 
+            // txtTanamanJadwalFarmer
+            // 
+            txtTanamanJadwalFarmer.Location = new Point(179, 76);
+            txtTanamanJadwalFarmer.Name = "txtTanamanJadwalFarmer";
+            txtTanamanJadwalFarmer.Size = new Size(324, 27);
+            txtTanamanJadwalFarmer.TabIndex = 28;
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(72, 122);
+            label34.Name = "label34";
+            label34.Size = new Size(88, 20);
+            label34.TabIndex = 27;
+            label34.Text = "Total Upah :";
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Location = new Point(636, 162);
+            label32.Name = "label32";
+            label32.Size = new Size(72, 20);
+            label32.TabIndex = 25;
+            label32.Text = "Id Lahan :";
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Location = new Point(585, 83);
+            label30.Name = "label30";
+            label30.Size = new Size(123, 20);
+            label30.TabIndex = 23;
+            label30.Text = "Jumlah Ditanam :";
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Location = new Point(41, 76);
+            label28.Name = "label28";
+            label28.Size = new Size(119, 20);
+            label28.TabIndex = 21;
+            label28.Text = "Nama Tanaman :";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new Point(609, 126);
+            label26.Name = "label26";
+            label26.Size = new Size(99, 20);
+            label26.TabIndex = 19;
+            label26.Text = "Nama Lahan :";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(57, 172);
+            label24.Name = "label24";
+            label24.Size = new Size(103, 20);
+            label24.TabIndex = 17;
+            label24.Text = "status Jadwal :";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(218, 237);
+            label23.Name = "label23";
+            label23.Size = new Size(0, 20);
+            label23.TabIndex = 16;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(35, 303);
+            label22.Name = "label22";
+            label22.Size = new Size(125, 20);
+            label22.TabIndex = 15;
+            label22.Text = "Banyak Anggota :";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(19, 230);
+            label20.Name = "label20";
+            label20.Size = new Size(141, 20);
+            label20.TabIndex = 13;
+            label20.Text = "Keterangan Jadwal :";
+            // 
+            // lbTanggalJadwalFarmer
+            // 
+            lbTanggalJadwalFarmer.AutoSize = true;
+            lbTanggalJadwalFarmer.Location = new Point(820, 7);
+            lbTanggalJadwalFarmer.Name = "lbTanggalJadwalFarmer";
+            lbTanggalJadwalFarmer.Size = new Size(58, 20);
+            lbTanggalJadwalFarmer.TabIndex = 12;
+            lbTanggalJadwalFarmer.Text = "label19";
+            // 
+            // l
+            // 
+            l.AutoSize = true;
+            l.Location = new Point(666, 7);
+            l.Name = "l";
+            l.Size = new Size(117, 20);
+            l.TabIndex = 11;
+            l.Text = "Tanggal Jadwal :";
+            // 
+            // lbIdJadwalFarmer
+            // 
+            lbIdJadwalFarmer.AutoSize = true;
+            lbIdJadwalFarmer.Location = new Point(179, 49);
+            lbIdJadwalFarmer.Name = "lbIdJadwalFarmer";
+            lbIdJadwalFarmer.Size = new Size(58, 20);
+            lbIdJadwalFarmer.TabIndex = 10;
+            lbIdJadwalFarmer.Text = "label17";
+            // 
+            // IDJadwal
+            // 
+            IDJadwal.AutoSize = true;
+            IDJadwal.Location = new Point(84, 49);
+            IDJadwal.Name = "IDJadwal";
+            IDJadwal.Size = new Size(76, 20);
+            IDJadwal.TabIndex = 9;
+            IDJadwal.Text = "ID Jadwal:";
+            // 
+            // btKembaliJadwalFarmer
+            // 
+            btKembaliJadwalFarmer.Location = new Point(10, 2);
+            btKembaliJadwalFarmer.Name = "btKembaliJadwalFarmer";
+            btKembaliJadwalFarmer.Size = new Size(94, 38);
+            btKembaliJadwalFarmer.TabIndex = 8;
+            btKembaliJadwalFarmer.Text = "BACK";
+            btKembaliJadwalFarmer.UseVisualStyleBackColor = true;
+            btKembaliJadwalFarmer.Click += btKembaliJadwalFarmer_Click;
             // 
             // panelPilihanJadwal
             // 
@@ -1319,65 +1600,6 @@
             dgvLainnya.CellContentClick += dgvLaporan_CellContentClick;
             dgvLainnya.CellDoubleClick += dgvLainnya_CellDoubleClick;
             // 
-            // panelKaryawan
-            // 
-            panelKaryawan.Controls.Add(txtCariKaryawan);
-            panelKaryawan.Controls.Add(label1);
-            panelKaryawan.Controls.Add(btnTambahKaryawan);
-            panelKaryawan.Controls.Add(btnEditKaryawan);
-            panelKaryawan.Controls.Add(dgvKaryawan);
-            panelKaryawan.Dock = DockStyle.Fill;
-            panelKaryawan.Location = new Point(0, 0);
-            panelKaryawan.Name = "panelKaryawan";
-            panelKaryawan.Size = new Size(1037, 380);
-            panelKaryawan.TabIndex = 0;
-            // 
-            // txtCariKaryawan
-            // 
-            txtCariKaryawan.Location = new Point(900, 10);
-            txtCariKaryawan.Name = "txtCariKaryawan";
-            txtCariKaryawan.Size = new Size(125, 27);
-            txtCariKaryawan.TabIndex = 7;
-            txtCariKaryawan.TextChanged += textBox1_TextChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(13, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(132, 20);
-            label1.TabIndex = 3;
-            label1.Text = "TABEL KARYAWAN";
-            // 
-            // btnTambahKaryawan
-            // 
-            btnTambahKaryawan.Location = new Point(168, 6);
-            btnTambahKaryawan.Name = "btnTambahKaryawan";
-            btnTambahKaryawan.Size = new Size(94, 38);
-            btnTambahKaryawan.TabIndex = 2;
-            btnTambahKaryawan.Text = "ADD";
-            btnTambahKaryawan.UseVisualStyleBackColor = true;
-            btnTambahKaryawan.Click += btnTambahKaryawan_Click;
-            // 
-            // btnEditKaryawan
-            // 
-            btnEditKaryawan.Location = new Point(278, 6);
-            btnEditKaryawan.Name = "btnEditKaryawan";
-            btnEditKaryawan.Size = new Size(94, 38);
-            btnEditKaryawan.TabIndex = 1;
-            btnEditKaryawan.Text = "DETAIL";
-            btnEditKaryawan.UseVisualStyleBackColor = true;
-            btnEditKaryawan.Click += btnEditKaryawan_Click;
-            // 
-            // dgvKaryawan
-            // 
-            dgvKaryawan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKaryawan.Location = new Point(3, 50);
-            dgvKaryawan.Name = "dgvKaryawan";
-            dgvKaryawan.RowHeadersWidth = 51;
-            dgvKaryawan.Size = new Size(1031, 330);
-            dgvKaryawan.TabIndex = 0;
-            // 
             // panelLahan
             // 
             panelLahan.Controls.Add(txtCariLahan);
@@ -1625,7 +1847,7 @@
             // dgvJadwal
             // 
             dgvJadwal.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvJadwal.Location = new Point(3, 53);
+            dgvJadwal.Location = new Point(4, 48);
             dgvJadwal.Name = "dgvJadwal";
             dgvJadwal.RowHeadersWidth = 51;
             dgvJadwal.Size = new Size(1031, 330);
@@ -1694,217 +1916,6 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // panelDetailKaryawan
-            // 
-            panelDetailKaryawan.Controls.Add(btEdit);
-            panelDetailKaryawan.Controls.Add(btBack);
-            panelDetailKaryawan.Controls.Add(lbPassword);
-            panelDetailKaryawan.Controls.Add(lbUsername);
-            panelDetailKaryawan.Controls.Add(lbSaldo);
-            panelDetailKaryawan.Controls.Add(lbRole);
-            panelDetailKaryawan.Controls.Add(label12);
-            panelDetailKaryawan.Controls.Add(lbTanggalLahir);
-            panelDetailKaryawan.Controls.Add(label9);
-            panelDetailKaryawan.Controls.Add(label8);
-            panelDetailKaryawan.Controls.Add(lbStatusKerja);
-            panelDetailKaryawan.Controls.Add(label16);
-            panelDetailKaryawan.Controls.Add(label15);
-            panelDetailKaryawan.Controls.Add(label14);
-            panelDetailKaryawan.Controls.Add(TanggalLahir);
-            panelDetailKaryawan.Controls.Add(lbID);
-            panelDetailKaryawan.Controls.Add(label11);
-            panelDetailKaryawan.Controls.Add(lbEmail);
-            panelDetailKaryawan.Controls.Add(lbNOTELP);
-            panelDetailKaryawan.Controls.Add(lbNama);
-            panelDetailKaryawan.Location = new Point(0, 0);
-            panelDetailKaryawan.Name = "panelDetailKaryawan";
-            panelDetailKaryawan.Size = new Size(1037, 377);
-            panelDetailKaryawan.TabIndex = 4;
-            panelDetailKaryawan.Visible = false;
-            // 
-            // btEdit
-            // 
-            btEdit.Location = new Point(158, 15);
-            btEdit.Name = "btEdit";
-            btEdit.Size = new Size(94, 29);
-            btEdit.TabIndex = 19;
-            btEdit.Text = "Edit";
-            btEdit.UseVisualStyleBackColor = true;
-            btEdit.Click += btEdit_Click;
-            // 
-            // btBack
-            // 
-            btBack.Location = new Point(22, 15);
-            btBack.Name = "btBack";
-            btBack.Size = new Size(94, 29);
-            btBack.TabIndex = 18;
-            btBack.Text = "Kembali";
-            btBack.UseVisualStyleBackColor = true;
-            btBack.Click += btBack_Click;
-            // 
-            // lbPassword
-            // 
-            lbPassword.AutoSize = true;
-            lbPassword.Location = new Point(816, 323);
-            lbPassword.Name = "lbPassword";
-            lbPassword.Size = new Size(70, 20);
-            lbPassword.TabIndex = 17;
-            lbPassword.Text = "Password";
-            // 
-            // lbUsername
-            // 
-            lbUsername.AutoSize = true;
-            lbUsername.Location = new Point(816, 264);
-            lbUsername.Name = "lbUsername";
-            lbUsername.Size = new Size(75, 20);
-            lbUsername.TabIndex = 16;
-            lbUsername.Text = "Username";
-            // 
-            // lbSaldo
-            // 
-            lbSaldo.AutoSize = true;
-            lbSaldo.Location = new Point(816, 200);
-            lbSaldo.Name = "lbSaldo";
-            lbSaldo.Size = new Size(47, 20);
-            lbSaldo.TabIndex = 15;
-            lbSaldo.Text = "Saldo";
-            // 
-            // lbRole
-            // 
-            lbRole.AutoSize = true;
-            lbRole.Location = new Point(816, 149);
-            lbRole.Name = "lbRole";
-            lbRole.Size = new Size(39, 20);
-            lbRole.TabIndex = 14;
-            lbRole.Text = "Role";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(95, 323);
-            label12.Name = "label12";
-            label12.Size = new Size(94, 20);
-            label12.TabIndex = 13;
-            label12.Text = "Status Kerja :";
-            // 
-            // lbTanggalLahir
-            // 
-            lbTanggalLahir.AutoSize = true;
-            lbTanggalLahir.Location = new Point(95, 264);
-            lbTanggalLahir.Name = "lbTanggalLahir";
-            lbTanggalLahir.Size = new Size(104, 20);
-            lbTanggalLahir.TabIndex = 12;
-            lbTanggalLahir.Text = "Tanggal Lahir :";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(95, 200);
-            label9.Name = "label9";
-            label9.Size = new Size(53, 20);
-            label9.TabIndex = 11;
-            label9.Text = "Email :";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(95, 149);
-            label8.Name = "label8";
-            label8.Size = new Size(94, 20);
-            label8.TabIndex = 10;
-            label8.Text = "Nomer Telp :";
-            // 
-            // lbStatusKerja
-            // 
-            lbStatusKerja.AutoSize = true;
-            lbStatusKerja.Location = new Point(225, 323);
-            lbStatusKerja.Name = "lbStatusKerja";
-            lbStatusKerja.Size = new Size(87, 20);
-            lbStatusKerja.TabIndex = 9;
-            lbStatusKerja.Text = "Status Kerja";
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(681, 200);
-            label16.Name = "label16";
-            label16.Size = new Size(54, 20);
-            label16.TabIndex = 8;
-            label16.Text = "Saldo :";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(681, 149);
-            label15.Name = "label15";
-            label15.Size = new Size(90, 20);
-            label15.TabIndex = 7;
-            label15.Text = "Nama Role :";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(681, 264);
-            label14.Name = "label14";
-            label14.Size = new Size(82, 20);
-            label14.TabIndex = 6;
-            label14.Text = "Username :";
-            // 
-            // TanggalLahir
-            // 
-            TanggalLahir.AutoSize = true;
-            TanggalLahir.Location = new Point(225, 264);
-            TanggalLahir.Name = "TanggalLahir";
-            TanggalLahir.Size = new Size(93, 20);
-            TanggalLahir.TabIndex = 5;
-            TanggalLahir.Text = "TanggalLahir";
-            // 
-            // lbID
-            // 
-            lbID.AutoSize = true;
-            lbID.Location = new Point(382, 94);
-            lbID.Name = "lbID";
-            lbID.Size = new Size(22, 20);
-            lbID.TabIndex = 4;
-            lbID.Text = "id";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(681, 323);
-            label11.Name = "label11";
-            label11.Size = new Size(77, 20);
-            label11.TabIndex = 3;
-            label11.Text = "Password :";
-            // 
-            // lbEmail
-            // 
-            lbEmail.AutoSize = true;
-            lbEmail.Location = new Point(225, 200);
-            lbEmail.Name = "lbEmail";
-            lbEmail.Size = new Size(46, 20);
-            lbEmail.TabIndex = 2;
-            lbEmail.Text = "Email";
-            // 
-            // lbNOTELP
-            // 
-            lbNOTELP.AutoSize = true;
-            lbNOTELP.Location = new Point(225, 149);
-            lbNOTELP.Name = "lbNOTELP";
-            lbNOTELP.Size = new Size(54, 20);
-            lbNOTELP.TabIndex = 1;
-            lbNOTELP.Text = "noTelp";
-            // 
-            // lbNama
-            // 
-            lbNama.AutoSize = true;
-            lbNama.Font = new Font("Segoe UI Black", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbNama.Location = new Point(429, 80);
-            lbNama.Name = "lbNama";
-            lbNama.Size = new Size(99, 38);
-            lbNama.TabIndex = 0;
-            lbNama.Text = "Nama";
-            // 
             // FormOwner
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1921,12 +1932,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelBottom.ResumeLayout(false);
             panelMiddle.ResumeLayout(false);
-            panelDetailJadwalFarmer.ResumeLayout(false);
-            panelDetailJadwalFarmer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).EndInit();
+            panelDetailKaryawan.ResumeLayout(false);
+            panelDetailKaryawan.PerformLayout();
+            panelKaryawan.ResumeLayout(false);
+            panelKaryawan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).EndInit();
             panelDetailJadwalPengantar.ResumeLayout(false);
             panelDetailJadwalPengantar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGKeranjangBelanja).EndInit();
+            panelDetailJadwalFarmer.ResumeLayout(false);
+            panelDetailJadwalFarmer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGAnggotaJadwalFarmer).EndInit();
             panelPilihanJadwal.ResumeLayout(false);
             panelPilihanJadwal.PerformLayout();
             panelLainnya.ResumeLayout(false);
@@ -1936,9 +1952,6 @@
             panelDetailLaporan.ResumeLayout(false);
             panelDetailLaporan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLainnya).EndInit();
-            panelKaryawan.ResumeLayout(false);
-            panelKaryawan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvKaryawan).EndInit();
             panelLahan.ResumeLayout(false);
             panelLahan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLahan).EndInit();
@@ -1953,8 +1966,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvJadwal).EndInit();
             panelPilihanJadwalFarmer.ResumeLayout(false);
             panelPilihanJadwalFarmer.PerformLayout();
-            panelDetailKaryawan.ResumeLayout(false);
-            panelDetailKaryawan.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2127,5 +2138,6 @@
         private TextBox txtCariKaryawan;
         private TextBox txtCariPelanggan;
         private TextBox txtCariLahan;
+        private Label label48;
     }
 }
