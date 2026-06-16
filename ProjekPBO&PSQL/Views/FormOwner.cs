@@ -160,7 +160,7 @@ namespace ProjekPBO_PSQL.Views
             FormTambahKaryawan popUpTambah = new FormTambahKaryawan();
             this.Hide();
             DialogResult hasil = popUpTambah.ShowDialog();
-            this.Close();
+            this.Show();
             if (hasil == DialogResult.OK)
             {
                 List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
@@ -760,7 +760,7 @@ namespace ProjekPBO_PSQL.Views
             PindahPanel(panelJadwal, "Jadwal");
             try
             {
-                DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwnerHariIni();
+                DataTable dtJadwal = ControllersJadwal.GetAllJadwalOwner();
                 dgvJadwal.DataSource = dtJadwal;
                 dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 if (dgvJadwal.Columns.Contains("id_jadwal"))

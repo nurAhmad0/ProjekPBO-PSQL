@@ -1,6 +1,6 @@
 ﻿namespace ProjekPBO_PSQL.Views
 {
-    partial class FormFarmer
+    partial class FormKaryawan
     {
         /// <summary>
         /// Required designer variable.

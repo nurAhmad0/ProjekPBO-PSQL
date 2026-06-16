@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProjekPBO_PSQL.Views
 {
-    public partial class FormFarmer : Form
+    public partial class FormKaryawan : Form
     {
         OrangController controllersOrang = new OrangController();
         JadwalController controllersJadwal = new JadwalController();
@@ -20,7 +20,7 @@ namespace ProjekPBO_PSQL.Views
         int idKaryawan;
         Orang Karyawan;
         int idRole;
-        public FormFarmer(int idKaryawan, int idRole)
+        public FormKaryawan(int idKaryawan, int idRole)
         {
             InitializeComponent();
             this.idKaryawan = idKaryawan;

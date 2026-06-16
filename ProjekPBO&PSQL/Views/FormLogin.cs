@@ -59,7 +59,7 @@ namespace ProjekPBO_PSQL
 
                     case 2:
                         MessageBox.Show("Login Berhasil! Selamat Datang Farmer.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        FormFarmer formFarmer = new FormFarmer(idAnggota, idrole);
+                        FormKaryawan formFarmer = new FormKaryawan(idAnggota, idrole);
                         this.Hide();
                         formFarmer.ShowDialog();
                         txtUsername.Clear();
@@ -69,7 +69,7 @@ namespace ProjekPBO_PSQL
 
                     case 3:
                         MessageBox.Show("Login Berhasil! Selamat Datang Karyawan.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        FormFarmer formPengantar = new FormFarmer(idAnggota, idrole);
+                        FormKaryawan formPengantar = new FormKaryawan(idAnggota, idrole);
                         this.Hide();
                         formPengantar.ShowDialog();
                         txtUsername.Clear();
