@@ -39,24 +39,46 @@ namespace ProjekPBO_PSQL
 
             Tuple<int, int> hasilLogin = Controller.LoginOtentikasi(Username, Password);
 
-            int idAnggota = hasilLogin.Item1;    
+            int idAnggota = hasilLogin.Item1;
             int idrole = hasilLogin.Item2;
 
             if (idAnggota > 0)
             {
-                MessageBox.Show($"Login Berhasil! Selamat Datang.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 switch (idrole)
                 {
                     case 1:
+                        MessageBox.Show("Login Berhasil! Selamat Datang Owner.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         FormOwner formOwner = new FormOwner(idAnggota);
+                        formOwner.FormClosed += (s, args) => this.Close(); 
                         formOwner.Show();
+                        this.Hide(); 
                         break;
 
-                    
+                    case 2:
+                        MessageBox.Show("Login Berhasil! Selamat Datang Farmer.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FormFarmer formFarmer = new FormFarmer(idAnggota, idrole);
+                        this.Hide();
+                        formFarmer.ShowDialog();
+                        txtUsername.Clear();
+                        txtPassword.Clear();
+                        this.Show();
+                        break;
+
+                    case 3:
+                        MessageBox.Show("Login Berhasil! Selamat Datang Farmer.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FormFarmer formPengantar = new FormFarmer(idAnggota, idrole);
+                        formPengantar.FormClosed += (s, args) => this.Close();
+                        formPengantar.Show();
+                        this.Hide();
+                        break;
+
+                    default:
+                        MessageBox.Show("Role akun Anda tidak dikenali oleh sistem!", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        break;
                 }
 
-                this.Hide();
+                
             }
         }
     }

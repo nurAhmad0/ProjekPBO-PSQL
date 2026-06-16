@@ -20,7 +20,7 @@ namespace ProjekPBO_PSQL.Controllers
 
         public static bool ApakahAngka(string input)
         {
-            if (!int.TryParse(input, out _))
+            if (!long.TryParse(input, out _))
             {
                 return false;
             }
@@ -86,6 +86,13 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 return false;
             }
+        }
+
+        public static bool ApakahHurufAngkaDanSpasi(string input)
+        {
+
+            if (string.IsNullOrEmpty(input)) return false;
+            return input.All(ch => char.IsLetterOrDigit(ch) || char.IsWhiteSpace(ch));
         }
     }
 }

@@ -15,25 +15,6 @@ namespace ProjekPBO_PSQL.Controllers
             return Context.getAllLaporan();
         }
 
-        public List<Laporan> getAllLaporanHariIni()
-        {
-            List<Laporan> DataLaporan = new List<Laporan>();
-            List<Laporan> laporan = Context.getAllLaporan();
-
-            DateTime TanggalSekarang = DateTime.Today;
-
-            foreach (var L in laporan)
-            {
-
-                if (L.getWaktuLapor().Date == TanggalSekarang)
-                {
-                    DataLaporan.Add(L);
-                }
-            }
-
-            return DataLaporan;
-        }
-
         public bool TambahLaporan(Laporan laporan)
         {
 
@@ -45,6 +26,23 @@ namespace ProjekPBO_PSQL.Controllers
 
             
             return Context.ADDLaporan(laporan);
+        }
+
+        public bool DeleteLaporan(int id)
+        {
+            bool isSucces = false;
+            try
+            {
+
+                isSucces = Context.DelateLaporan(id);
+            }
+            catch
+            {
+                MessageBox.Show("gagal Hapus Laporan", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                isSucces = false;
+            }
+
+            return isSucces;
         }
     }
 }

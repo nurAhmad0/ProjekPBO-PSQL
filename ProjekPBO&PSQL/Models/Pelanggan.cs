@@ -67,6 +67,9 @@ namespace ProjekPBO_PSQL.Models
             {
                 return "Alamat Tidak Ada";
             }
-        }
+        }    
+
+        public string namaPelanggan => this.NamePelanggan;
+        public int idPelanggan => this.IdPelanggan;
     }
 }

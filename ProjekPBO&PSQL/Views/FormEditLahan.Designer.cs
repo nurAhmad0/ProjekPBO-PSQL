@@ -30,7 +30,6 @@
         {
             panel1 = new Panel();
             cbStatusLahan = new ComboBox();
-            btnHapus = new Button();
             txtNamaLahan = new TextBox();
             btnUpdate = new Button();
             txtLuasLahan = new TextBox();
@@ -47,7 +46,6 @@
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
             panel1.Controls.Add(cbStatusLahan);
-            panel1.Controls.Add(btnHapus);
             panel1.Controls.Add(txtNamaLahan);
             panel1.Controls.Add(btnUpdate);
             panel1.Controls.Add(txtLuasLahan);
@@ -70,16 +68,6 @@
             cbStatusLahan.Name = "cbStatusLahan";
             cbStatusLahan.Size = new Size(310, 28);
             cbStatusLahan.TabIndex = 28;
-            // 
-            // btnHapus
-            // 
-            btnHapus.BackColor = Color.FromArgb(255, 128, 128);
-            btnHapus.Location = new Point(805, 463);
-            btnHapus.Name = "btnHapus";
-            btnHapus.Size = new Size(126, 29);
-            btnHapus.TabIndex = 26;
-            btnHapus.Text = "HAPUS BARIS";
-            btnHapus.UseVisualStyleBackColor = false;
             // 
             // txtNamaLahan
             // 
@@ -178,7 +166,6 @@
         private Panel panel1;
         private Button btnBatal;
         private Label label10;
-        private Button btnHapus;
         private Button btnUpdate;
         public ComboBox cbStatusLahan;
         public TextBox txtNamaLahan;

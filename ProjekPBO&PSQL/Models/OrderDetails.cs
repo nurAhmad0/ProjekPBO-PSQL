@@ -11,19 +11,25 @@ namespace ProjekPBO_PSQL.Models
         private decimal JumlahOrder;
         private int idOrder;
         private int IDTanaman;
+        private string namaTanaman;
 
-        public OrderDetails(int IDOrderDetails, decimal Harga, decimal JumlahOrder, int idOrder, int IDTanaman)
+        public OrderDetails(int IDOrderDetails, decimal Harga, decimal JumlahOrder, int idOrder, int IDTanaman, string namatanaman)
         {
             this.IDOrderDetails = IDOrderDetails;
             this.Harga = Harga;
             this.JumlahOrder = JumlahOrder;
             this.idOrder = idOrder;
             this.IDTanaman = IDTanaman;
+            this.namaTanaman = namatanaman;
         }
 
         public int getIDOrderDetails()
         {
             return this.IDOrderDetails;
+        }
+        public string getNamaTanaman()
+        {
+            return this.namaTanaman;
         }
 
         public decimal getHarga()

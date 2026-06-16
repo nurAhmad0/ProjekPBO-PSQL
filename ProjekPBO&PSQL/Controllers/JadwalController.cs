@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ProjekPBO_PSQL.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using ProjekPBO_PSQL.Models;
-using System.Windows.Forms;
 using System.Data;
+using System.Text;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProjekPBO_PSQL.Controllers
 {
@@ -37,14 +38,13 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalFarmer> GetAllJadwalFarmer(int id) //memasukkan id dari farmer
+        public JadwalFarmer? GetAllJadwalFarmer(int id) //memasukkan id dari farmer
         {
-            List<JadwalFarmer> DataJadwalFarmer = new List<JadwalFarmer>();
             if (id <= 0)
             {
                 
                 MessageBox.Show("ID Jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return DataJadwalFarmer;
+                return null;
             }
             
             return Context.GetALLJadwalFarmer(id);
@@ -59,14 +59,13 @@ namespace ProjekPBO_PSQL.Controllers
 
         }
 
-        public List<JadwalPengantaran> GetAllJadwalPengantaran(int id) //buat detail
+        public JadwalPengantaran? GetAllJadwalPengantaran(int id) //buat detail
         {
-            List<JadwalPengantaran> DataJadwalPengantaran = new List<JadwalPengantaran>();
             if (id <= 0)
             {
 
                 MessageBox.Show("ID jadwal tidak valid", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return DataJadwalPengantaran;
+                return null;
             }
 
             return Context.GetALLJadwalPengataran(id);
@@ -141,6 +140,22 @@ namespace ProjekPBO_PSQL.Controllers
             {
                 
                 isSucces = Context.UPDATEJadwal(jadwal, status);
+            }
+            catch
+            {
+                return isSucces;
+            }
+
+            return isSucces;
+        }
+
+        public bool TambahDetailJadwal (int idKaryawan, int idjadwal)
+        {
+            bool isSucces = false;
+            try
+            {
+
+                isSucces = Context.ADDDetailJadwal(idKaryawan,idjadwal);
             }
             catch
             {

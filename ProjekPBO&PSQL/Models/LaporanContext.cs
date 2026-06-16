@@ -15,7 +15,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT l.id_laporan, l.isi_laporan, l.waktu_lapor, l.id_jadwal, l.id_anggota, j.keterangan_kegiatan, ap.nama_anggota, j.tanggal AS tanggal_jadwal FROM laporan_jadwal l INNER JOIN jadwal j ON l.id_jadwal = j.id_jadwal INNER JOIN anggota_perusahaan ap ON l.id_anggota = ap.id_anggota;", conn);
+                using var query1 = new NpgsqlCommand("SELECT l.id_laporan, l.isi_laporan, l.waktu_lapor, l.id_jadwal, l.id_anggota, j.keterangan_kegiatan, ap.nama_anggota, j.tanggal AS tanggal_jadwal FROM laporan_jadwal l INNER JOIN jadwal j ON l.id_jadwal = j.id_jadwal INNER JOIN anggota_perusahaan ap ON l.id_anggota = ap.id_anggota order by l.waktu_lapor desc;", conn);
                 using var reader = query1.ExecuteReader();
                 while (reader.Read())
                 {

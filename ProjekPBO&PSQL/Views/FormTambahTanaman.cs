@@ -30,7 +30,7 @@ namespace ProjekPBO_PSQL.Views
                 txtNamaTanaman.Focus();
                 return;
             }
-            if (!Validator.ApakahHanyaHurufDanSpasi(txtNamaTanaman.Text))
+            if (!Validator.ApakahHurufAngkaDanSpasi(txtNamaTanaman.Text))
             {
                 MessageBox.Show("Nama tanaman hanya boleh berisi huruf dan spasi!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNamaTanaman.Focus();
@@ -104,6 +104,9 @@ namespace ProjekPBO_PSQL.Views
                     txtNamaTanaman.Clear();
                     txtHargaTanaman.Clear();
                     txtDurasiPanen.Clear();
+                    DialogResult = DialogResult.OK;
+                    this.Close();
+
                 }
                 else
                 {
