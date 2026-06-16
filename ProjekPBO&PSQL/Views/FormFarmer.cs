@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection.Emit;
 using System.Text;
 using System.Windows.Forms;
 
@@ -36,6 +37,8 @@ namespace ProjekPBO_PSQL.Views
             }
             lblNama.Text = Karyawan.getName();
             lbSaldo.Text = Karyawan.getSaldo().ToString("N0");
+            DateTime tanggalSekarang = DateTime.Today;
+            lblTanggal.Text = tanggalSekarang.ToString("dd MMMM yyyy");
             PindahPanel(panelJadwal, "Jadwal");
         }
         private void FormFarmer_Load(object sender, EventArgs e)
@@ -551,6 +554,32 @@ namespace ProjekPBO_PSQL.Views
                 txtNoRek.Enabled = true;
                 txtAtasNamaPenarikan.Enabled = false;
                 txtAtasNamaPenarikan.Clear();
+            }
+        }
+
+        private void btKembaliPenarikan_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelPenarikan, "Penarikan Saldo");
+        }
+
+        private void btLOGOUT_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                Orang ownerPilihan = controllersOrang.Cari(idKaryawan)!;
+                if (ownerPilihan != null)
+                {
+                    lbSaldo.Text = ownerPilihan.getSaldo().ToString("N0");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

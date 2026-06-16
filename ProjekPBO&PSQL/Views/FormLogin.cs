@@ -50,9 +50,11 @@ namespace ProjekPBO_PSQL
                     case 1:
                         MessageBox.Show("Login Berhasil! Selamat Datang Owner.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         FormOwner formOwner = new FormOwner(idAnggota);
-                        formOwner.FormClosed += (s, args) => this.Close(); 
-                        formOwner.Show();
-                        this.Hide(); 
+                        this.Hide();
+                        formOwner.ShowDialog(); 
+                        txtUsername.Clear();
+                        txtPassword.Clear();
+                        this.Show();
                         break;
 
                     case 2:
@@ -66,11 +68,13 @@ namespace ProjekPBO_PSQL
                         break;
 
                     case 3:
-                        MessageBox.Show("Login Berhasil! Selamat Datang Farmer.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Login Berhasil! Selamat Datang Karyawan.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         FormFarmer formPengantar = new FormFarmer(idAnggota, idrole);
-                        formPengantar.FormClosed += (s, args) => this.Close();
-                        formPengantar.Show();
                         this.Hide();
+                        formPengantar.ShowDialog();
+                        txtUsername.Clear();
+                        txtPassword.Clear();
+                        this.Show();
                         break;
 
                     default:

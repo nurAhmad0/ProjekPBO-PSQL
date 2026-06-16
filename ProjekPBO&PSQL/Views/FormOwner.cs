@@ -30,6 +30,8 @@ namespace ProjekPBO_PSQL.Views
 
             label7.Text = owner.getSaldo().ToString("N0");
             lblNama.Text = owner.getUsername();
+            DateTime TanggalSekarang = DateTime.Today;
+            lblTanggal.Text = TanggalSekarang.ToString("dd MMMM yyyy");
             PindahPanel(panelKaryawan, "karyawan");
             List<Orang> listAsli = ControllersOrang.GetAllKaryawan();
             var dataUntukGrid = listAsli.Select(o => new
@@ -1027,7 +1029,7 @@ namespace ProjekPBO_PSQL.Views
                         dgvJadwal.Columns["banyaknya_anggota"]!.HeaderText = "Jumlah Pekerja";
                         dgvJadwal.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
                         dgvJadwal.Columns["status_global"]!.HeaderText = "Status";
-                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0"; 
+                        dgvJadwal.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
                     }
                     btSimpanEditPengantar.Visible = false;
                     btSimpanEditPengantar.Enabled = false;
@@ -1500,6 +1502,32 @@ namespace ProjekPBO_PSQL.Views
                 }).ToList();
 
                 dgvLahan.DataSource = dataHasilCariGrid;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void lblTanggal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btLOGOUT_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                Orang ownerPilihan = ControllersOrang.Cari(owner.getIDOrang())!;
+                if (ownerPilihan != null)
+                {
+                    label7.Text = ownerPilihan.getSaldo().ToString("N0");
+                }
             }
             catch (Exception ex)
             {

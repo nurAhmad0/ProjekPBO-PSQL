@@ -28,9 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panelMiddle = new Panel();
+            panelHistoriPenarikan = new Panel();
+            btKembaliPenarikan = new Button();
+            label5 = new Label();
+            dgvHistori = new DataGridView();
             panelPenarikan = new Panel();
             btKonfirmasiPenarikan = new Button();
+            btnHistoriPenarikan = new Button();
             txtNoRek = new TextBox();
             label47 = new Label();
             radioButton2 = new RadioButton();
@@ -41,9 +47,6 @@
             txtAtasNamaPenarikan = new TextBox();
             txtNominalPenarikan = new TextBox();
             panelLaporan = new Panel();
-            dgvLaporan = new DataGridView();
-            label6 = new Label();
-            btnTambahLaporan = new Button();
             btnHapusLaporan = new Button();
             btnTambahLaporan = new Button();
             label6 = new Label();
@@ -62,21 +65,15 @@
             panelJadwlDiterima = new Panel();
             dataGridJadwalDiterima = new DataGridView();
             button1 = new Button();
-            panelHistoriPenarikan = new Panel();
-            label5 = new Label();
-            dgvHistori = new DataGridView();
             panelPenarikanSaldo = new Panel();
-            label3 = new Label();
             btnTarik = new Button();
             txtNominalTarik = new TextBox();
             btnMinus50k = new Button();
             btnPlus100k = new Button();
             btnMinus100k = new Button();
             btnPlus50k = new Button();
-            label1 = new Label();
             panelBottom = new Panel();
             btJadwal = new Button();
-            btnHistoriPenarikan = new Button();
             btnLaporan = new Button();
             btnTarikSaldo = new Button();
             btnJadwal = new Button();
@@ -84,9 +81,13 @@
             lblNama = new Label();
             pictureBox1 = new PictureBox();
             panelTop = new Panel();
+            btLOGOUT = new Button();
             lbSaldo = new Label();
             lblTanggal = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             panelMiddle.SuspendLayout();
+            panelHistoriPenarikan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHistori).BeginInit();
             panelPenarikan.SuspendLayout();
             panelLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).BeginInit();
@@ -95,8 +96,6 @@
             panelBuatLaporan.SuspendLayout();
             panelJadwlDiterima.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridJadwalDiterima).BeginInit();
-            panelHistoriPenarikan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvHistori).BeginInit();
             panelPenarikanSaldo.SuspendLayout();
             panelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -105,12 +104,12 @@
             // 
             // panelMiddle
             // 
+            panelMiddle.Controls.Add(panelHistoriPenarikan);
             panelMiddle.Controls.Add(panelPenarikan);
             panelMiddle.Controls.Add(panelLaporan);
             panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelBuatLaporan);
             panelMiddle.Controls.Add(panelJadwlDiterima);
-            panelMiddle.Controls.Add(panelHistoriPenarikan);
             panelMiddle.Controls.Add(panelPenarikanSaldo);
             panelMiddle.Dock = DockStyle.Fill;
             panelMiddle.Location = new Point(0, 107);
@@ -118,9 +117,50 @@
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 5;
             // 
+            // panelHistoriPenarikan
+            // 
+            panelHistoriPenarikan.Controls.Add(btKembaliPenarikan);
+            panelHistoriPenarikan.Controls.Add(label5);
+            panelHistoriPenarikan.Controls.Add(dgvHistori);
+            panelHistoriPenarikan.Dock = DockStyle.Fill;
+            panelHistoriPenarikan.Location = new Point(0, 0);
+            panelHistoriPenarikan.Name = "panelHistoriPenarikan";
+            panelHistoriPenarikan.Size = new Size(1037, 380);
+            panelHistoriPenarikan.TabIndex = 6;
+            panelHistoriPenarikan.Visible = false;
+            // 
+            // btKembaliPenarikan
+            // 
+            btKembaliPenarikan.Location = new Point(219, 6);
+            btKembaliPenarikan.Name = "btKembaliPenarikan";
+            btKembaliPenarikan.Size = new Size(117, 38);
+            btKembaliPenarikan.TabIndex = 5;
+            btKembaliPenarikan.Text = "Kembali";
+            btKembaliPenarikan.UseVisualStyleBackColor = true;
+            btKembaliPenarikan.Click += btKembaliPenarikan_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(13, 15);
+            label5.Name = "label5";
+            label5.Size = new Size(192, 20);
+            label5.TabIndex = 3;
+            label5.Text = "TABEL HISTORI PENARIKAN";
+            // 
+            // dgvHistori
+            // 
+            dgvHistori.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvHistori.Location = new Point(3, 50);
+            dgvHistori.Name = "dgvHistori";
+            dgvHistori.RowHeadersWidth = 51;
+            dgvHistori.Size = new Size(1031, 330);
+            dgvHistori.TabIndex = 0;
+            // 
             // panelPenarikan
             // 
             panelPenarikan.Controls.Add(btKonfirmasiPenarikan);
+            panelPenarikan.Controls.Add(btnHistoriPenarikan);
             panelPenarikan.Controls.Add(txtNoRek);
             panelPenarikan.Controls.Add(label47);
             panelPenarikan.Controls.Add(radioButton2);
@@ -144,6 +184,17 @@
             btKonfirmasiPenarikan.Text = "Konfirmasi";
             btKonfirmasiPenarikan.UseVisualStyleBackColor = true;
             btKonfirmasiPenarikan.Click += btKonfirmasiPenarikan_Click;
+            // 
+            // btnHistoriPenarikan
+            // 
+            btnHistoriPenarikan.Font = new Font("Segoe UI", 6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnHistoriPenarikan.Location = new Point(46, 311);
+            btnHistoriPenarikan.Name = "btnHistoriPenarikan";
+            btnHistoriPenarikan.Size = new Size(127, 38);
+            btnHistoriPenarikan.TabIndex = 3;
+            btnHistoriPenarikan.Text = "HISTORI";
+            btnHistoriPenarikan.UseVisualStyleBackColor = true;
+            btnHistoriPenarikan.Click += btnNavHistori_Click;
             // 
             // txtNoRek
             // 
@@ -232,9 +283,6 @@
             panelLaporan.Controls.Add(btnTambahLaporan);
             panelLaporan.Controls.Add(label6);
             panelLaporan.Controls.Add(dgvLaporan);
-            panelLaporan.Controls.Add(label6);
-            panelLaporan.Controls.Add(btnTambahLaporan);
-            panelLaporan.Controls.Add(btnHapusLaporan);
             panelLaporan.Dock = DockStyle.Fill;
             panelLaporan.Location = new Point(0, 0);
             panelLaporan.Name = "panelLaporan";
@@ -242,23 +290,16 @@
             panelLaporan.TabIndex = 7;
             panelLaporan.Visible = false;
             // 
-            // dgvLaporan
+            // btnHapusLaporan
             // 
-            dgvLaporan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLaporan.Location = new Point(1, 49);
-            dgvLaporan.Name = "dgvLaporan";
-            dgvLaporan.RowHeadersWidth = 51;
-            dgvLaporan.Size = new Size(1031, 330);
-            dgvLaporan.TabIndex = 0;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(11, 14);
-            label6.Name = "label6";
-            label6.Size = new Size(120, 20);
-            label6.TabIndex = 3;
-            label6.Text = "TABEL LAPORAN";
+            btnHapusLaporan.BackColor = Color.FromArgb(255, 192, 192);
+            btnHapusLaporan.Location = new Point(287, 5);
+            btnHapusLaporan.Name = "btnHapusLaporan";
+            btnHapusLaporan.Size = new Size(94, 38);
+            btnHapusLaporan.TabIndex = 4;
+            btnHapusLaporan.Text = "DELETE";
+            btnHapusLaporan.UseVisualStyleBackColor = false;
+            btnHapusLaporan.Click += btnHapusLaporan_Click;
             // 
             // btnTambahLaporan
             // 
@@ -271,16 +312,23 @@
             btnTambahLaporan.UseVisualStyleBackColor = false;
             btnTambahLaporan.Click += btnTambahLaporan_Click;
             // 
-            // btnHapusLaporan
+            // label6
             // 
-            btnHapusLaporan.BackColor = Color.FromArgb(255, 192, 192);
-            btnHapusLaporan.Location = new Point(287, 5);
-            btnHapusLaporan.Name = "btnHapusLaporan";
-            btnHapusLaporan.Size = new Size(94, 38);
-            btnHapusLaporan.TabIndex = 4;
-            btnHapusLaporan.Text = "DELETE";
-            btnHapusLaporan.UseVisualStyleBackColor = false;
-            btnHapusLaporan.Click += btnHapusLaporan_Click;
+            label6.AutoSize = true;
+            label6.Location = new Point(11, 14);
+            label6.Name = "label6";
+            label6.Size = new Size(120, 20);
+            label6.TabIndex = 3;
+            label6.Text = "TABEL LAPORAN";
+            // 
+            // dgvLaporan
+            // 
+            dgvLaporan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLaporan.Location = new Point(1, 49);
+            dgvLaporan.Name = "dgvLaporan";
+            dgvLaporan.RowHeadersWidth = 51;
+            dgvLaporan.Size = new Size(1031, 330);
+            dgvLaporan.TabIndex = 0;
             // 
             // panelJadwal
             // 
@@ -365,7 +413,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(692, 132);
+            label3.Location = new Point(268, 152);
             label3.Name = "label3";
             label3.Size = new Size(110, 20);
             label3.TabIndex = 2;
@@ -374,7 +422,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(202, 132);
+            label1.Location = new Point(461, 24);
             label1.Name = "label1";
             label1.Size = new Size(86, 20);
             label1.TabIndex = 1;
@@ -419,60 +467,20 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // panelHistoriPenarikan
-            // 
-            panelHistoriPenarikan.Controls.Add(label5);
-            panelHistoriPenarikan.Controls.Add(dgvHistori);
-            panelHistoriPenarikan.Dock = DockStyle.Fill;
-            panelHistoriPenarikan.Location = new Point(0, 0);
-            panelHistoriPenarikan.Name = "panelHistoriPenarikan";
-            panelHistoriPenarikan.Size = new Size(1037, 380);
-            panelHistoriPenarikan.TabIndex = 6;
-            panelHistoriPenarikan.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(13, 15);
-            label5.Name = "label5";
-            label5.Size = new Size(192, 20);
-            label5.TabIndex = 3;
-            label5.Text = "TABEL HISTORI PENARIKAN";
-            // 
-            // dgvHistori
-            // 
-            dgvHistori.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvHistori.Location = new Point(3, 50);
-            dgvHistori.Name = "dgvHistori";
-            dgvHistori.RowHeadersWidth = 51;
-            dgvHistori.Size = new Size(1031, 330);
-            dgvHistori.TabIndex = 0;
-            // 
             // panelPenarikanSaldo
             // 
-            panelPenarikanSaldo.Controls.Add(label3);
             panelPenarikanSaldo.Controls.Add(btnTarik);
             panelPenarikanSaldo.Controls.Add(txtNominalTarik);
             panelPenarikanSaldo.Controls.Add(btnMinus50k);
             panelPenarikanSaldo.Controls.Add(btnPlus100k);
             panelPenarikanSaldo.Controls.Add(btnMinus100k);
             panelPenarikanSaldo.Controls.Add(btnPlus50k);
-            panelPenarikanSaldo.Controls.Add(label1);
             panelPenarikanSaldo.Dock = DockStyle.Fill;
             panelPenarikanSaldo.Location = new Point(0, 0);
             panelPenarikanSaldo.Name = "panelPenarikanSaldo";
             panelPenarikanSaldo.Size = new Size(1037, 380);
             panelPenarikanSaldo.TabIndex = 5;
             panelPenarikanSaldo.Visible = false;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(268, 152);
-            label3.Name = "label3";
-            label3.Size = new Size(30, 20);
-            label3.TabIndex = 9;
-            label3.Text = "Rp.";
             // 
             // btnTarik
             // 
@@ -501,7 +509,6 @@
             btnMinus50k.TabIndex = 7;
             btnMinus50k.Text = "- 50.000";
             btnMinus50k.UseVisualStyleBackColor = true;
-            btnMinus50k.Click += btnMinus50k_Click;
             // 
             // btnPlus100k
             // 
@@ -511,7 +518,6 @@
             btnPlus100k.TabIndex = 6;
             btnPlus100k.Text = "+ 100.000";
             btnPlus100k.UseVisualStyleBackColor = true;
-            btnPlus100k.Click += btnPlus100k_Click;
             // 
             // btnMinus100k
             // 
@@ -531,22 +537,11 @@
             btnPlus50k.TabIndex = 4;
             btnPlus50k.Text = "+ 50.000";
             btnPlus50k.UseVisualStyleBackColor = true;
-            btnPlus50k.Click += btnPlus50k_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(461, 24);
-            label1.Name = "label1";
-            label1.Size = new Size(140, 20);
-            label1.TabIndex = 3;
-            label1.Text = "PENARIKAN SALDO";
             // 
             // panelBottom
             // 
             panelBottom.BackColor = Color.RosyBrown;
             panelBottom.Controls.Add(btJadwal);
-            panelBottom.Controls.Add(btnHistoriPenarikan);
             panelBottom.Controls.Add(btnLaporan);
             panelBottom.Controls.Add(btnTarikSaldo);
             panelBottom.Controls.Add(btnJadwal);
@@ -566,20 +561,9 @@
             btJadwal.UseVisualStyleBackColor = true;
             btJadwal.Click += btJadwal_Click;
             // 
-            // btnHistoriPenarikan
-            // 
-            btnHistoriPenarikan.Font = new Font("Segoe UI", 6F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnHistoriPenarikan.Location = new Point(382, 14);
-            btnHistoriPenarikan.Name = "btnHistoriPenarikan";
-            btnHistoriPenarikan.Size = new Size(127, 38);
-            btnHistoriPenarikan.TabIndex = 3;
-            btnHistoriPenarikan.Text = "HISTORI PENARIKAN";
-            btnHistoriPenarikan.UseVisualStyleBackColor = true;
-            btnHistoriPenarikan.Click += btnNavHistori_Click;
-            // 
             // btnLaporan
             // 
-            btnLaporan.Location = new Point(544, 14);
+            btnLaporan.Location = new Point(381, 16);
             btnLaporan.Name = "btnLaporan";
             btnLaporan.Size = new Size(117, 38);
             btnLaporan.TabIndex = 2;
@@ -599,7 +583,7 @@
             // 
             // btnJadwal
             // 
-            btnJadwal.Location = new Point(685, 16);
+            btnJadwal.Location = new Point(528, 16);
             btnJadwal.Name = "btnJadwal";
             btnJadwal.Size = new Size(117, 38);
             btnJadwal.TabIndex = 0;
@@ -645,6 +629,7 @@
             // panelTop
             // 
             panelTop.BackColor = Color.RosyBrown;
+            panelTop.Controls.Add(btLOGOUT);
             panelTop.Controls.Add(lbSaldo);
             panelTop.Controls.Add(lblTanggal);
             panelTop.Controls.Add(lblSaldo);
@@ -655,6 +640,17 @@
             panelTop.Name = "panelTop";
             panelTop.Size = new Size(1037, 107);
             panelTop.TabIndex = 3;
+            // 
+            // btLOGOUT
+            // 
+            btLOGOUT.BackColor = Color.IndianRed;
+            btLOGOUT.Location = new Point(922, 65);
+            btLOGOUT.Name = "btLOGOUT";
+            btLOGOUT.Size = new Size(94, 29);
+            btLOGOUT.TabIndex = 5;
+            btLOGOUT.Text = "LOG OUT";
+            btLOGOUT.UseVisualStyleBackColor = false;
+            btLOGOUT.Click += btLOGOUT_Click;
             // 
             // lbSaldo
             // 
@@ -676,6 +672,12 @@
             lblTanggal.TabIndex = 3;
             lblTanggal.Text = "yyyy-MM-dd";
             // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 5000;
+            timer1.Tick += timer1_Tick;
+            // 
             // FormFarmer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -688,6 +690,9 @@
             Text = "Form1";
             Load += FormFarmer_Load;
             panelMiddle.ResumeLayout(false);
+            panelHistoriPenarikan.ResumeLayout(false);
+            panelHistoriPenarikan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHistori).EndInit();
             panelPenarikan.ResumeLayout(false);
             panelPenarikan.PerformLayout();
             panelLaporan.ResumeLayout(false);
@@ -700,9 +705,6 @@
             panelBuatLaporan.PerformLayout();
             panelJadwlDiterima.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridJadwalDiterima).EndInit();
-            panelHistoriPenarikan.ResumeLayout(false);
-            panelHistoriPenarikan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvHistori).EndInit();
             panelPenarikanSaldo.ResumeLayout(false);
             panelPenarikanSaldo.PerformLayout();
             panelBottom.ResumeLayout(false);
@@ -727,14 +729,8 @@
         private Button btnHistoriPenarikan;
         private Button btnLaporan;
         private Panel panelPenarikanSaldo;
-        private Label label1;
-        private Button btnPlus50k;
-        private Button btnMinus50k;
-        private Button btnPlus100k;
-        private Button btnMinus100k;
         private TextBox txtNominalTarik;
         private Button btnTarik;
-        private Label label3;
         private Panel panelJadwal;
         private Panel panelHistoriPenarikan;
         private Label label5;
@@ -768,5 +764,12 @@
         private ComboBox cbPilihJadwal;
         private Label label3;
         private Label label1;
+        private Button btnPlus50k;
+        private Button btnMinus50k;
+        private Button btnPlus100k;
+        private Button btnMinus100k;
+        private Button btKembaliPenarikan;
+        private Button btLOGOUT;
+        private System.Windows.Forms.Timer timer1;
     }
 }
