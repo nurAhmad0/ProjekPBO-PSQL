@@ -26,6 +26,7 @@ namespace ProjekPBO_PSQL.Views
             panel2.Visible = false;
             txtTipeJadwal.ReadOnly = true;
         }
+
         private void btnBatal_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -38,7 +39,6 @@ namespace ProjekPBO_PSQL.Views
 
         private void FormTambahJadwal_Load(object sender, EventArgs e)
         {
-
         }
 
         private void IsiComboBoxLahanDanTanaman()
@@ -73,11 +73,12 @@ namespace ProjekPBO_PSQL.Views
             }
         }
 
+        // Validasi Tahap Depan sebelum masuk ke halaman Input Keranjang Belanja
         private void btnTambah_Click(object sender, EventArgs e)
         {
             if (cbPengantar.SelectedIndex == -1 || cbPengantar.SelectedValue == null)
             {
-                MessageBox.Show("Silakan pilih Lahan terlebih dahulu!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Silakan pilih Pengantar terlebih dahulu!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -109,13 +110,10 @@ namespace ProjekPBO_PSQL.Views
             }
 
             panel2.Visible = true;
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -124,18 +122,33 @@ namespace ProjekPBO_PSQL.Views
             panel2.Visible = false;
         }
 
+        // Method Pembantu/Helper khusus untuk menghitung ulang total belanjaan di label
+        private void HitungUlangTotalKeranjang()
+        {
+            decimal totalHargaSemua = 0;
+            foreach (DataGridViewRow row in dataKeranjangBelanja.Rows)
+            {
+                if (row.Cells["colTotal"].Value != null)
+                {
+                    totalHargaSemua += Convert.ToDecimal(row.Cells["colTotal"].Value);
+                }
+            }
+            // Menampilkan string format mata uang yang rapi ke label belanja
+            lbTotalKeranjang.Text = totalHargaSemua.ToString("N0");
+        }
+
         private void btTambahKeranjang_Click(object sender, EventArgs e)
         {
             if (Validator.ApakahKosong(txtJumlahDibeli.Text))
             {
-                MessageBox.Show("Jumlah tanaman yang ditanam tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Jumlah tanaman yang dibeli tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtJumlahDibeli.Focus();
                 return;
             }
 
-            if (!int.TryParse(txtJumlahDibeli.Text.Trim(), out int jumlahDitanam) || jumlahDitanam <= 0)
+            if (!int.TryParse(txtJumlahDibeli.Text.Trim(), out int kuantitasBeli) || kuantitasBeli <= 0)
             {
-                MessageBox.Show("Jumlah ditanam harus berupa angka bulat dan lebih dari 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Jumlah beli harus berupa angka bulat dan lebih dari 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtJumlahDibeli.Focus();
                 return;
             }
@@ -157,15 +170,13 @@ namespace ProjekPBO_PSQL.Views
                 dataKeranjangBelanja.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
 
-
             string nameTanaman = cbTanaman.Text.Trim();
             int idTanaman = (int)cbTanaman.SelectedValue;
+            decimal banyakTanamanDibeli = Convert.ToDecimal(kuantitasBeli);
 
-            decimal BanyakTanamanDibeli = Convert.ToDecimal(txtJumlahDibeli.Text.Trim());
-
-            Tanaman TanamanTerpilih = tanamanController.Cari(idTanaman)!;
-            decimal hargaTanaman = TanamanTerpilih.getHargaTanaman();
-            decimal totalHarga = hargaTanaman * BanyakTanamanDibeli;
+            Tanaman tanamanTerpilih = tanamanController.Cari(idTanaman)!;
+            decimal hargaTanaman = tanamanTerpilih.getHargaTanaman();
+            decimal totalHarga = hargaTanaman * banyakTanamanDibeli;
             bool sudahAda = false;
 
             foreach (DataGridViewRow row in dataKeranjangBelanja.Rows)
@@ -173,9 +184,9 @@ namespace ProjekPBO_PSQL.Views
                 if (row.Cells["colId"].Value != null && Convert.ToInt32(row.Cells["colId"].Value) == idTanaman)
                 {
                     decimal jumlahLama = Convert.ToDecimal(row.Cells["colJumlah"].Value);
-                    decimal jumlahBaru = jumlahLama + BanyakTanamanDibeli;
+                    decimal jumlahBaru = jumlahLama + banyakTanamanDibeli;
                     row.Cells["colJumlah"].Value = jumlahBaru;
-                    row.Cells["colTotal"].Value = Convert.ToDecimal(jumlahBaru) * hargaTanaman;
+                    row.Cells["colTotal"].Value = jumlahBaru * hargaTanaman;
                     sudahAda = true;
                     break;
                 }
@@ -183,18 +194,12 @@ namespace ProjekPBO_PSQL.Views
 
             if (!sudahAda)
             {
-                dataKeranjangBelanja.Rows.Add(idTanaman, nameTanaman, hargaTanaman, BanyakTanamanDibeli, totalHarga);
+                dataKeranjangBelanja.Rows.Add(idTanaman, nameTanaman, hargaTanaman, banyakTanamanDibeli, totalHarga);
             }
 
-            decimal totalHargaSemua = 0;
-
-            foreach (DataGridViewRow row in dataKeranjangBelanja.Rows)
-            {
-                totalHargaSemua += Convert.ToInt32(row.Cells["colJumlah"].Value);
-            }
-
-            lbTotalKeranjang.Text = totalHargaSemua.ToString();
-
+            // Panggil fungsi hitung ulang agar label langsung singkron ter-update
+            HitungUlangTotalKeranjang();
+            txtJumlahDibeli.Clear();
         }
 
         private void btHapus_Click(object sender, EventArgs e)
@@ -213,6 +218,10 @@ namespace ProjekPBO_PSQL.Views
                 {
                     int indexSengklek = dataKeranjangBelanja.CurrentRow.Index;
                     dataKeranjangBelanja.Rows.RemoveAt(indexSengklek);
+
+                    // Panggil fungsi hitung ulang setelah item berhasil dibuang!
+                    HitungUlangTotalKeranjang();
+
                     MessageBox.Show("Item berhasil dihapus dari keranjang.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
@@ -239,6 +248,7 @@ namespace ProjekPBO_PSQL.Views
                     decimal harga = Convert.ToDecimal(row.Cells["colHarga"].Value);
                     decimal jumlah = Convert.ToDecimal(row.Cells["colJumlah"].Value);
                     string namaTanaman = Convert.ToString(row.Cells["colNama"].Value)!;
+
                     OrderDetails detail = new OrderDetails(0, harga, jumlah, 0, idTanaman, namaTanaman);
                     daftarBelanja.Add(detail);
                 }
@@ -249,22 +259,37 @@ namespace ProjekPBO_PSQL.Views
                 MessageBox.Show("Keranjang belanja masih kosong! Silakan tambah tanaman terlebih dahulu.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            bool statusOrder = orderController.simpanOrder(idPengantar, tanggalTerpilih, idPelanggan, daftarBelanja);
-            if (statusOrder == true)
+            int idOrderTerbuat = orderController.simpanOrder(idPengantar, tanggalTerpilih, idPelanggan, daftarBelanja);
+            if (idOrderTerbuat > 0)
             {
-                Order orderData = new Order(0, tanggalTerpilih, idPengantar, idPelanggan);
+                Order orderData = new Order(idOrderTerbuat, tanggalTerpilih, idPengantar, idPelanggan);
                 foreach (OrderDetails od in daftarBelanja)
                 {
                     orderData.getlistOrderdetails().Add(od);
                 }
-                JadwalPengantaran jadwalbaru = new JadwalPengantaran(0,Convert.ToDateTime(dtpTanggal.Text), txtKeterangan.Text, 1, "Belum Dikerjakan", pelangganTerpilih.getNamePelanggan(), pelangganTerpilih.getNO_TELP(), pelangganTerpilih.getDetailAlamat(), idPelanggan, Convert.ToDecimal(txtTotalUpah.Text.Trim()), orderData);
+                decimal.TryParse(txtTotalUpah.Text.Trim(), out decimal upahValid);
+
+                JadwalPengantaran jadwalbaru = new JadwalPengantaran(
+                    0,
+                    tanggalTerpilih,
+                    txtKeterangan.Text.Trim(),
+                    1,
+                    "Belum Dikerjakan",
+                    pelangganTerpilih.getNamePelanggan(),
+                    pelangganTerpilih.getNO_TELP(),
+                    pelangganTerpilih.getDetailAlamat(),
+                    idPelanggan,
+                    upahValid,
+                    orderData
+                );
+
                 int idJadwalBaru = jadwalController.tambahJadwal(jadwalbaru);
                 if (idJadwalBaru > 0)
                 {
                     bool hasil = jadwalController.TambahDetailJadwal(idPengantar, idJadwalBaru);
                     if (hasil)
                     {
+                        MessageBox.Show("Jadwal pengantaran dan rincian transaksi berhasil disimpan ke sistem!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         dataKeranjangBelanja.Rows.Clear();
                         txtKeterangan.Clear();
                         txtTipeJadwal.Clear();
@@ -274,8 +299,8 @@ namespace ProjekPBO_PSQL.Views
                         cbTanaman.SelectedIndex = -1;
                         cbPelanggan.SelectedIndex = -1;
                         cbPengantar.SelectedIndex = -1;
-                        DialogResult = DialogResult.OK;
-                        this.Close();
+
+                        this.DialogResult = DialogResult.OK;
                     }
                     else
                     {

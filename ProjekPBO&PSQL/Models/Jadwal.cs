@@ -67,6 +67,8 @@ namespace ProjekPBO_PSQL.Models
         {
             return TotalUpah;
         }
+
+       
         public void setTanggal(DateTime tanggal)
         {
             this.tanggal = tanggal;

@@ -90,7 +90,7 @@ namespace ProjekPBO_PSQL.Controllers
             if (Validator.ApakahKosong(jadwal.getTipeJadwal()))
             {
                 MessageBox.Show("Tipe Jadwal tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             return Context.ADDJadwal(jadwal);

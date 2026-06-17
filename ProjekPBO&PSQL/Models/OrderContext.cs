@@ -66,51 +66,70 @@ namespace ProjekPBO_PSQL.Models
             return DataOrder;
         }
 
-        public bool SimpanOrder(int idAnggota, DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjangBelanja)
+        public int SimpanOrder(int idAnggota, DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjangBelanja)
         {
             if (keranjangBelanja == null || keranjangBelanja.Count == 0)
             {
                 MessageBox.Show("Keranjang belanja kosong! Tidak ada data untuk disimpan.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             using var conn = DataBaseHelper.GetConnection();
-            NpgsqlTransaction? transaksi = null; 
+            NpgsqlTransaction? transaksi = null;
 
             try
             {
                 conn.Open();
                 transaksi = conn.BeginTransaction();
+
+                // 1. Ambil ID Order Baru dari fungsi buat_order
                 using var cmdOrder = new NpgsqlCommand("SELECT buat_order(@idAnggota, @Tanggal, @idPelanggan);", conn);
                 cmdOrder.Parameters.AddWithValue("@idAnggota", idAnggota);
                 cmdOrder.Parameters.Add("@Tanggal", NpgsqlTypes.NpgsqlDbType.Date).Value = Tanggal.Date;
                 cmdOrder.Parameters.AddWithValue("@idPelanggan", idPelanggan);
+
                 int idOrderBaru = Convert.ToInt32(cmdOrder.ExecuteScalar());
+
+                // 2. Looping isi keranjang untuk dimasukkan ke detail order
                 foreach (OrderDetails OrderD in keranjangBelanja)
                 {
                     using var cmdOrderD = new NpgsqlCommand("CALL tambah_order_details(@idOrder, @idTanaman, @jumlah, @harga);", conn);
 
                     cmdOrderD.Parameters.AddWithValue("@idOrder", idOrderBaru);
                     cmdOrderD.Parameters.AddWithValue("@idTanaman", OrderD.getIDTanaman());
-                    cmdOrderD.Parameters.AddWithValue("@jumlah", OrderD.getJumlahOrder());
-                    cmdOrderD.Parameters.AddWithValue("@harga", OrderD.getHarga());
+
+                    // PERBAIKAN UTAMA: Tegaskan tipe data ke NpgsqlDbType.Numeric agar sinkron dengan NUMERIC(10,2) di Postgres
+                    cmdOrderD.Parameters.Add("@jumlah", NpgsqlTypes.NpgsqlDbType.Numeric).Value = Convert.ToDecimal(OrderD.getJumlahOrder());
+                    cmdOrderD.Parameters.Add("@harga", NpgsqlTypes.NpgsqlDbType.Numeric).Value = Convert.ToDecimal(OrderD.getHarga());
+
                     cmdOrderD.ExecuteNonQuery();
                 }
+
+                // Jika semua item berhasil masuk tanpa crash, komit transaksi
                 transaksi.Commit();
-                MessageBox.Show("Transaksi Berhasil Disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return true;
+
+                // Catatan: MessageBox sukses di sini bisa dipertahankan, 
+                // atau dihapus jika kamu ingin memunculkan pesan sukses di Form saja agar tidak double.
+                return idOrderBaru;
             }
             catch (NpgsqlException ex)
             {
-                transaksi?.Rollback();
-                MessageBox.Show("Gagal Memproses Transaksi: " + ex.Message, "Peringatan Database", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                if (transaksi != null && conn.State == System.Data.ConnectionState.Open)
+                {
+                    transaksi.Rollback();
+                }
+                // Sekarang, jika database melempar RAISE EXCEPTION, pesan aslinya AKAN PASTI MUNCUL di sini!
+                MessageBox.Show("Gagal Memproses Transaksi di Database: " + ex.Message, "Peringatan Database", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
             }
             catch (Exception ex)
             {
-                transaksi?.Rollback();
-                MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                if (transaksi != null && conn.State == System.Data.ConnectionState.Open)
+                {
+                    transaksi.Rollback();
+                }
+                MessageBox.Show("Terjadi kesalahan sistem C#: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
             }
         }
     }

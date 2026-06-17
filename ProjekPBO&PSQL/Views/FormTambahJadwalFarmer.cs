@@ -39,6 +39,8 @@ namespace ProjekPBO_PSQL.Views
                 txtTipeJadwal.Text = "Farmer";
                 txtTipeJadwal.ReadOnly = true;
                 cbTanaman.Enabled = false;
+                txtJumlahDitanam.Text = "0";
+                txtJumlahDitanam.ReadOnly = true;
             }
             else if (infoJadwal.template == "Menanam")
             {
@@ -52,12 +54,12 @@ namespace ProjekPBO_PSQL.Views
         }
         private void btnBatal_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.DialogResult = DialogResult.OK;
         }
 
         private void btnBatal_Click_1(object sender, EventArgs e)
         {
-            this.Close();
+            this.DialogResult = DialogResult.OK;
         }
 
         private void FormTambahJadwal_Load(object sender, EventArgs e)
@@ -113,6 +115,18 @@ namespace ProjekPBO_PSQL.Views
                     MessageBox.Show("Silakan pilih Jenis Tanaman terlebih dahulu!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (Validator.ApakahKosong(txtJumlahDitanam.Text))
+                {
+                    MessageBox.Show("Jumlah tanaman yang ditanam tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtJumlahDitanam.Focus();
+                    return;
+                }
+                if (!int.TryParse(txtJumlahDitanam.Text.Trim(), out int jumlahDitanam) || jumlahDitanam <= 0)
+                {
+                    MessageBox.Show("Jumlah ditanam harus berupa angka bulat dan lebih dari 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtJumlahDitanam.Focus();
+                    return;
+                }
             }
 
             if (Validator.ApakahKosong(txtKeterangan.Text))
@@ -122,12 +136,7 @@ namespace ProjekPBO_PSQL.Views
                 return;
             }
 
-            if (Validator.ApakahKosong(txtJumlahDitanam.Text))
-            {
-                MessageBox.Show("Jumlah tanaman yang ditanam tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtJumlahDitanam.Focus();
-                return;
-            }
+
 
             if (Validator.ApakahKosong(txtJumlahAnggota.Text))
             {
@@ -143,12 +152,6 @@ namespace ProjekPBO_PSQL.Views
                 return;
             }
 
-            if (!int.TryParse(txtJumlahDitanam.Text.Trim(), out int jumlahDitanam) || jumlahDitanam <= 0)
-            {
-                MessageBox.Show("Jumlah ditanam harus berupa angka bulat dan lebih dari 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtJumlahDitanam.Focus();
-                return;
-            }
 
             if (!int.TryParse(txtJumlahAnggota.Text.Trim(), out int jumlahAnggota) || jumlahAnggota <= 0)
             {
@@ -166,6 +169,12 @@ namespace ProjekPBO_PSQL.Views
 
             try
             {
+
+                int jumlahDitanam = 0;
+                if (infoJadwal.template == "Menanam")
+                {
+                    jumlahDitanam = Convert.ToInt32(txtJumlahDitanam.Text.Trim());
+                }
                 int idLahanTerpilih = (int)cbLahan.SelectedValue;
                 DateTime tanggalKegiatan = dtpTanggal.Value.Date;
                 string namaTanamanJadwal = (infoJadwal.template == "Panen") ? "Panen" : cbTanaman.Text;
@@ -201,7 +210,6 @@ namespace ProjekPBO_PSQL.Views
                     cbLahan.SelectedIndex = -1;
                     cbTanaman.SelectedIndex = -1;
                     DialogResult = DialogResult.OK;
-                    this.Close();
                 }
             }
             catch (Exception ex)

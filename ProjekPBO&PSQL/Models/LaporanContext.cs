@@ -111,7 +111,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("DELETE FROM Laporan WHERE id=@id", conn);
+                using var query1 = new NpgsqlCommand("DELETE FROM Laporan_jadwal WHERE id_laporan=@id", conn);
                 query1.Parameters.AddWithValue("id", id);
                 int DampakBaris = query1.ExecuteNonQuery();
                 if (DampakBaris > 0)

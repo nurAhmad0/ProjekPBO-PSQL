@@ -39,7 +39,36 @@ namespace ProjekPBO_PSQL.Views
             lbSaldo.Text = Karyawan.getSaldo().ToString("N0");
             DateTime tanggalSekarang = DateTime.Today;
             lblTanggal.Text = tanggalSekarang.ToString("dd MMMM yyyy");
-            PindahPanel(panelJadwal, "Jadwal");
+            PindahPanel(panelJadwlDiterima, "Jadwal Diterima");
+            try
+            {
+                DataTable dtJadwal = AmbilDataJadwalSesuaiRole();
+
+                DataView viewJadwalSaya = new DataView(dtJadwal);
+                viewJadwalSaya.RowFilter = $"(id_anggota = {idKaryawan}) AND (status_global IN ('Dalam Pengerjaan', 'Sudah Dikerjakan'))";
+
+                dataGridJadwalDiterima.DataSource = viewJadwalSaya;
+                dataGridJadwalDiterima.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                if (dataGridJadwalDiterima.Columns.Contains("id_jadwal"))
+                {
+                    dataGridJadwalDiterima.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                    dataGridJadwalDiterima.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                    dataGridJadwalDiterima.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan Kegiatan";
+                    dataGridJadwalDiterima.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                    dataGridJadwalDiterima.Columns["banyaknya_anggota"]!.HeaderText = "Sisa Kuota";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                    dataGridJadwalDiterima.Columns["status_global"]!.HeaderText = "Status";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+
+                    if (dataGridJadwalDiterima.Columns.Contains("id_anggota"))
+                        dataGridJadwalDiterima.Columns["id_anggota"]!.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal menampilkan jadwal diterima: " + ex.Message, "Error Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void FormFarmer_Load(object sender, EventArgs e)
         {
@@ -130,8 +159,8 @@ namespace ProjekPBO_PSQL.Views
                     dgvHistori.Columns["metode_penarikan"]!.HeaderText = "Metode";
                     dgvHistori.Columns["status_penarikan"]!.HeaderText = "Status";
                     dgvHistori.Columns["nominal_penarikan"]!.DefaultCellStyle.Format = "N0";
-                    if (dgvHistori.Columns.Contains("id_anggota"))
-                        dgvHistori.Columns["id_anggota"]!.Visible = false;
+                    if (dgvHistori.Columns.Contains("id_penarikan"))
+                        dgvHistori.Columns["id_penarikan"]!.Visible = false;
                 }
             }
             catch (Exception ex)

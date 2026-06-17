@@ -267,7 +267,7 @@ namespace ProjekPBO_PSQL.Models
                 DateTime TanggalSekarang = DateTime.Today;
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("SELECT id_jadwal, tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global FROM jadwal where text_tipe_jadwal = 'Pengantar' and tanggal = @tanggal", conn);
+                using var query1 = new NpgsqlCommand("SELECT j.id_jadwal, j.tanggal, j.keterangan_kegiatan, j.text_tipe_jadwal, j.banyaknya_anggota, j.total_upah, j.status_global, dj.id_anggota FROM jadwal j LEFT JOIN detail_jadwal dj ON j.id_jadwal = dj.id_jadwal where text_tipe_jadwal = 'Pengantar' and tanggal = @tanggal", conn);
                 query1.Parameters.AddWithValue("tanggal", TanggalSekarang);
                 {
                     using (var da = new NpgsqlDataAdapter(query1))
@@ -384,21 +384,24 @@ namespace ProjekPBO_PSQL.Models
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
                 using var query1 = new NpgsqlCommand(
-                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, status_global, id_lahan, id_pelanggan) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @Status::status, @IdLahan, @IdPelanggan) RETURNING id_jadwal", conn);
+                        "insert into jadwal (tanggal, keterangan_kegiatan, text_tipe_jadwal, banyaknya_anggota, total_upah, status_global, id_lahan, id_pelanggan, id_order) values (@Tanggal, @Keterangan, @TipeJadwal::tipe_jadwal, @BanyakAnggota, @total_upah, @Status::status, @IdLahan, @IdPelanggan, @id_order) RETURNING id_jadwal", conn);
                 query1.Parameters.AddWithValue("Tanggal", jadwal.getTanggal());
                 query1.Parameters.AddWithValue("keterangan", jadwal.getKeteranganKegiatan());
                 query1.Parameters.AddWithValue("TipeJadwal", jadwal.getTipeJadwal());
                 query1.Parameters.AddWithValue("BanyakAnggota", jadwal.getBanyakAnggota());
+                query1.Parameters.AddWithValue("total_upah", jadwal.getTotalUpah());
                 query1.Parameters.AddWithValue("Status", jadwal.getStatus());
                 if (jadwal is JadwalFarmer farmer)
                 {
                     query1.Parameters.AddWithValue("IdLahan", farmer.getIDLahan());
                     query1.Parameters.AddWithValue("IdPelanggan", DBNull.Value);
+                    query1.Parameters.AddWithValue("id_order", DBNull.Value);
                 }
                 else if (jadwal is JadwalPengantaran pengantaran)
                 {
                     query1.Parameters.AddWithValue("IdLahan", DBNull.Value);
                     query1.Parameters.AddWithValue("IdPelanggan", pengantaran.getIDPelanggan());
+                    query1.Parameters.AddWithValue("id_order", pengantaran.getOrderData().getIDOrder());
                 }
                 else
                 {
@@ -432,11 +435,8 @@ namespace ProjekPBO_PSQL.Models
                 using var query1 = new NpgsqlCommand(
                     "call hapus_jadwal(@id)", conn);
                 query1.Parameters.AddWithValue("id", id);
-                int DampakBaris = query1.ExecuteNonQuery();
-                if (DampakBaris > 0)
-                {
-                    isSucces = true;
-                }
+                query1.ExecuteNonQuery();
+                isSucces = true;
             }
             catch (Exception ex)
             {

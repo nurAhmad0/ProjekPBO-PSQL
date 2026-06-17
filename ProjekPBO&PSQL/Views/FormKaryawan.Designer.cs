@@ -30,10 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             panelMiddle = new Panel();
-            panelHistoriPenarikan = new Panel();
-            btKembaliPenarikan = new Button();
-            label5 = new Label();
-            dgvHistori = new DataGridView();
             panelPenarikan = new Panel();
             btKonfirmasiPenarikan = new Button();
             btnHistoriPenarikan = new Button();
@@ -46,6 +42,10 @@
             label39 = new Label();
             txtAtasNamaPenarikan = new TextBox();
             txtNominalPenarikan = new TextBox();
+            panelHistoriPenarikan = new Panel();
+            btKembaliPenarikan = new Button();
+            label5 = new Label();
+            dgvHistori = new DataGridView();
             panelLaporan = new Panel();
             btnHapusLaporan = new Button();
             btnTambahLaporan = new Button();
@@ -85,10 +85,11 @@
             lbSaldo = new Label();
             lblTanggal = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            label4 = new Label();
             panelMiddle.SuspendLayout();
+            panelPenarikan.SuspendLayout();
             panelHistoriPenarikan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvHistori).BeginInit();
-            panelPenarikan.SuspendLayout();
             panelLaporan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).BeginInit();
             panelJadwal.SuspendLayout();
@@ -104,11 +105,11 @@
             // 
             // panelMiddle
             // 
-            panelMiddle.Controls.Add(panelHistoriPenarikan);
-            panelMiddle.Controls.Add(panelPenarikan);
             panelMiddle.Controls.Add(panelLaporan);
-            panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelBuatLaporan);
+            panelMiddle.Controls.Add(panelPenarikan);
+            panelMiddle.Controls.Add(panelHistoriPenarikan);
+            panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelJadwlDiterima);
             panelMiddle.Controls.Add(panelPenarikanSaldo);
             panelMiddle.Dock = DockStyle.Fill;
@@ -116,46 +117,6 @@
             panelMiddle.Name = "panelMiddle";
             panelMiddle.Size = new Size(1037, 380);
             panelMiddle.TabIndex = 5;
-            // 
-            // panelHistoriPenarikan
-            // 
-            panelHistoriPenarikan.Controls.Add(btKembaliPenarikan);
-            panelHistoriPenarikan.Controls.Add(label5);
-            panelHistoriPenarikan.Controls.Add(dgvHistori);
-            panelHistoriPenarikan.Dock = DockStyle.Fill;
-            panelHistoriPenarikan.Location = new Point(0, 0);
-            panelHistoriPenarikan.Name = "panelHistoriPenarikan";
-            panelHistoriPenarikan.Size = new Size(1037, 380);
-            panelHistoriPenarikan.TabIndex = 6;
-            panelHistoriPenarikan.Visible = false;
-            // 
-            // btKembaliPenarikan
-            // 
-            btKembaliPenarikan.Location = new Point(219, 6);
-            btKembaliPenarikan.Name = "btKembaliPenarikan";
-            btKembaliPenarikan.Size = new Size(117, 38);
-            btKembaliPenarikan.TabIndex = 5;
-            btKembaliPenarikan.Text = "Kembali";
-            btKembaliPenarikan.UseVisualStyleBackColor = true;
-            btKembaliPenarikan.Click += btKembaliPenarikan_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(13, 15);
-            label5.Name = "label5";
-            label5.Size = new Size(192, 20);
-            label5.TabIndex = 3;
-            label5.Text = "TABEL HISTORI PENARIKAN";
-            // 
-            // dgvHistori
-            // 
-            dgvHistori.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvHistori.Location = new Point(3, 50);
-            dgvHistori.Name = "dgvHistori";
-            dgvHistori.RowHeadersWidth = 51;
-            dgvHistori.Size = new Size(1031, 330);
-            dgvHistori.TabIndex = 0;
             // 
             // panelPenarikan
             // 
@@ -277,6 +238,46 @@
             txtNominalPenarikan.Size = new Size(125, 27);
             txtNominalPenarikan.TabIndex = 1;
             // 
+            // panelHistoriPenarikan
+            // 
+            panelHistoriPenarikan.Controls.Add(btKembaliPenarikan);
+            panelHistoriPenarikan.Controls.Add(label5);
+            panelHistoriPenarikan.Controls.Add(dgvHistori);
+            panelHistoriPenarikan.Dock = DockStyle.Fill;
+            panelHistoriPenarikan.Location = new Point(0, 0);
+            panelHistoriPenarikan.Name = "panelHistoriPenarikan";
+            panelHistoriPenarikan.Size = new Size(1037, 380);
+            panelHistoriPenarikan.TabIndex = 6;
+            panelHistoriPenarikan.Visible = false;
+            // 
+            // btKembaliPenarikan
+            // 
+            btKembaliPenarikan.Location = new Point(219, 6);
+            btKembaliPenarikan.Name = "btKembaliPenarikan";
+            btKembaliPenarikan.Size = new Size(117, 38);
+            btKembaliPenarikan.TabIndex = 5;
+            btKembaliPenarikan.Text = "Kembali";
+            btKembaliPenarikan.UseVisualStyleBackColor = true;
+            btKembaliPenarikan.Click += btKembaliPenarikan_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(13, 15);
+            label5.Name = "label5";
+            label5.Size = new Size(192, 20);
+            label5.TabIndex = 3;
+            label5.Text = "TABEL HISTORI PENARIKAN";
+            // 
+            // dgvHistori
+            // 
+            dgvHistori.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvHistori.Location = new Point(3, 50);
+            dgvHistori.Name = "dgvHistori";
+            dgvHistori.RowHeadersWidth = 51;
+            dgvHistori.Size = new Size(1031, 330);
+            dgvHistori.TabIndex = 0;
+            // 
             // panelLaporan
             // 
             panelLaporan.Controls.Add(btnHapusLaporan);
@@ -374,6 +375,7 @@
             // 
             // panelBuatLaporan
             // 
+            panelBuatLaporan.Controls.Add(label4);
             panelBuatLaporan.Controls.Add(btBuatLaporan);
             panelBuatLaporan.Controls.Add(txtTextLaporan);
             panelBuatLaporan.Controls.Add(cbPilihJadwal);
@@ -413,7 +415,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(268, 152);
+            label3.Location = new Point(605, 152);
             label3.Name = "label3";
             label3.Size = new Size(110, 20);
             label3.TabIndex = 2;
@@ -678,7 +680,16 @@
             timer1.Interval = 5000;
             timer1.Tick += timer1_Tick;
             // 
-            // FormFarmer
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(119, 152);
+            label4.Name = "label4";
+            label4.Size = new Size(152, 20);
+            label4.TabIndex = 6;
+            label4.Text = "Isi Keterangan Jadwal";
+            // 
+            // FormKaryawan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -686,15 +697,15 @@
             Controls.Add(panelMiddle);
             Controls.Add(panelBottom);
             Controls.Add(panelTop);
-            Name = "FormFarmer";
+            Name = "FormKaryawan";
             Text = "Form1";
             Load += FormFarmer_Load;
             panelMiddle.ResumeLayout(false);
+            panelPenarikan.ResumeLayout(false);
+            panelPenarikan.PerformLayout();
             panelHistoriPenarikan.ResumeLayout(false);
             panelHistoriPenarikan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvHistori).EndInit();
-            panelPenarikan.ResumeLayout(false);
-            panelPenarikan.PerformLayout();
             panelLaporan.ResumeLayout(false);
             panelLaporan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLaporan).EndInit();
@@ -771,5 +782,6 @@
         private Button btKembaliPenarikan;
         private Button btLOGOUT;
         private System.Windows.Forms.Timer timer1;
+        private Label label4;
     }
 }

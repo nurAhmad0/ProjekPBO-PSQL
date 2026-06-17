@@ -15,50 +15,50 @@ namespace ProjekPBO_PSQL.Controllers
             return Context.GetALLdataOrder();
         }
 
-        public bool simpanOrder(int idAnggota,DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjang)
+        public int simpanOrder(int idAnggota,DateTime Tanggal, int idPelanggan, List<OrderDetails> keranjang)
         {
             if (idAnggota <= 0)
             {
                 MessageBox.Show("Sesi Anggota tidak valid! Silakan login ulang.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             if (idPelanggan <= 0)
             {
                 MessageBox.Show("Silakan pilih pelanggan terlebih dahulu!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             if (keranjang == null || keranjang.Count == 0)
             {
                 MessageBox.Show("Keranjang belanja masih kosong! Tidak ada item untuk diproses.", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             try
             {
-                bool hasil = Context.SimpanOrder(idAnggota, Tanggal, idPelanggan, keranjang);
+                int hasil = Context.SimpanOrder(idAnggota, Tanggal, idPelanggan, keranjang);
 
-                if (hasil)
+                if (hasil > 0)
                 {
                     MessageBox.Show("Transaksi Berhasil Disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
+                    return hasil;
                 }
                 else
                 {
                     MessageBox.Show("Transaksi Gagal Disimpan ke Database.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return false;
+                    return 0;
                 }
             }
             catch (NpgsqlException ex)
             {
                 MessageBox.Show("Gagal Memproses Transaksi di Database: " + ex.Message, "Peringatan Database", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Terjadi kesalahan sistem: " + ex.Message, "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return 0;
             }
         }
     }

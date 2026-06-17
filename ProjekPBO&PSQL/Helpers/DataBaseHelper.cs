@@ -10,7 +10,7 @@ namespace ProjekPBO_PSQL.Helpers
         static string connString =
         "Host=localhost;" +  // server PostgreSQL
         "Port=5432;" +  // port default PostgreSQL
-        "Database=DOKUMENASLISUPERSEMAR;" +  // nama database
+        "Database=cobaDataBase;" +  // nama database
         "Username=postgres;" +  // username
         "Password=SUNGKEM0711";  // password
 
