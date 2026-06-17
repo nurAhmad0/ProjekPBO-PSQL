@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ProjekPBO_PSQL.Controllers;
 
 namespace ProjekPBO_PSQL.Models
 {
@@ -35,7 +34,7 @@ namespace ProjekPBO_PSQL.Models
 
         public string getNO_TELP()
         {
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahPanjang(10, this.NO_Telp, 13))
+            if (Helpers.Validator.ApakahPanjang(10, this.NO_Telp, 13))
             {
                 return this.NO_Telp;
             }
@@ -47,7 +46,7 @@ namespace ProjekPBO_PSQL.Models
 
         public string getEmail()
         {
-            if (ProjekPBO_PSQL.Controllers.Validator.ApakahEmailValid(Email))
+            if (Helpers.Validator.ApakahEmailValid(Email))
             {
                 return this.Email;
             }

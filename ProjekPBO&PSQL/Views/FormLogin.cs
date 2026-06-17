@@ -1,4 +1,5 @@
 using ProjekPBO_PSQL.Controllers;
+using ProjekPBO_PSQL.Helpers;
 using ProjekPBO_PSQL.Views;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -82,6 +83,11 @@ namespace ProjekPBO_PSQL
                         break;
                 }
 
+                
+            }
+            else
+            {
+                MessageBox.Show("Username atau Password salah!", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 
             }
         }

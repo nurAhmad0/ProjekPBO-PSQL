@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using ProjekPBO_PSQL.Controllers;
-using MyValidator = ProjekPBO_PSQL.Controllers.Validator;
+using MyValidator = ProjekPBO_PSQL.Helpers.Validator;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ProjekPBO_PSQL.Views

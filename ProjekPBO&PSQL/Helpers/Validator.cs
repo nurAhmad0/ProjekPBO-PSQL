@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjekPBO_PSQL.Controllers
+namespace ProjekPBO_PSQL.Helpers
 {
     static class Validator
     {

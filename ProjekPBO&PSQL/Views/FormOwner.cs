@@ -1,4 +1,5 @@
 ﻿using ProjekPBO_PSQL.Controllers;
+using ProjekPBO_PSQL.Helpers;
 using ProjekPBO_PSQL.Models;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace ProjekPBO_PSQL.Views
             owner = ControllersOrang.Cari(id)!;
 
             label7.Text = owner.getSaldo().ToString("N0");
-            lblNama.Text = owner.getUsername();
+            lblNama.Text = owner.getName();
             DateTime TanggalSekarang = DateTime.Today;
             lblTanggal.Text = TanggalSekarang.ToString("dd MMMM yyyy");
             PindahPanel(panelKaryawan, "karyawan");
