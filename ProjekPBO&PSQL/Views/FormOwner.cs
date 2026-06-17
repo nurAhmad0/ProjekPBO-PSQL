@@ -21,6 +21,7 @@ namespace ProjekPBO_PSQL.Views
         RiwayatPenarikanController ControllersPenarikan = new RiwayatPenarikanController();
         JadwalController ControllersJadwal = new JadwalController();
         LaporanController ControllersLaporan = new LaporanController();
+        GudangController ControllersGudang = new GudangController();
 
         private string menuAktif = "";
         private Orang owner;
@@ -1552,6 +1553,91 @@ namespace ProjekPBO_PSQL.Views
             {
                 MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btGudang_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelGudang, "Gudang");
+            try
+            {
+                List<Gudang> listAsli = ControllersGudang.GetAllGudang();
+                var dataUntukGrid = listAsli.Select(o => new
+                {
+                    ID = o.getIDGudang(),
+                    Nama = o.getNamaGudang(),
+                    Stock = o.getStock(),
+                    Tanggal_masuk = o.getTanggalMasuk(),
+                    Nama_Tanaman = o.getNamaTanaman()
+                }).ToList();
+                dataGudang.DataSource = dataUntukGrid;
+                dataGudang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat jadwal hari ini: " + ex.Message, "Eror Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void textBox1_TextChanged_2(object sender, EventArgs e)
+        {
+            try
+            {
+                string kataKunci = txtCariGudang.Text.Trim();
+                if (Validator.ApakahKosong(kataKunci))
+                {
+                    List<Gudang> listAsli = ControllersGudang.GetAllGudang();
+                    var dataUntukGrid = listAsli.Select(o => new
+                    {
+                        ID = o.getIDGudang(),
+                        Nama = o.getNamaGudang(),
+                        Stock = o.getStock(),
+                        Tanggal_masuk = o.getTanggalMasuk(),
+                        Nama_Tanaman = o.getNamaTanaman()
+                    }).ToList();
+                    dataGudang.DataSource = dataUntukGrid;
+                    dataGudang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    return;
+                }
+                List<Gudang> hasilCari = new List<Gudang>();
+                if (Validator.ApakahAngka(kataKunci))
+                {
+                    int idGudang = Convert.ToInt32(kataKunci);
+                    Gudang? GudangTunggal = ControllersGudang.Cari(idGudang);
+                    if (GudangTunggal != null)
+                    {
+                        hasilCari.Add(GudangTunggal);
+                    }
+                }
+                else
+                {
+                    hasilCari = ControllersGudang.Cari(kataKunci);
+                }
+                var dataHasilCariGrid = hasilCari.Select(o => new
+                {
+                    ID = o.getIDGudang(),
+                    Nama = o.getNamaGudang(),
+                    Stock = o.getStock(),
+                    Tanggal_masuk = o.getTanggalMasuk(),
+                    Nama_Tanaman = o.getNamaTanaman()
+                }).ToList();
+
+                dataGudang.DataSource = dataHasilCariGrid;
+                dataGudang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btTambahGudang_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btEditGudang_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

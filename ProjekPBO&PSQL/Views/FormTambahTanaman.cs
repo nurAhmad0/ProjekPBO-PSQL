@@ -14,6 +14,7 @@ namespace ProjekPBO_PSQL.Views
     public partial class FormTambahTanaman : Form
     {
         TanamanController tanamanController = new TanamanController();
+        GudangController gudangController = new GudangController();
         public FormTambahTanaman()
         {
             InitializeComponent();
@@ -48,6 +49,17 @@ namespace ProjekPBO_PSQL.Views
             else if (cekNama == null)
             {
                 MessageBox.Show("Gagal melakukan pengecekan nama tanaman karena masalah koneksi database.", "Error Sistem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool? statusNama = gudangController.ApakahAdaNamaGudang(txtNamaGudang.Text);
+            if (statusNama == null)
+            {
+                return;
+            }
+            else if (statusNama == true)
+            {
+                MessageBox.Show("Nama gudang sudah terdaftar. Gunakan nama lain!", "Duplikasi Nama", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -96,18 +108,22 @@ namespace ProjekPBO_PSQL.Views
                 decimal hargaTanaman = Convert.ToDecimal(txtHargaTanaman.Text.Trim());
                 int durasiPanen = Convert.ToInt32(txtDurasiPanen.Text.Trim());
                 Tanaman tanamanBaru = new Tanaman(0,namaTanaman, hargaTanaman, durasiPanen);
-                bool apakahSukses = tanamanController.TambahTanaman(tanamanBaru);
+                int apakahSukses = tanamanController.TambahTanaman(tanamanBaru);
 
-                if (apakahSukses)
+                if (apakahSukses > 0)
                 {
-                    MessageBox.Show("Data tanaman berhasil ditambahkan ke database!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    txtNamaTanaman.Clear();
-                    txtHargaTanaman.Clear();
-                    txtDurasiPanen.Clear();
-                    DialogResult = DialogResult.OK;
-                    this.Close();
-
+                    DateTime Tanggal = DateTime.Today;
+                    Gudang gudangBaru = new Gudang(0, txtNamaGudang.Text.Trim(), 0, Tanggal, apakahSukses, "");
+                    bool hasil = gudangController.tambahGudang(gudangBaru);
+                    if (hasil)
+                    {
+                        MessageBox.Show("Data berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtNamaTanaman.Clear();
+                        txtHargaTanaman.Clear();
+                        txtDurasiPanen.Clear();
+                        txtNamaGudang.Clear();
+                        DialogResult = DialogResult.OK;
+                    }
                 }
                 else
                 {

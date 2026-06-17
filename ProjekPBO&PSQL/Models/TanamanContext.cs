@@ -41,35 +41,32 @@ namespace ProjekPBO_PSQL.Models
             return DataTanaman;
         }
 
-        public bool ADDTanaman(Tanaman Tanaman)
+        public int ADDTanaman(Tanaman Tanaman) 
         {
-            bool isSucces = false;
+            int idBaru = 0; 
             try
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand(
-                    "INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES (@Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa)", conn);
+                string sql = "INSERT INTO Tanaman (nama_tanaman, harga, estimasi_kadaluarsa) VALUES (@Nama_Tanaman, @Harga, @Estimasi_Kadaluarsa) RETURNING id_tanaman";
+
+                using var query1 = new NpgsqlCommand(sql, conn);
                 query1.Parameters.AddWithValue("Nama_Tanaman", Tanaman.getNamaTanaman());
                 query1.Parameters.AddWithValue("Harga", Tanaman.getHargaTanaman());
                 query1.Parameters.AddWithValue("Estimasi_Kadaluarsa", Tanaman.getEstimasiKadaluarsa());
-                int DampakBaris = query1.ExecuteNonQuery();
-                if (DampakBaris > 0)
-                {
-                    isSucces = true;
-                }
+                idBaru = Convert.ToInt32(query1.ExecuteScalar());
             }
             catch (NpgsqlException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Database: " + ex.Message, "Gagal Simpan", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
+                idBaru = 0;
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("Eror Sistem: " + ex.Message, "Gagal", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                isSucces = false;
+                idBaru = 0;
             }
-            return isSucces;
+            return idBaru; 
         }
 
         public bool UpdateTanaman(Tanaman Tanaman)

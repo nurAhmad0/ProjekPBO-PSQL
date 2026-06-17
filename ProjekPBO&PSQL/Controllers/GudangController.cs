@@ -6,10 +6,51 @@ using System.Text;
 
 namespace ProjekPBO_PSQL.Controllers
 {
-    class GudangController
+    class GudangController : ISearch<Gudang>
     {
         GudangContext context = new GudangContext();
-        
+
+        public Gudang? Cari(int id)
+        {
+            if (id <= 0) return null;
+
+            List<Gudang> getData = context.getAllGudang();
+
+            foreach (var L in getData)
+            {
+                if (L.getIDGudang() == id)
+                {
+                    return L;
+
+                }
+            }
+
+            return null;
+        }
+
+        public List<Gudang> Cari(string nama)
+        {
+            List<Gudang> dataLahan = new List<Gudang>();
+
+            if (Validator.ApakahKosong(nama))
+            {
+                return dataLahan;
+            }
+
+            List<Gudang> getData = context.getAllGudang();
+
+            foreach (var L in getData)
+            {
+                if (L.getNamaGudang().ToLower().Contains(nama.ToLower()))
+                {
+                    dataLahan.Add(L);
+                }
+            }
+
+            return dataLahan;
+        }
+
+
         public List<Gudang> GetAllGudang()
         {
             return context.getAllGudang();
@@ -75,6 +116,11 @@ namespace ProjekPBO_PSQL.Controllers
                 return null;
             }
             return context.ApakahAdaNamaGudang(nama);
+        }
+
+        public Gudang getDataGudangTerbaru(int idTanaman)
+        {
+            return context.GetGudangByTanaman(idTanaman);
         }
     }
 }

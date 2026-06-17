@@ -37,6 +37,8 @@
             label2 = new Label();
             label1 = new Label();
             btnBatal = new Button();
+            label3 = new Label();
+            txtNamaGudang = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -67,6 +69,8 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 255, 192);
+            panel1.Controls.Add(txtNamaGudang);
+            panel1.Controls.Add(label3);
             panel1.Controls.Add(txtHargaTanaman);
             panel1.Controls.Add(txtNamaTanaman);
             panel1.Controls.Add(txtDurasiPanen);
@@ -82,7 +86,7 @@
             // 
             // txtHargaTanaman
             // 
-            txtHargaTanaman.Location = new Point(384, 329);
+            txtHargaTanaman.Location = new Point(384, 305);
             txtHargaTanaman.Name = "txtHargaTanaman";
             txtHargaTanaman.Size = new Size(310, 27);
             txtHargaTanaman.TabIndex = 16;
@@ -90,7 +94,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(211, 329);
+            label5.Location = new Point(211, 305);
             label5.Name = "label5";
             label5.Size = new Size(50, 20);
             label5.TabIndex = 5;
@@ -124,6 +128,22 @@
             btnBatal.UseVisualStyleBackColor = true;
             btnBatal.Click += btnBatal_Click;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(211, 386);
+            label3.Name = "label3";
+            label3.Size = new Size(105, 20);
+            label3.TabIndex = 17;
+            label3.Text = "Nama Gudang";
+            // 
+            // txtNamaGudang
+            // 
+            txtNamaGudang.Location = new Point(384, 386);
+            txtNamaGudang.Name = "txtNamaGudang";
+            txtNamaGudang.Size = new Size(310, 27);
+            txtNamaGudang.TabIndex = 18;
+            // 
             // FormTambahTanaman
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -147,5 +167,7 @@
         public TextBox txtNamaTanaman;
         public TextBox txtDurasiPanen;
         public TextBox txtHargaTanaman;
+        public TextBox txtNamaGudang;
+        private Label label3;
     }
 }

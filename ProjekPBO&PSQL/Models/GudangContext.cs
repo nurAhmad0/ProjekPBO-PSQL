@@ -16,7 +16,7 @@ namespace ProjekPBO_PSQL.Models
             {
                 using var conn = DataBaseHelper.GetConnection();
                 conn.Open();
-                using var query1 = new NpgsqlCommand("Select ID_Gudang, Nama_Gudang, Stock, Tanggal_Masuk, ID_Tanaman from Gudang", conn);
+                using var query1 = new NpgsqlCommand("Select g.ID_Gudang, g.Nama_Gudang, g.Stock, g.Tanggal_Masuk, g.ID_Tanaman, t.nama_tanaman from Gudang g join tanaman t using (id_Tanaman)", conn);
                 using var reader = query1.ExecuteReader();
                 while (reader.Read())
                 {
@@ -25,7 +25,8 @@ namespace ProjekPBO_PSQL.Models
                         reader.IsDBNull(1) ? "Tanpa Nama" : reader.GetString(1),
                         reader.IsDBNull(2) ? 0 : reader.GetDecimal(2),
                         reader.IsDBNull(3) ? DateTime.Now : reader.GetDateTime(3),
-                        reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
+                        reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        reader.IsDBNull(5) ? "Tanpa Nama" : reader.GetString(5)
                         ));
                 }
             }
@@ -165,6 +166,36 @@ namespace ProjekPBO_PSQL.Models
                 return null;
             }
             
+        }
+
+        public Gudang GetGudangByTanaman(int idTanaman)
+        {
+            try
+            {
+                using var conn = DataBaseHelper.GetConnection();
+                conn.Open();
+                string sql = "SELECT id_gudang, nama_gudang, stock, tanggal_masuk, id_tanaman FROM gudang WHERE id_tanaman = @idTanaman LIMIT 1";
+                using var cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("idTanaman", idTanaman);
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new Gudang(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetDecimal(2),
+                        reader.GetDateTime(3),
+                        reader.GetInt32(4),
+                        ""
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error mencari gudang: " + ex.Message);
+            }
+            return null!;
         }
     }
 }

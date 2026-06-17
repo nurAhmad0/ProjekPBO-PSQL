@@ -117,18 +117,18 @@ namespace ProjekPBO_PSQL.Controllers
             return isSucces;
         }
 
-        public bool TambahTanaman(Tanaman tanaman)
+        public int TambahTanaman(Tanaman tanaman)
         {
             if (Validator.ApakahKosong(tanaman.getNamaTanaman()))
             {
                 MessageBox.Show("Nama Tanaman tidak boleh kosong!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             if (tanaman.getEstimasiKadaluarsa() <= 0 )
             {
                 MessageBox.Show("Estimasi kadaluarsa Tidak Bisa 0!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return 0;
             }
 
             

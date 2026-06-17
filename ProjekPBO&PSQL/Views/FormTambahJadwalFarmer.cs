@@ -18,6 +18,7 @@ namespace ProjekPBO_PSQL.Views
         PenanamanLahanController penanamanController = new PenanamanLahanController();
         LahanController lahanController = new LahanController();
         TanamanController tanamanController = new TanamanController();
+        GudangController gudangController = new GudangController();
         string Template;
         public FormTambahJadwalFarmer((string tipeJadwal, string template) infoJadwal)
         {
