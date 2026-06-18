@@ -21,6 +21,7 @@ namespace ProjekPBO_PSQL.Views
         RiwayatPenarikanController ControllersPenarikan = new RiwayatPenarikanController();
         JadwalController ControllersJadwal = new JadwalController();
         LaporanController ControllersLaporan = new LaporanController();
+        PenanamanLahanController ControllerPenanamanLahan = new PenanamanLahanController();
 
         private string menuAktif = "";
         private Orang owner;
@@ -1552,6 +1553,29 @@ namespace ProjekPBO_PSQL.Views
             {
                 MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            panelPenarikan.Visible = false;
+            menuAktif = "Penanaman Lahan";
+            List<PenanamanLahan> listAsli = ControllerPenanamanLahan.GetAllPenanamanLahan();
+            var dataUntukGrid = listAsli.Select(o => new
+            {
+                idPenanaman = o.getIDPenanaman(),
+                tanggalDitanam = o.getTanggalDitanam(),
+                jumlahTanaman = o.getJumlahTanaman(),
+                statusPenanaman = o.getStatusPenanaman(),
+                lahanTempatMenanam = o.getLahanTempatMenanam(),
+                jenisTanaman = o.getJenisTanaman(),
+            }).ToList();
+            dgvLainnya.DataSource = dataUntukGrid;
+            dgvLainnya.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
     }
 }
