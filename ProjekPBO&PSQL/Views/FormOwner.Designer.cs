@@ -431,17 +431,17 @@
             // 
             // panelMiddle
             // 
-            panelMiddle.Controls.Add(panelGudang);
-            panelMiddle.Controls.Add(panelLahan);
-            panelMiddle.Controls.Add(panelDetailJadwalFarmer);
             panelMiddle.Controls.Add(panelJadwal);
             panelMiddle.Controls.Add(panelDetailJadwalPengantar);
+            panelMiddle.Controls.Add(panelDetailJadwalFarmer);
+            panelMiddle.Controls.Add(panelLainnya);
+            panelMiddle.Controls.Add(panelGudang);
+            panelMiddle.Controls.Add(panelLahan);
             panelMiddle.Controls.Add(panelPilihanJadwal);
             panelMiddle.Controls.Add(panelPilihanJadwalFarmer);
             panelMiddle.Controls.Add(panelTanaman);
             panelMiddle.Controls.Add(panelKaryawan);
             panelMiddle.Controls.Add(panelDetailKaryawan);
-            panelMiddle.Controls.Add(panelLainnya);
             panelMiddle.Controls.Add(panelPelanggan);
             panelMiddle.Dock = DockStyle.Fill;
             panelMiddle.Location = new Point(0, 107);
@@ -1605,13 +1605,13 @@
             // 
             // panelLainnya
             // 
+            panelLainnya.Controls.Add(dgvLainnya);
             panelLainnya.Controls.Add(panelPenarikan);
             panelLainnya.Controls.Add(panelDetailLaporan);
             panelLainnya.Controls.Add(btTarikSaldo);
             panelLainnya.Controls.Add(btPenarikan);
             panelLainnya.Controls.Add(btLaporan);
             panelLainnya.Controls.Add(label6);
-            panelLainnya.Controls.Add(dgvLainnya);
             panelLainnya.Dock = DockStyle.Fill;
             panelLainnya.Location = new Point(0, 0);
             panelLainnya.Name = "panelLainnya";

@@ -612,6 +612,134 @@ namespace ProjekPBO_PSQL.Views
                 MessageBox.Show("Gagal melakukan pencarian otomatis: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btDetailJadwal_Click(object sender, EventArgs e)
+        {
+            if (dataGridJadwalDiterima.CurrentRow == null)
+            {
+                MessageBox.Show("Silakan pilih salah satu baris jadwal terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                int idTerpilih = Convert.ToInt32(dataGridJadwalDiterima.CurrentRow.Cells["id_jadwal"].Value);
+                string tipeJadwal = Convert.ToString(dataGridJadwalDiterima.CurrentRow.Cells["text_tipe_jadwal"].Value)!;
+                if (tipeJadwal == "Farmer")
+                {
+                    JadwalFarmer JadwalTerpilih = controllersJadwal.GetAllJadwalFarmer(idTerpilih)!;
+                    if (JadwalTerpilih == null)
+                    {
+                        MessageBox.Show("Data jadwal farmer tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                    txtTanamanJadwalFarmer.ReadOnly = true;
+                    txtTotalUpah.ReadOnly = true;
+                    txtStatusJadwalFarmer.ReadOnly = true;
+                    txtKeteranganJadwalFarmer.ReadOnly = true;
+                    txtBanyakAnggotaJadwalFarmer.ReadOnly = true;
+                    txtJumlahDItanamJadwalFarmer.ReadOnly = true;
+                    txtNamaLahanJadwalFarmer.ReadOnly = true;
+                    txtIdLahanJadwalFarmer.ReadOnly = true;
+
+                    lbIdJadwalFarmer.Text = Convert.ToString(JadwalTerpilih.getIdJadwal());
+                    txtTanamanJadwalFarmer.Text = JadwalTerpilih.getNamaTanaman();
+                    txtTotalUpah.Text = Convert.ToString(JadwalTerpilih.getTotalUpah());
+                    txtStatusJadwalFarmer.Text = JadwalTerpilih.getStatus();
+                    txtKeteranganJadwalFarmer.Text = JadwalTerpilih.getKeteranganKegiatan();
+                    txtBanyakAnggotaJadwalFarmer.Text = Convert.ToString(JadwalTerpilih.getBanyakAnggota());
+                    lbTanggalJadwalFarmer.Text = Convert.ToString(JadwalTerpilih.getTanggal());
+                    txtJumlahDItanamJadwalFarmer.Text = Convert.ToString(JadwalTerpilih.getJumlahDitanam());
+                    txtNamaLahanJadwalFarmer.Text = JadwalTerpilih.getNamaLahan();
+                    txtIdLahanJadwalFarmer.Text = Convert.ToString(JadwalTerpilih.getIDLahan());
+                    List<DetailAnggotaJadwal> listDetailAnggota = JadwalTerpilih.getDaftarAnggota();
+
+                    dataGAnggotaJadwalFarmer.Rows.Clear();
+                    dataGAnggotaJadwalFarmer.Columns.Clear();
+
+                    dataGAnggotaJadwalFarmer.Columns.Add("colIdAnggota", "ID Anggota");
+                    dataGAnggotaJadwalFarmer.Columns.Add("colNamaAnggota", "Nama Anggota");
+                    foreach (DetailAnggotaJadwal anggota in listDetailAnggota)
+                    {
+                        int rowIndex = dataGAnggotaJadwalFarmer.Rows.Add(anggota.getIdAnggota(), anggota.getNamaAnggota());
+
+                        if (dataGAnggotaJadwalFarmer.Columns.Contains("colIdAnggota"))
+                        {
+                            dataGAnggotaJadwalFarmer.Columns["colIdAnggota"]!.HeaderText = "ID Anggota";
+                            dataGAnggotaJadwalFarmer.Columns["colNamaAnggota"]!.HeaderText = "Nama Anggota";
+                        }
+                    }
+                    PindahPanel(panelDetailJadwalFarmer, "DetailJadwalFarmer");
+                }
+                else if (tipeJadwal == "Pengantar")
+                {
+                    JadwalPengantaran JadwalTerpilih = controllersJadwal.GetAllJadwalPengantaran(idTerpilih)!;
+                    if (JadwalTerpilih == null)
+                    {
+                        MessageBox.Show("Data jadwal pangantaran tidak ditemukan di database!", "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    txtIDJadwalPengantar.ReadOnly = true;
+                    txtStatusJadwalPengantar.ReadOnly = true;
+                    txtNamaAnggotaPengantar.ReadOnly = true;
+                    txtTotalUpahPengantar.ReadOnly = true;
+                    txtNoTelpJadwalPengantar.ReadOnly = true;
+                    txtKeteranganJadwalPengantar.ReadOnly = true;
+                    txtIdPelangganPengantar.ReadOnly = true;
+                    txtNamaPelanggan.ReadOnly = true;
+                    txtTanggalOrderPengantar.ReadOnly = true;
+                    txtDetailAlamatPengantar.ReadOnly = true;
+
+                    lbTanggalJadwalPengantaran.Text = Convert.ToString(JadwalTerpilih.getTanggal());
+                    txtIDJadwalPengantar.Text = Convert.ToString(JadwalTerpilih.getIdJadwal());
+                    txtStatusJadwalPengantar.Text = JadwalTerpilih.getStatus();
+                    txtNamaAnggotaPengantar.Text = JadwalTerpilih.getDaftarAnggota()[0].getNamaAnggota();
+                    txtTotalUpahPengantar.Text = Convert.ToString(JadwalTerpilih.getTotalUpah());
+                    txtNoTelpJadwalPengantar.Text = JadwalTerpilih.getNO_TELP();
+                    txtKeteranganJadwalPengantar.Text = JadwalTerpilih.getKeteranganKegiatan();
+                    txtIdPelangganPengantar.Text = Convert.ToString(JadwalTerpilih.getIDPelanggan());
+                    txtNamaPelanggan.Text = JadwalTerpilih.getNamaPelanggan();
+                    txtTanggalOrderPengantar.Text = Convert.ToString(JadwalTerpilih.getOrderData().getTanggalOrder());
+                    txtDetailAlamatPengantar.Text = JadwalTerpilih.getDetailAlamat();
+
+                    dataGKeranjangBelanja.Rows.Clear();
+                    dataGKeranjangBelanja.Columns.Clear();
+                    Order orderTerpilih = JadwalTerpilih.getOrderData();
+
+                    dataGKeranjangBelanja.Columns.Add("colNamaTanaman", "Nama Tanaman");
+                    dataGKeranjangBelanja.Columns.Add("colHarga", "Harga (Rp)");
+                    dataGKeranjangBelanja.Columns.Add("colJumlah", "Jumlah Keluar");
+
+                    if (dataGKeranjangBelanja.Columns.Contains("colHarga"))
+                    {
+                        dataGKeranjangBelanja.Columns["colHarga"]!.DefaultCellStyle.Format = "N0";
+                    }
+
+                    List<OrderDetails> keranjangBelanja = orderTerpilih.getlistOrderdetails();
+
+                    foreach (OrderDetails orderD in keranjangBelanja)
+                    {
+                        dataGKeranjangBelanja.Rows.Add(
+                            orderD.getNamaTanaman(),
+                            orderD.getHarga(),
+                            orderD.getJumlahOrder()
+                        );
+                    }
+
+                    PindahPanel(panelDetailJadwalPengantar, "DetailJadwalPengantar");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan saat mengambil data: " + ex.Message, "Eror", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+    
     }
 
 }
