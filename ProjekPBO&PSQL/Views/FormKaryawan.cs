@@ -406,6 +406,8 @@ namespace ProjekPBO_PSQL.Views
                 MessageBox.Show("Maaf, saldo Anda tidak mencukupi untuk melakukan penarikan ini!", "Saldo Kurang", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            Orang karyawanBaru = controllersOrang.Cari(idKaryawan)!;
             if (radioButton1.Checked)
             {
                 if (string.IsNullOrWhiteSpace(txtAtasNamaPenarikan.Text))
@@ -415,13 +417,13 @@ namespace ProjekPBO_PSQL.Views
                 }
                 MetodePenarikanCash aksiCash = new MetodePenarikanCash();
                 string namaPengambil = txtAtasNamaPenarikan.Text;
-                bool berhasil = aksiCash.MenarikUang(jumlahTarik, Karyawan, namaPengambil);
+                bool berhasil = aksiCash.MenarikUang(jumlahTarik, karyawanBaru, namaPengambil);
                 if (berhasil)
                 {
                     MessageBox.Show("Penarikan tunai berhasil diproses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtAtasNamaPenarikan.Clear();
                     txtNominalPenarikan.Clear();
-                    lbSaldo.Text = Karyawan.getSaldo().ToString("N0");
+                    lbSaldo.Text = karyawanBaru.getSaldo().ToString("N0");
                 }
             }
             else if (radioButton2.Checked)
@@ -433,13 +435,15 @@ namespace ProjekPBO_PSQL.Views
                 }
                 MetodePenarikanTransfer aksiTransfer = new MetodePenarikanTransfer();
                 string nomorRekening = txtNoRek.Text;
-                bool berhasil = aksiTransfer.MenarikUang(jumlahTarik, Karyawan, nomorRekening);
+                bool berhasil = aksiTransfer.MenarikUang(jumlahTarik, karyawanBaru, nomorRekening);
+                
+                
                 if (berhasil)
                 {
                     MessageBox.Show("Penarikan transfer berhasil diproses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtNoRek.Clear();
                     txtNominalPenarikan.Clear();
-                    lbSaldo.Text = Karyawan.getSaldo().ToString("N0");
+                    lbSaldo.Text = karyawanBaru.getSaldo().ToString("N0");
                 }
             }
             else
@@ -739,7 +743,75 @@ namespace ProjekPBO_PSQL.Views
             }
 
         }
-    
+
+        private void btKembaliJadwalFarmer_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelJadwlDiterima, "Jadwal Diterima");
+            try
+            {
+                DataTable dtJadwal = AmbilDataJadwalSesuaiRole();
+
+                DataView viewJadwalSaya = new DataView(dtJadwal);
+                viewJadwalSaya.RowFilter = $"(id_anggota = {idKaryawan}) AND (status_global IN ('Dalam Pengerjaan', 'Sudah Dikerjakan'))";
+
+                dataGridJadwalDiterima.DataSource = viewJadwalSaya;
+                dataGridJadwalDiterima.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                if (dataGridJadwalDiterima.Columns.Contains("id_jadwal"))
+                {
+                    dataGridJadwalDiterima.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                    dataGridJadwalDiterima.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                    dataGridJadwalDiterima.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan Kegiatan";
+                    dataGridJadwalDiterima.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                    dataGridJadwalDiterima.Columns["banyaknya_anggota"]!.HeaderText = "Sisa Kuota";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                    dataGridJadwalDiterima.Columns["status_global"]!.HeaderText = "Status";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+
+                    if (dataGridJadwalDiterima.Columns.Contains("id_anggota"))
+                        dataGridJadwalDiterima.Columns["id_anggota"]!.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal menampilkan jadwal diterima: " + ex.Message, "Error Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            PindahPanel(panelJadwlDiterima, "Jadwal Diterima");
+            try
+            {
+                DataTable dtJadwal = AmbilDataJadwalSesuaiRole();
+
+                DataView viewJadwalSaya = new DataView(dtJadwal);
+                viewJadwalSaya.RowFilter = $"(id_anggota = {idKaryawan}) AND (status_global IN ('Dalam Pengerjaan', 'Sudah Dikerjakan'))";
+
+                dataGridJadwalDiterima.DataSource = viewJadwalSaya;
+                dataGridJadwalDiterima.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                if (dataGridJadwalDiterima.Columns.Contains("id_jadwal"))
+                {
+                    dataGridJadwalDiterima.Columns["id_jadwal"]!.HeaderText = "ID Jadwal";
+                    dataGridJadwalDiterima.Columns["tanggal"]!.HeaderText = "Tanggal Kegiatan";
+                    dataGridJadwalDiterima.Columns["keterangan_kegiatan"]!.HeaderText = "Keterangan Kegiatan";
+                    dataGridJadwalDiterima.Columns["text_tipe_jadwal"]!.HeaderText = "Tipe Jabatan";
+                    dataGridJadwalDiterima.Columns["banyaknya_anggota"]!.HeaderText = "Sisa Kuota";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.HeaderText = "Total Upah (Rp)";
+                    dataGridJadwalDiterima.Columns["status_global"]!.HeaderText = "Status";
+                    dataGridJadwalDiterima.Columns["total_upah"]!.DefaultCellStyle.Format = "N0";
+
+                    if (dataGridJadwalDiterima.Columns.Contains("id_anggota"))
+                        dataGridJadwalDiterima.Columns["id_anggota"]!.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal menampilkan jadwal diterima: " + ex.Message, "Error Tampilan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
 }

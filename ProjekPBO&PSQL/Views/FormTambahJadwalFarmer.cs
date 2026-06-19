@@ -202,7 +202,7 @@ namespace ProjekPBO_PSQL.Views
                 {
                     isSukses = jadwalController.tambahJadwal(jadwalFarmerBaru);
                 }
-                if (isSukses >= 0)
+                if (isSukses > 0)
                 {
                     MessageBox.Show($"Jadwal {infoJadwal.template} berhasil disimpan ke sistem!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtKeterangan.Clear();
@@ -212,6 +212,10 @@ namespace ProjekPBO_PSQL.Views
                     cbLahan.SelectedIndex = -1;
                     cbTanaman.SelectedIndex = -1;
                     DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menambhakan di sistem!", "Peringatan Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
